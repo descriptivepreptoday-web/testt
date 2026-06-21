@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Descriptive Prep Today</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-<style>
-[data-theme="dark-default"]{--bg:#0e1117;--bg2:#161c27;--bg3:#1c2333;--bg4:#232d40;--t:#d1d9e6;--t2:#7a8499;--t3:#3a4150;--b:#252d3d;--accent:#e2b714;--ah:#c9a312;--adim:rgba(226,183,20,.08);--aborder:rgba(226,183,20,.22);--green:#4caf50;--gdim:rgba(76,175,80,.08);--gborder:rgba(76,175,80,.22);--red:#ca4754;--rdim:rgba(202,71,84,.08);--rborder:rgba(202,71,84,.22);--amber:#e2a014;--ch:rgba(255,255,255,.02);--shadow:0 1px 3px rgba(0,0,0,.5);}
+<style>[data-theme="dark-default"]{--bg:#0e1117;--bg2:#161c27;--bg3:#1c2333;--bg4:#232d40;--t:#d1d9e6;--t2:#7a8499;--t3:#3a4150;--b:#252d3d;--accent:#e2b714;--ah:#c9a312;--adim:rgba(226,183,20,.08);--aborder:rgba(226,183,20,.22);--green:#4caf50;--gdim:rgba(76,175,80,.08);--gborder:rgba(76,175,80,.22);--red:#ca4754;--rdim:rgba(202,71,84,.08);--rborder:rgba(202,71,84,.22);--amber:#e2a014;--ch:rgba(255,255,255,.02);--shadow:0 1px 3px rgba(0,0,0,.5);}
 [data-theme="dark-vs"]{--bg:#1e1e1e;--bg2:#252526;--bg3:#2d2d30;--bg4:#333337;--t:#cccccc;--t2:#858585;--t3:#444;--b:#3c3c3c;--accent:#4ec9b0;--ah:#3aab94;--adim:rgba(78,201,176,.08);--aborder:rgba(78,201,176,.22);--green:#4ec9b0;--gdim:rgba(78,201,176,.08);--gborder:rgba(78,201,176,.22);--red:#f44747;--rdim:rgba(244,71,71,.08);--rborder:rgba(244,71,71,.22);--amber:#dcdcaa;--ch:rgba(255,255,255,.02);--shadow:0 1px 3px rgba(0,0,0,.6);}
 [data-theme="dark-obsidian"]{--bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;--bg4:#222222;--t:#e8e8e8;--t2:#666;--t3:#333;--b:#2a2a2a;--accent:#7c6af7;--ah:#6959e5;--adim:rgba(124,106,247,.08);--aborder:rgba(124,106,247,.22);--green:#50fa7b;--gdim:rgba(80,250,123,.08);--gborder:rgba(80,250,123,.22);--red:#ff5555;--rdim:rgba(255,85,85,.08);--rborder:rgba(255,85,85,.22);--amber:#ffb86c;--ch:rgba(255,255,255,.02);--shadow:0 1px 4px rgba(0,0,0,.8);}
 [data-theme="light-default"]{--bg:#f8f9fc;--bg2:#ffffff;--bg3:#f0f2f7;--bg4:#e8ebf2;--t:#1a1d2e;--t2:#5a6278;--t3:#c2c8d8;--b:#dde1ee;--accent:#2563eb;--ah:#1d4ed8;--adim:rgba(37,99,235,.07);--aborder:rgba(37,99,235,.2);--green:#15803d;--gdim:rgba(21,128,61,.07);--gborder:rgba(21,128,61,.2);--red:#dc2626;--rdim:rgba(220,38,38,.07);--rborder:rgba(220,38,38,.2);--amber:#b45309;--ch:rgba(0,0,0,.015);--shadow:0 1px 3px rgba(0,0,0,.07);}
@@ -21,7 +20,9 @@ header{background:var(--bg2);border-bottom:1px solid var(--b);height:54px;displa
 .h-brand{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none;color:inherit;border-radius:var(--rs);padding:4px 8px;margin:-4px -8px;transition:background var(--tr);flex-shrink:1;min-width:0;overflow:hidden}
 .h-brand:hover{background:var(--bg3)}
 .site-logo{height:26px;width:auto;display:none;border-radius:4px;flex-shrink:0;background:transparent;padding:2px 4px;}
-.site-name{font-size:.875rem;font-weight:700;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-name{display:flex;flex-direction:column;line-height:1.15;overflow:hidden;min-width:0;}
+.site-name-top{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--accent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.site-name-bot{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .h-right{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:10px}
 .ib{width:32px;height:32px;border-radius:var(--rs);border:1px solid var(--b);background:transparent;color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--tr);flex-shrink:0}
 .ib:hover{border-color:var(--accent);color:var(--accent)}
@@ -253,7 +254,10 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <header>
   <a class="h-brand" id="h-brand" onclick="handleBrand(event)" href="#">
     <img id="site-logo" class="site-logo" src="" alt="logo"/>
-    <span class="site-name" id="site-name">Descriptive Prep Today</span>
+    <span class="site-name" id="site-name">
+      <span class="site-name-top">Descriptive</span>
+      <span class="site-name-bot">PrepToday</span>
+    </span>
   </a>
   <div class="h-right">
     <a class="tg-hbtn" id="tg-hbtn" href="#" target="_blank">
@@ -549,7 +553,8 @@ function applyTheme(t,save=true){
   const ico=document.getElementById("theme-ico");
   ico.innerHTML=dark?'<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>':'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>';
   document.querySelectorAll(".t-choice").forEach(e=>e.classList.toggle("on",e.dataset.t===t));
-  updateLogo(t);
+  // Only update logo if data is already loaded (save=true means user-triggered, data is ready)
+  if(save)updateLogo(t);
 }
 function setTheme(t){applyTheme(t);document.getElementById("tp").classList.remove("open");}
 function updateLogo(t){
@@ -577,10 +582,24 @@ function closeCov(){document.getElementById("exit-cov").classList.remove("open")
 function doExit(){clearInterval(TI);clearInterval(WI);document.getElementById("exit-cov").classList.remove("open");if(exitDest)showS(exitDest);exitDest=null;}
 function setT(id,v){const e=document.getElementById(id);if(e&&v)e.textContent=v;}
 function openTG(){const l=D().siteSettings?.tgLink||"";if(l)window.open(l,"_blank");}
+function updateSiteName(name){
+  // name format: "Descriptive Prep Today" or any string — split at first space boundary for two lines
+  // Always show "Descriptive" on top and "PrepToday" on bottom regardless of stored name
+  const el=document.getElementById("site-name");
+  if(!el)return;
+  const parts=name?name.split(" "):[""]; 
+  // Use first word as top, rest joined as bottom
+  const top=parts[0]||"Descriptive";
+  const bot=parts.slice(1).join("")||"PrepToday";
+  const topEl=el.querySelector(".site-name-top");
+  const botEl=el.querySelector(".site-name-bot");
+  if(topEl)topEl.textContent=top;
+  if(botEl)botEl.textContent=bot;
+}
 function renderHome(){
   const d=D(),cfg=d.siteSettings||{};
-  if(cfg.name)document.getElementById("site-name").textContent=cfg.name;
-  updateLogo(localStorage.getItem("dpt_theme")||"dark-default");
+  if(cfg.name)updateSiteName(cfg.name);
+  updateLogo(localStorage.getItem("dpt_theme")||"light-default");
   setT("h-eyebrow",cfg.homeEyebrow);
   const ht=document.getElementById("h-title");if(ht&&cfg.homeTitle)ht.innerHTML=cfg.homeTitle.replace("\n","<br>");
   setT("h-sub",cfg.homeSub);setT("h-plbl",cfg.practiceSectionLabel);setT("h-tlbl",cfg.toolsLabel);
