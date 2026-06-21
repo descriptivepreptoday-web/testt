@@ -960,6 +960,15 @@
       "link": "https://guidely.in/pdf-course-subscription",
       "iconUrl": "",
       "logoUrl": "https://i.postimg.cc/gjdC9Q86/176162780593.png"
+    },
+    {
+      "title": "Smartkeeda CA MockDrill",
+      "badge": "Maximum Discount",
+      "desc": "•Daily/Weekly CA MockDrill Quizzes\n•Daily/Weekly/Monthly/ BA & FA CA MockDrill PDFs\n•Digital, Financial Awareness & RBI circulars",
+      "coupon": "PREP2DAY",
+      "link": "https://testzone.smartkeeda.com/pricing?tabId=ca-mock-drill",
+      "iconUrl": "https://i.postimg.cc/W3Fp8XkS/logo.png",
+      "logoUrl": ""
     }
   ]
 }
