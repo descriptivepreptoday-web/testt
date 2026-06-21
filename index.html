@@ -228,8 +228,11 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 @media(max-width:640px){.offers-home-btn{position:static;margin-bottom:18px;display:inline-flex;}}
 /* OFFERS PAGE */
 .op-msg{background:var(--adim);border:1px solid var(--aborder);border-radius:var(--rs);padding:9px 12px;font-size:.75rem;line-height:1.6;margin-bottom:16px;}
-.offer-card{background:var(--bg3);border:1px solid var(--b);border-radius:var(--r);padding:13px;margin-bottom:9px;position:relative;overflow:visible;}
-.offer-card:last-child{margin-bottom:0;}
+.offer-card{background:var(--bg3);border:1px solid var(--b);border-radius:var(--r);padding:13px;position:relative;overflow:visible;flex:0 0 220px;min-width:0;}
+.offers-scroll-row{display:flex;flex-direction:row;gap:9px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--b) transparent;}
+.offers-scroll-row::-webkit-scrollbar{height:4px;}
+.offers-scroll-row::-webkit-scrollbar-track{background:transparent;}
+.offers-scroll-row::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px;}
 .offer-logo-wrap{background:#fff;border-radius:6px;padding:4px 8px;display:inline-flex;align-items:center;margin-bottom:8px;max-width:100%;}
 .offer-logo-wrap img{max-height:28px;width:auto;display:block;}
 .oc-icon-wrap{width:32px;height:32px;border-radius:var(--rs);border:1px solid var(--aborder);background:var(--adim);display:flex;align-items:center;justify-content:center;margin-bottom:9px;overflow:hidden;flex-shrink:0;}
@@ -614,7 +617,7 @@ function renderHome(){
     const homeCardsEl=document.getElementById("offers-home-cards");
     if(homeCardsEl){
       // Use card-grid layout; add a "See More" link card at the end of the row
-      homeCardsEl.innerHTML=`<div class="card-grid" style="margin-bottom:0">${offers.map((o,i)=>offerCardHtml(o,i)).join("")}<div class="offer-card" style="display:flex;align-items:center;justify-content:center;cursor:pointer;border-style:dashed;" onclick="showS('offers')"><span style="font-size:.8rem;font-weight:700;color:var(--accent);">See More Offers &amp; Discounts →</span></div></div>`;
+      homeCardsEl.innerHTML=`<div class="offers-scroll-row">${offers.map((o,i)=>offerCardHtml(o,i)).join("")}<div class="offer-card" style="display:flex;align-items:center;justify-content:center;cursor:pointer;border-style:dashed;min-width:140px;" onclick="showS('offers')"><span style="font-size:.8rem;font-weight:700;color:var(--accent);text-align:center;">See More Offers &amp; Discounts →</span></div></div>`;
     }
   } else {
     const homeCardsEl=document.getElementById("offers-home-cards");
