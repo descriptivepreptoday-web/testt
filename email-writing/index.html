@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark-default">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Email Writing Practice — Descriptive Prep Today</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="dark-default"]{--bg:#0e1117;--bg2:#161c27;--bg3:#1c2333;--bg4:#232d40;--t:#d1d9e6;--t2:#7a8499;--t3:#3a4150;--b:#252d3d;--accent:#e2b714;--ah:#c9a312;--adim:rgba(226,183,20,.08);--aborder:rgba(226,183,20,.22);--green:#4caf50;--gdim:rgba(76,175,80,.08);--gborder:rgba(76,175,80,.22);--red:#ca4754;--rdim:rgba(202,71,84,.08);--rborder:rgba(202,71,84,.22);--amber:#e2a014;--ch:rgba(255,255,255,.02);--shadow:0 1px 3px rgba(0,0,0,.5);}
+[data-theme="light-default"]{--bg:#f8f9fc;--bg2:#ffffff;--bg3:#f0f2f7;--bg4:#e8ebf2;--t:#1a1d2e;--t2:#5a6278;--t3:#c2c8d8;--b:#dde1ee;--accent:#2563eb;--ah:#1d4ed8;--adim:rgba(37,99,235,.07);--aborder:rgba(37,99,235,.2);--green:#15803d;--gdim:rgba(21,128,61,.07);--gborder:rgba(21,128,61,.2);--red:#dc2626;--rdim:rgba(220,38,38,.07);--rborder:rgba(220,38,38,.2);--amber:#b45309;--ch:rgba(0,0,0,.015);--shadow:0 1px 3px rgba(0,0,0,.07);}
+:root{--r:10px;--rs:6px;--rl:14px;--fs:15px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.18s ease;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:var(--fs)}
+body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;transition:background var(--tr),color var(--tr);line-height:1.6;-webkit-font-smoothing:antialiased}
+header{background:var(--bg2);border-bottom:1px solid var(--b);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:100}
+.h-brand{display:flex;flex-direction:column;line-height:1.15}
+.h-brand-top{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--accent)}
+.h-brand-bot{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--t)}
+.ib{width:32px;height:32px;border-radius:var(--rs);border:1px solid var(--b);background:transparent;color:var(--t2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+.ib:hover{border-color:var(--accent);color:var(--accent)}
+.ib svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.screen{display:none}.screen.active{display:block}
+.page-wrap{max-width:740px;margin:0 auto;padding:30px 24px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--t2);background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:6px 14px;cursor:pointer;font-family:var(--font);transition:all var(--tr);margin-bottom:18px}
+.back-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
+.back-btn svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.qs-head{font-size:1.1rem;font-weight:700;margin-bottom:3px}
+.qs-sub{color:var(--t2);font-size:.78rem;margin-bottom:18px}
+.sec-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.65rem;color:var(--accent);background:var(--adim);border:1px solid var(--aborder);border-radius:20px;padding:4px 11px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.08em}
+.q-list{display:flex;flex-direction:column;gap:6px}
+.q-item{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:border-color var(--tr),background var(--tr);display:flex;gap:10px;align-items:flex-start}
+.q-item:hover{border-color:var(--accent);background:var(--ch)}
+.q-n{font-family:var(--mono);font-size:.62rem;color:var(--accent);min-width:18px;padding-top:2px;flex-shrink:0}
+.q-prev{font-size:.8rem;color:var(--t2);line-height:1.5}
+.q-item:hover .q-prev{color:var(--t)}
+.chips{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:.6rem;padding:2px 6px;border-radius:3px;background:var(--bg3);border:1px solid var(--b);color:var(--t2)}
+#exam{max-width:1000px;margin:0 auto;padding:18px 14px}
+.exam-bar{display:flex;align-items:center;justify-content:space-between;background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:8px 14px;margin-bottom:11px;gap:10px;flex-wrap:wrap}
+.bar-l{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.bstat{text-align:center;flex-shrink:0}
+.bval{font-family:var(--mono);font-size:1rem;font-weight:600;color:var(--accent);line-height:1}
+.blbl{font-size:.56rem;color:var(--t2);margin-top:2px;text-transform:uppercase;letter-spacing:.07em}
+.exam-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.panel{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.ph{background:var(--bg3);padding:7px 12px;font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.pb{padding:13px;flex:1;overflow-y:auto}
+.q-text{font-size:.86rem;line-height:1.8;white-space:pre-wrap}
+.q-meta{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
+.answer-ta{width:100%;min-height:340px;background:var(--bg);border:1px solid var(--b);border-radius:var(--rs);color:var(--t);font-family:var(--font);font-size:.86rem;line-height:1.8;padding:11px;resize:vertical;outline:none;transition:border-color var(--tr);display:block}
+.answer-ta:focus{border-color:var(--accent)}
+.answer-ta::placeholder{color:var(--t3)}
+.ta-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.wc-lbl{font-family:var(--mono);font-size:.68rem;color:var(--t2)}
+.wc-lbl strong{color:var(--accent)}
+.wc-lbl.under strong{color:var(--amber)}
+.wc-lbl.ok strong{color:var(--green)}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:var(--rs);font-size:.8rem;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:all var(--tr)}
+.bp{background:var(--accent);color:var(--bg)}.bp:hover{opacity:.88}
+.bg{background:transparent;border:1px solid var(--b);color:var(--t2)}.bg:hover{border-color:var(--accent);color:var(--accent)}
+.bsm{padding:4px 10px;font-size:.7rem}
+.exam-actions{display:flex;gap:8px;margin-top:12px;justify-content:flex-end;flex-wrap:wrap}
+.model-wrap{margin-top:12px;display:none}
+.model-wrap.show{display:block}
+.rcard{background:var(--bg2);border:1px solid var(--gborder);border-radius:var(--r);overflow:hidden}
+.rcard-h{background:var(--bg3);padding:7px 14px;font-family:var(--mono);font-size:.6rem;color:var(--green);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b)}
+.model-box{padding:13px;font-size:.83rem;line-height:1.85;white-space:pre-wrap;border-left:3px solid var(--green)}
+@media(max-width:680px){.exam-grid{grid-template-columns:1fr}.bar-l{gap:10px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-brand">
+    <span class="h-brand-top">DESCRIPTIVE</span>
+    <span class="h-brand-bot">PREP TODAY</span>
+  </div>
+  <button class="ib" onclick="toggleTheme()" title="Toggle theme">
+    <svg width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+</header>
+
+<!-- QUESTION LIST -->
+<div id="qselect" class="screen active">
+  <div class="page-wrap">
+    <div class="sec-pill">✉️ Email Writing &middot; 150–200 words &middot; 20 marks</div>
+    <div class="qs-head">Email Writing Practice</div>
+    <div class="qs-sub">SBI PO Mains 2026 &middot; Select a question to begin</div>
+    <div class="q-list" id="q-list"></div>
+  </div>
+</div>
+
+<!-- WRITING SCREEN -->
+<div id="exam" class="screen">
+  <div class="page-wrap" style="max-width:1000px;padding:18px 14px">
+    <button class="back-btn" onclick="backToList()">
+      <svg width="13" height="13" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back to Questions
+    </button>
+    <div class="exam-bar">
+      <div class="bar-l">
+        <div class="bstat"><div class="bval" id="exam-wc-top">0</div><div class="blbl">Words</div></div>
+        <div class="bstat"><div class="bval" id="exam-marks">20</div><div class="blbl">Marks</div></div>
+        <div class="bstat"><div class="bval" id="exam-limit">150–200</div><div class="blbl">Word Limit</div></div>
+      </div>
+    </div>
+    <div class="exam-grid">
+      <div class="panel">
+        <div class="ph"><span>EMAIL WRITING</span><span id="exam-wl" style="color:var(--t2)"></span></div>
+        <div class="pb"><div class="q-text" id="exam-qtext"></div></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><span>Your Answer</span><span id="exam-pwc" style="color:var(--t2)">0 words</span></div>
+        <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
+          <textarea class="answer-ta" id="exam-ta" placeholder="Start writing your email here…" oninput="updWC()"></textarea>
+          <div class="ta-footer"><div class="wc-lbl" id="wc-lbl">Words: <strong id="exam-wc">0</strong></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="exam-actions">
+      <button class="btn bg" onclick="clearAnswer()">Clear</button>
+      <button class="btn bp" onclick="toggleModel()" id="model-btn">Show Model Answer</button>
+    </div>
+    <div class="model-wrap" id="model-wrap">
+      <div class="rcard">
+        <div class="rcard-h">✓ Model Answer</div>
+        <div class="model-box" id="model-box"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const EMAIL_QUESTIONS = [{"id": "q1", "examId": "sbi_po", "type": "email", "text": "You are a PO at SBI. A customer Mr. Ramesh Gupta has complained that his net banking access has been blocked for 3 days. Write a formal email explaining the reason (scheduled maintenance) and the resolution timeline.", "wordLimit": "150\u2013200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "To: ramesh.gupta@email.com\nSubject: Resolution of Net Banking Access Issue\n\nDear Mr. Gupta,\n\nI sincerely apologise for the inconvenience caused due to the disruption in your net banking services.\n\nThe temporary suspension was due to scheduled server maintenance from 14th to 16th June 2026. Your net banking access has been restored. Please reset your password if you face any difficulty.\n\nFor assistance, contact 1800-11-2211.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 1}, {"id": "q_email_2", "examId": "sbi_po", "type": "email", "text": "You are a Branch Manager at SBI. A customer's cheque for Rs 85,000 has bounced due to insufficient funds. Write a formal email to the customer informing them of the dishonour and the applicable charges as per bank policy.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Customer,\n\nThis is to inform you that your cheque no. 003421 for Rs 85,000 dated 12th June 2026 has been returned unpaid due to insufficient funds in your account.\n\nAs per bank policy, a cheque bounce charge of Rs 590 (plus applicable GST) has been debited to your account. Please note that repeated dishonour of cheques may affect your credit history and could attract penal action under Section 138 of the Negotiable Instruments Act.\n\nWe request you to maintain sufficient balance before issuing cheques in future and ensure the payee is informed accordingly.\n\nFor any clarification, please contact our branch at 1800-11-2211.\n\nYours sincerely,\n[Your Name]\nBranch Manager, SBI", "active": true, "mockNo": 2}, {"id": "q_email_3", "examId": "sbi_po", "type": "email", "text": "You are a PO at SBI handling SME accounts. A corporate client, M/s Sharma Textiles, has been waiting two weeks for disbursement of an approved working capital loan due to pending verification of collateral documents. Write an email explaining the delay and the documents still required.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Sir/Madam,\n\nWith reference to your approved working capital loan of Rs 25 lakh, we regret the delay in disbursement, which is due to pending verification of your collateral documents.\n\nOur records show that the registered valuation report and the latest property tax receipt for the mortgaged premises are still awaited from your end. Once received, disbursement will be processed within 3 working days.\n\nWe value your business relationship and apologise for the inconvenience caused. Please submit the pending documents at your earliest to avoid further delay.\n\nFor assistance, contact your Relationship Manager directly.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 3}, {"id": "q_email_4", "examId": "sbi_po", "type": "email", "text": "A customer's ATM card was retained by the machine during a failed transaction at your branch's ATM kiosk. Write an email to the customer explaining the reason, the retrieval process, and the expected timeline.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Mr./Ms. [Customer],\n\nWe understand your ATM card was retained by our machine at the Branch ATM kiosk during a failed transaction on 15th June 2026. This typically occurs due to a network timeout during card processing.\n\nYour card has been safely captured and deposited with our branch. You may collect it from the branch counter along with a valid photo ID between 10 AM and 4 PM on any working day.\n\nAlternatively, if you wish, we can arrange to send you a replacement card by post within 5-7 working days.\n\nWe apologise for the inconvenience caused.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 4}, {"id": "q_email_5", "examId": "sbi_po", "type": "email", "text": "You are a PO at SBI. A customer has not paid the annual locker rent due for the last two months despite a reminder. Write an email to the customer requesting payment within 15 days and explaining the consequence of continued non-payment as per bank policy.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Customer,\n\nThis is a reminder that your annual locker rent of Rs 3,500 for Locker No. 214 has remained unpaid despite our earlier notice dated 1st June 2026.\n\nWe request you to clear the outstanding dues within 15 days of this email. Please note that as per bank policy, continued non-payment of locker rent beyond the stipulated period may result in temporary suspension of locker access and, if unresolved, the bank may proceed with the breaking open of the locker as per due process.\n\nWe value you as our customer and request your immediate attention to avoid inconvenience.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 5}, {"id": "q_email_6", "examId": "sbi_po", "type": "email", "text": "RBI has issued a revised circular on periodic KYC updation requirements for all bank branches, effective from next month. Write an email to all branch staff explaining the key changes and the action required from them.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Team,\n\nPlease note that RBI has issued a revised circular on periodic KYC updation, effective 1st July 2026. Key changes include a reduced re-KYC cycle for high-risk customers (from 2 years to 1 year) and mandatory digital KYC verification through Aadhaar-based e-KYC wherever possible.\n\nAll staff handling account opening and KYC updation must complete the online training module on our learning portal by 25th June. Branch heads are requested to identify customers due for KYC updation this quarter and initiate outreach accordingly.\n\nFor any queries, please reach out to the Compliance desk.\n\nRegards,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 6}, {"id": "q_email_7", "examId": "sbi_po", "type": "email", "text": "A customer's credit card application has been rejected due to a low CIBIL score. Write an email to the applicant explaining the reason for rejection and the steps they can take to improve eligibility for future applications.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Mr./Ms. [Applicant],\n\nWith reference to your recent credit card application, we regret to inform you that we are unable to approve it at this time, as your current CIBIL score does not meet our minimum eligibility criteria.\n\nA low credit score is often the result of high existing credit utilisation, delayed EMI payments, or limited credit history. We encourage you to review your credit report, clear any outstanding dues, and maintain timely repayments on existing loans.\n\nYou are welcome to reapply after six months once your score improves. Our staff would be happy to guide you on building a healthier credit profile.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 7}, {"id": "q_email_8", "examId": "sbi_po", "type": "email", "text": "Due to a system error, an incorrect (higher) interest amount was credited to a customer's Fixed Deposit account. Write an email to the customer explaining the error, the correction process, and apologising for the inconvenience.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Customer,\n\nWe wish to inform you of a system error that resulted in an incorrect, higher interest amount being credited to your Fixed Deposit account (No. XXXX5678) on 10th June 2026.\n\nThe excess amount of Rs 1,240 will be reversed from your linked savings account on 20th June 2026, restoring your FD interest to the correct, contracted rate. We sincerely apologise for this error and any confusion it may have caused.\n\nShould you have already utilised these funds, please contact our branch to discuss a convenient repayment arrangement.\n\nWe regret the inconvenience and appreciate your understanding.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 8}, {"id": "q_email_9", "examId": "sbi_po", "type": "email", "text": "You are a PO at a busy SBI branch. With the festive season approaching, you expect a sharp rise in account opening and locker requests. Write an email to your Regional Manager requesting temporary additional staff for the next four weeks.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Sir/Madam,\n\nWith the festive season approaching, our branch anticipates a significant rise in footfall for new account openings, locker allotments, and gold loan enquiries over the next four weeks.\n\nOur current staff strength is already stretched managing daily operations, and we are concerned about maintaining service quality during this peak period. I request the temporary deployment of two additional staff members, preferably with customer service experience, for the duration of the festive rush.\n\nThis will help us manage increased demand without compromising turnaround time or customer experience.\n\nKindly consider this request at the earliest.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 9}, {"id": "q_email_10", "examId": "sbi_po", "type": "email", "text": "An NRI customer based in Dubai has written to your branch asking how to update his registered mobile number without visiting India in person. Write a reply email explaining the available options and required documents.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Mr. [Customer],\n\nThank you for reaching out regarding the update of your registered mobile number.\n\nAs you are unable to visit the branch in person, you may update your mobile number through our YONO SBI mobile application using Aadhaar-based e-KYC, provided your Aadhaar is linked to your account. Alternatively, you may send a duly signed request letter along with a self-attested copy of your passport and OCI/PIO card (if applicable) through registered post or courier to our branch.\n\nOnce received, the update will be processed within 3-5 working days, and you will receive a confirmation SMS and email.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 10}, {"id": "q_email_11", "examId": "sbi_po", "type": "email", "text": "You are a PO at SBI. Write an email to a customer informing them that their Fixed Deposit is maturing in 7 days and asking for their instructions on renewal or closure.", "wordLimit": "150-200 words", "marks": 20, "difficulty": "medium", "modelAnswer": "Dear Customer,\n\nThis is to inform you that your Fixed Deposit (Account No. XXXX9012) of Rs 2,00,000 is due to mature on 27th June 2026.\n\nKindly let us know your preference regarding this deposit: (i) renewal for a further term at the prevailing interest rate, (ii) renewal of principal with interest credited to your savings account, or (iii) closure with full proceeds transferred to your linked account.\n\nIf we do not receive your instructions before the maturity date, the deposit will be auto-renewed for the same tenure as per standing bank policy.\n\nPlease revert at your earliest convenience.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI", "active": true, "mockNo": 11}];
+
+let currentQ = null;
+
+function toggleTheme(){
+  const html = document.documentElement;
+  const cur = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', cur === 'dark-default' ? 'light-default' : 'dark-default');
+}
+
+function renderList(){
+  const list = document.getElementById('q-list');
+  list.innerHTML = EMAIL_QUESTIONS.map((q,i) => `
+    <div class="q-item" onclick="openQ('${q.id}')">
+      <div class="q-n">${String(i+1).padStart(2,'0')}</div>
+      <div style="flex:1">
+        <div class="q-prev">${escapeHtml(q.text.length > 140 ? q.text.slice(0,140) + '…' : q.text)}</div>
+        <div class="chips">
+          <span class="chip">${q.wordLimit}</span>
+          <span class="chip">${q.marks} marks</span>
+          <span class="chip">${q.difficulty}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function openQ(id){
+  currentQ = EMAIL_QUESTIONS.find(q => q.id === id);
+  if(!currentQ) return;
+  document.getElementById('exam-qtext').textContent = currentQ.text;
+  document.getElementById('exam-wl').textContent = currentQ.wordLimit;
+  document.getElementById('exam-limit').textContent = currentQ.wordLimit.replace(' words','');
+  document.getElementById('exam-marks').textContent = currentQ.marks;
+  document.getElementById('exam-ta').value = '';
+  document.getElementById('model-wrap').classList.remove('show');
+  document.getElementById('model-btn').textContent = 'Show Model Answer';
+  updWC();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('exam').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function backToList(){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('qselect').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function countWords(t){
+  return t.trim() === '' ? 0 : t.trim().split(/\s+/).length;
+}
+
+function updWC(){
+  const v = countWords(document.getElementById('exam-ta').value);
+  document.getElementById('exam-wc').textContent = v;
+  document.getElementById('exam-wc-top').textContent = v;
+  document.getElementById('exam-pwc').textContent = v + ' words';
+  const lbl = document.getElementById('wc-lbl');
+  lbl.classList.remove('under','ok');
+  if(v >= 150 && v <= 200) lbl.classList.add('ok');
+  else if(v > 0) lbl.classList.add('under');
+}
+
+function clearAnswer(){
+  document.getElementById('exam-ta').value = '';
+  updWC();
+}
+
+function toggleModel(){
+  const wrap = document.getElementById('model-wrap');
+  const btn = document.getElementById('model-btn');
+  const showing = wrap.classList.toggle('show');
+  document.getElementById('model-box').textContent = currentQ.modelAnswer;
+  btn.textContent = showing ? 'Hide Model Answer' : 'Show Model Answer';
+}
+
+renderList();
+</script>
+</body>
+</html>
