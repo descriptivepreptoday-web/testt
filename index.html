@@ -1025,8 +1025,60 @@ async function evalWithAI(q,ans,wc,wpm){
   if(!ep)return null;
   const tm={};d.sectionTypes.forEach(s=>tm[s.id]=s);
   const typeName=tm[q.type]?.name||q.type,max=q.marks;
-  const sys="You are an expert SBI/IBPS PO Mains Descriptive Paper evaluator. Evaluate strictly as per 2026 pattern. Respond ONLY with valid JSON, no markdown.";
-  const p=`TYPE: ${typeName}\nWORD LIMIT: ${q.wordLimit}\nMAX MARKS: ${max}\nQUESTION: ${q.text}\nANSWER: ${ans||"(blank)"}\nWORDS: ${wc} | WPM: ${wpm}\n\nEvaluate on 4 parameters each out of ${Math.round(max/4)}: Content and Relevance, Structure and Format, Language and Grammar, Word Limit Adherence.\n\nReturn ONLY JSON: {"totalScore":<n>,"parameters":[{"name":"Content & Relevance","score":<n>,"max":${Math.round(max/4)},"comment":"<1 sentence>"},{"name":"Structure & Format","score":<n>,"max":${Math.round(max/4)},"comment":"<1 sentence>"},{"name":"Language & Grammar","score":<n>,"max":${Math.round(max/4)},"comment":"<1 sentence>"},{"name":"Word Limit","score":<n>,"max":${Math.round(max/4)},"comment":"<1 sentence>"}],"strengths":["<point>","<point>"],"improvements":["<point>","<point>","<point>"],"overallVerdict":"<2-3 sentences>"}`;
+  const sys=`You are a strict, senior examiner for SBI PO / IBPS PO Mains Descriptive Paper (2026 pattern), equivalent to the marking standard used by Oliveboard and Guidely. Your scoring must be realistic, unbiased, and rigorous — the same way an actual UPSC/banking exam evaluator would mark.
+
+HARD RULES YOU MUST FOLLOW WITHOUT EXCEPTION:
+1. GIBBERISH / IRRELEVANT / BLANK answers: If the answer is blank, random characters, keyboard mashing, copy-paste of the question, or completely off-topic, award 0 across ALL parameters. Do not give any charity marks.
+2. INCOMPLETE answers (under 40% of word limit): Cap total score at 30% of max marks. Penalise heavily on Word Limit and Content.
+3. PARTIAL answers (40–70% of word limit): Cap total score at 55% of max marks unless quality is exceptional.
+4. WRONG FORMAT (e.g. writing an essay instead of an email, missing Subject/To/Salutation in email, missing heading/date/to in report): Deduct at least 50% from Structure & Format score.
+5. LANGUAGE ERRORS: Each significant grammar/spelling error costs marks. An answer with 5+ errors cannot score more than 50% on Language & Grammar.
+6. CONTENT ACCURACY: Award marks only for points directly relevant to the question scenario. Generic or vague points get partial credit. Irrelevant points get zero content credit.
+7. DO NOT inflate scores to be encouraging. A mediocre answer should score 40–55%. A good answer 60–75%. An excellent answer 80–90%. Near-perfect answers 90%+. Scores above 90% should be extremely rare.
+8. Respond ONLY with valid JSON, no markdown, no explanation outside JSON.`;
+  const p=`SECTION TYPE: ${typeName}
+WORD LIMIT: ${q.wordLimit}
+MAX MARKS: ${max}
+QUESTION: ${q.text}
+STUDENT'S ANSWER: ${ans||"(blank)"}
+WORD COUNT: ${wc} words
+
+STEP 1 — VALIDITY CHECK:
+- Is this answer blank, gibberish, random characters, or completely unrelated to the question? If YES → set all scores to 0, set overallVerdict to explain why, then return JSON.
+- Does the answer attempt to address the question at all? If NO → treat as gibberish.
+
+STEP 2 — SCORING (only if answer is valid):
+Score each of the 4 parameters out of ${Math.round(max/4)} marks using this strict rubric:
+
+[Content & Relevance /${Math.round(max/4)}]
+- Full marks: All key points covered with accurate, question-specific detail and banking/professional knowledge
+- 75%: Most key points covered, minor gaps
+- 50%: Some relevant points but significant gaps or vague content
+- 25%: Very few relevant points, mostly generic
+- 0%: Off-topic, irrelevant, or gibberish
+
+[Structure & Format /${Math.round(max/4)}]
+- For EMAIL: Must have To, Subject, Salutation, Body paragraphs, Closing, Signature. Missing any = heavy deduction.
+- For REPORT: Must have heading, date, To, Subject, body with sections, recommendation, signature. Missing = heavy deduction.
+- For SITUATION/PRECIS/ESSAY: Logical flow, paragraphing, introduction and conclusion.
+- 0 if format is completely wrong for the type.
+
+[Language & Grammar /${Math.round(max/4)}]
+- Full marks: Formal tone, zero/near-zero errors, varied sentence structure, precise vocabulary
+- Deduct per error: spelling mistakes, wrong tense, subject-verb disagreement, informal language
+- 5+ errors = max 50% of this parameter
+- Gibberish/random text = 0
+
+[Word Limit Adherence /${Math.round(max/4)}]
+- Within ±10% of prescribed limit: full marks
+- 10–30% below limit: 50% of this parameter
+- >30% below or heavily over: 0–25% of this parameter
+- Under 20 meaningful words regardless of limit: 0
+
+STEP 3 — totalScore must equal the sum of the 4 parameter scores exactly.
+
+Return ONLY this JSON:
+{"totalScore":<n>,"parameters":[{"name":"Content & Relevance","score":<n>,"max":${Math.round(max/4)},"comment":"<specific 1-sentence critique>"},{"name":"Structure & Format","score":<n>,"max":${Math.round(max/4)},"comment":"<specific 1-sentence critique>"},{"name":"Language & Grammar","score":<n>,"max":${Math.round(max/4)},"comment":"<specific 1-sentence critique>"},{"name":"Word Limit","score":<n>,"max":${Math.round(max/4)},"comment":"<state actual word count vs required and impact>"}],"strengths":["<specific strength or 'None identified' if gibberish>"],"improvements":["<specific actionable point>","<specific actionable point>","<specific actionable point>"],"overallVerdict":"<2-3 honest sentences — state clearly if answer is unacceptable, below average, average, good, or excellent and why>"}`;
   try{
     const res=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({model:"gemini-2.5-flash-lite",max_tokens:1000,system:sys,messages:[{role:"user",content:p}]})});
