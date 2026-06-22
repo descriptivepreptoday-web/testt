@@ -511,7 +511,7 @@ let MS={s:[],a:{},idx:0,st:null},exitDest=null;
 let tyMode="given",tyPara="",tyLim=120,tyStart=null,tyInterval=null,tyDone=false,tyTStarted=false,tLeft2=0;
 const EX=()=>{try{const d=D();return d.exams.find(e=>e.status==="active")||d.exams[0];}catch(e){return null;}};
 async function init(){
-  const th=localStorage.getItem("dpt_theme")||"light-default";
+  const th=localStorage.getItem("dpt_theme")||"dark-default";
   applyTheme(th,false);
   const rawFs=parseInt(localStorage.getItem("dpt_font")||"15");
   const fs=String(Math.min(Math.max(rawFs,12),20));
@@ -649,7 +649,7 @@ function updateSiteName(name){
 function renderHome(){
   const d=D(),cfg=d.siteSettings||{};
   if(cfg.name)updateSiteName(cfg.name);
-  updateLogo(localStorage.getItem("dpt_theme")||"light-default");
+  updateLogo(localStorage.getItem("dpt_theme")||"dark-default");
   setT("h-eyebrow",cfg.homeEyebrow);
   const ht=document.getElementById("h-title");if(ht&&cfg.homeTitle)ht.innerHTML=cfg.homeTitle.replace("\n","<br>");
   setT("h-sub",cfg.homeSub);setT("h-plbl",cfg.practiceSectionLabel);setT("h-tlbl",cfg.toolsLabel);
