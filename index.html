@@ -493,6 +493,16 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div id="offers-page-cards"></div>
   </div>
 </div>
+
+<div id="mocklist" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="showS('home')"><svg width="13" height="13" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back to Home</button>
+    <div style="font-size:1rem;font-weight:700;margin-bottom:3px" id="ml-exam-name">Mock Tests</div>
+    <div style="color:var(--t2);font-size:.78rem;margin-bottom:18px" id="ml-exam-desc"></div>
+    <div id="ml-cards" class="card-grid"></div>
+    <div id="ml-empty" style="display:none;color:var(--t2);font-size:.82rem;padding:18px 0">No mocks available yet. Check back soon!</div>
+  </div>
+</div>
 <script>
 function D(){try{return JSON.parse(localStorage.getItem("dpt_data"))||DD();}catch(e){return DD();}}
 function DD(){return{siteSettings:{name:"Descriptive Prep Today",tagline:"",tgLink:"",tgText:"Join Telegram",logoUrl:"",logoUrlDark:"",logoUrlLight:"",accentColor:"",fontFamily:"Inter",fontSize:15,apiProxy:"",homeEyebrow:"Free Practice Platform",homeTitle:"SBI PO Descriptive\nPractice 2026",homeSub:"Exam-pattern interface · AI evaluation · Model answers · Typing speed tracker",practiceSectionLabel:"Practice Section",toolsLabel:"Tools",typingCardTitle:"Typing Speed Test",typingCardDesc:"Check your WPM and accuracy with a countdown timer",typingHeading:"Typing Speed Test",typingSubhead:"Test your WPM and accuracy before the exam",tgStripTitle:"Get daily questions on Telegram",tgStripSub:"Free PDFs, updates and practice material",offersMsg:"Support this channel — purchase any course using my coupon code. It helps me keep this platform free for everyone!"},sectionTypes:[{id:"email",name:"Email Writing",wordLimit:"150-200 words",marks:20,timer:10,noTimer:true},{id:"situation",name:"Situation Analysis",wordLimit:"100-150 words",marks:15,timer:10,noTimer:true},{id:"report",name:"Report Writing",wordLimit:"100-150 words",marks:15,timer:10,noTimer:true},{id:"precis",name:"Precis Writing",wordLimit:"~1/3rd of passage",marks:15,timer:10,noTimer:true}],exams:[{id:"sbi_po",name:"SBI PO Mains 2026",duration:30,status:"active",desc:"Email, Situation Analysis, Report, Precis",sections:["email","situation","report","precis"]}],typingParas:["Financial inclusion remains one of the most pressing developmental challenges facing India today. Despite significant progress over the past decade, a large section of the population continues to lack access to formal banking services. The Pradhan Mantri Jan Dhan Yojana has been a landmark initiative bringing millions of unbanked households into the formal financial fold.","The Reserve Bank of India plays a pivotal role in maintaining monetary stability and regulating the banking sector. Its primary objectives include controlling inflation, managing foreign exchange reserves, and ensuring the smooth functioning of the payment and settlement system. The RBI also acts as the banker to the government."],offers:[],questions:[{id:"q1",examId:"sbi_po",type:"email",text:"You are a PO at SBI, Connaught Place Branch. A customer Mr. Ramesh Gupta has complained that his net banking access has been blocked for 3 days. Write a formal email explaining the reason (scheduled server maintenance) and the resolution timeline.",wordLimit:"150-200 words",marks:20,difficulty:"medium",modelAnswer:"To: ramesh.gupta@email.com\nSubject: Resolution of Net Banking Access Issue\n\nDear Mr. Gupta,\n\nI sincerely apologise for the disruption to your net banking services. The temporary suspension was due to scheduled server maintenance from 14th to 16th June 2026. Your access has been fully restored.\n\nPlease reset your password via Forgot Password if you face any difficulty. For assistance call 1800-11-2211.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI",active:true},{id:"q2",examId:"sbi_po",type:"situation",text:"You are a PO at a semi-urban SBI branch. Mrs. Kamla Devi (72) reports she shared her OTP with a fraudster and Rs 45,000 was debited. She is in tears. Describe your immediate steps.",wordLimit:"100-150 words",marks:15,difficulty:"medium",modelAnswer:"I would calm Mrs. Kamla Devi and offer her a seat. I would immediately block her debit card and help her call 1800-11-2211 to report the fraud. I would assist in filing a branch complaint and guide her to cybercrime.gov.in. I would explain the RBI Zero Liability policy and educate her about never sharing OTPs with anyone.",active:true},{id:"q3",examId:"sbi_po",type:"report",text:"You participated in a Financial Literacy Camp in village Rampur on 5th June 2026. Write a formal report to your Branch Manager covering objectives, activities, attendance, outcomes and recommendations.",wordLimit:"100-150 words",marks:15,difficulty:"easy",modelAnswer:"REPORT ON FINANCIAL LITERACY CAMP - RAMPUR\n\nDate: 6th June 2026\nTo: Branch Manager, SBI\n\nA camp was held at Gram Panchayat Hall on 5th June 2026. Topics: PMJDY, RuPay card, UPI, fraud awareness. 180 villagers attended; 42 new accounts opened.\n\nRecommendation: Continue monthly camps and deploy a Business Correspondent.\n\n[Your Name] | PO",active:true},{id:"q4",examId:"sbi_po",type:"precis",text:"Read the following passage and write a precis in approximately 100 words.\n\nFinancial inclusion remains one of the most pressing challenges facing India. Despite PMJDY bringing millions into formal banking, merely opening accounts does not guarantee meaningful inclusion. The real challenge lies in ensuring accounts are actively used for credit, savings, insurance and remittances. Financial literacy, digital infrastructure and trust in banking institutions must be strengthened simultaneously.",wordLimit:"~100 words",marks:15,difficulty:"easy",modelAnswer:"Financial inclusion remains a major challenge in India. While PMJDY has brought millions into the banking system, account ownership alone is insufficient. True inclusion requires active usage for savings, credit, insurance and transfers. Achieving this depends on strengthening financial literacy, expanding digital infrastructure and building public trust in banking institutions.",active:true}]}};
@@ -515,6 +525,7 @@ async function init(){
     const es=(ex&&ex.siteSettings)||{};
     const merged={
       ..._bundled,
+      mocks: (ex&&ex.mocks&&ex.mocks.length)?ex.mocks:(_bundled.mocks||[]),
       siteSettings:{
         ...bs,
         apiProxy:     es.apiProxy     || bs.apiProxy     || "",
@@ -575,7 +586,46 @@ function ocCopy(code,uid){
     setTimeout(()=>{if(lbl)lbl.textContent='CODE: '+code;if(ico)ico.innerHTML='<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';},2000);
   }).catch(()=>{if(lbl){lbl.textContent=code;setTimeout(()=>lbl.textContent='CODE: '+code,2000);}});
 }
-function showS(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0);["fp","tp"].forEach(id=>document.getElementById(id).classList.remove("open"));}
+/* ---- Shareable-link routing ----
+   Keeps the URL hash in sync with whichever screen is showing, so any
+   screen (current or future) can be opened/shared via a direct link
+   like yoursite.com/#typing or yoursite.com/#qselect-quant.
+   "exam","fullmock","result" are deliberately left out of the shareable
+   set below (a stale link shouldn't drop someone into a live/expired test). */
+const NON_LINKABLE_SCREENS=new Set(["exam","fullmock","result"]);
+function showS(id,opts){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo(0,0);
+  ["fp","tp"].forEach(id=>document.getElementById(id).classList.remove("open"));
+  if(!opts||!opts.skipHash){
+    const hash=(opts&&opts.hash)?opts.hash:id;
+    if(NON_LINKABLE_SCREENS.has(id)){
+      if(location.hash)history.replaceState(null,"",location.pathname+location.search);
+    }else if(("#"+hash)!==location.hash){
+      history.pushState(null,"",location.pathname+location.search+"#"+hash);
+    }
+  }
+}
+function routeFromHash(){
+  const raw=location.hash.slice(1);
+  if(!raw)return;
+  const[screenId,...rest]=raw.split("-");
+  const sectionArg=rest.join("-");
+  if(screenId==="qselect"&&sectionArg&&typeof goSec==="function"){
+    goSec(sectionArg,{skipHash:true});
+    return;
+  }
+  if(screenId==="mocks"&&sectionArg&&typeof showMockList==="function"){
+    showMockList(sectionArg,{skipHash:true});
+    return;
+  }
+  if(NON_LINKABLE_SCREENS.has(screenId))return;
+  const el=document.getElementById(screenId);
+  if(el&&el.classList.contains("screen"))showS(screenId,{skipHash:true});
+}
+window.addEventListener("hashchange",routeFromHash);
+window.addEventListener("DOMContentLoaded",routeFromHash);
 function handleBrand(e){e.preventDefault();const inExam=document.getElementById("exam").classList.contains("active")||document.getElementById("fullmock").classList.contains("active");if(inExam)askExit("home");else showS("home");}
 function askExit(dest){exitDest=dest;document.getElementById("exit-cov").classList.add("open");}
 function closeCov(){document.getElementById("exit-cov").classList.remove("open");exitDest=null;}
@@ -650,7 +700,7 @@ function renderHome(){
     const qCount=d.questions.filter(q=>q.examId===ex.id&&q.active).length;
     const iconHtml=ex.icon?`<img src="${ex.icon}" style="width:20px;height:20px;object-fit:contain"/>`:`<svg width="16" height="16" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`;
     const iconStyle=ex.icon?"background:#fff;border-color:#fff;":"background:var(--accent);border-color:var(--accent);color:var(--bg)";
-    return `<div class="hcard exam-card" onclick="startFullMockFor('${ex.id}')" style="border-color:var(--aborder);background:var(--adim)">
+    return `<div class="hcard exam-card" onclick="showMockList('${ex.id}')" style="border-color:var(--aborder);background:var(--adim)">
       <div class="hc-icon" style="${iconStyle}">${iconHtml}</div>
       <div class="hc-title">${ex.name}</div>
       <div class="hc-desc">${ex.desc||""}</div>
@@ -667,7 +717,7 @@ function renderHome(){
       <div class="hc-desc">${s.wordLimit} &middot; ${s.marks} marks</div>
     </div>`).join("");
 }
-function goSec(t){renderQS(t);showS("qselect");}
+function goSec(t,opts){renderQS(t);showS("qselect",{skipHash:opts&&opts.skipHash,hash:"qselect-"+t});}
 function renderQS(type){
   const d=D();
   const tm={};d.sectionTypes.forEach(s=>tm[s.id]=s);const sec=tm[type]||{};
@@ -767,18 +817,53 @@ async function submitSingle(){
   showResult(ans,wc,wpm,taken);showS("result");await runAI(ans,wc,wpm);
 }
 let _pendingMockExamId=null;
+// ── Mock List Screen ──
+function showMockList(examId,opts){
+  const d=D();
+  const ex=d.exams.find(e=>e.id===examId);
+  if(!ex)return;
+  const mocks=(d.mocks||[]).filter(m=>m.examId===examId&&m.active).sort((a,b)=>a.mockNo-b.mockNo);
+  document.getElementById("ml-exam-name").textContent=ex.name;
+  document.getElementById("ml-exam-desc").textContent=ex.desc||"";
+  const container=document.getElementById("ml-cards");
+  const empty=document.getElementById("ml-empty");
+  if(!mocks.length){container.innerHTML="";empty.style.display="block";}
+  else{
+    empty.style.display="none";
+    container.innerHTML=mocks.map(m=>{
+      const qc=d.questions.filter(q=>q.examId===examId&&q.mockNo===m.mockNo&&q.active).length;
+      return `<div class="hcard exam-card" onclick="startMockByNo('${examId}',${m.mockNo})" style="border-color:var(--aborder);background:var(--adim)">
+        <div class="hc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+        <div class="hc-title">${m.title}</div>
+        <div class="hc-sub" style="font-size:.7rem;color:var(--t2)">${qc} question${qc!==1?'s':''} · ${ex.duration||30} min</div>
+      </div>`;
+    }).join("");
+  }
+  showS("mocklist",{skipHash:opts&&opts.skipHash,hash:"mocks-"+examId});
+}
+function startMockByNo(examId,mockNo){
+  _pendingMockExamId=examId;
+  _pendingMockNo=mockNo;
+  const d=D();
+  const ex=d.exams.find(e=>e.id===examId);
+  if(!ex){alert("Exam not found.");return;}
+  document.getElementById("mock-instr-title").textContent=ex.name+" — Mock "+mockNo+" Instructions";
+  document.getElementById("mock-instr-cov").classList.add("open");
+}
+let _pendingMockNo=null;
 function startFullMockFor(examId){
   const d=D();
   const ex=d.exams.find(e=>e.id===examId);
   if(!ex){alert("Exam not found.");return;}
   _pendingMockExamId=examId;
+  _pendingMockNo=null;
   // Show instructions popup
   document.getElementById("mock-instr-title").querySelector("span") ? document.getElementById("mock-instr-title").querySelector("span").textContent=ex.name+" — Instructions" : document.getElementById("mock-instr-title").textContent=ex.name+" — Instructions";
   document.getElementById("mock-instr-cov").classList.add("open");
 }
 function startMockAfterInstr(){
   document.getElementById("mock-instr-cov").classList.remove("open");
-  const examId=_pendingMockExamId;_pendingMockExamId=null;
+  const examId=_pendingMockExamId;const mockNo=_pendingMockNo;_pendingMockExamId=null;_pendingMockNo=null;
   const d=D();
   const ex=d.exams.find(e=>e.id===examId);
   if(!ex){alert("Exam not found.");return;}
@@ -787,17 +872,17 @@ function startMockAfterInstr(){
   const hasBoth=(ex.sections||[]).includes("report")&&(ex.sections||[]).includes("precis");
   const fixedIds=hasBoth?(ex.sections||[]).filter(s=>s!=="report"&&s!=="precis"):(ex.sections||[]);
   const secs=fixedIds.map(tid=>{
-    const qs=d.questions.filter(q=>q.examId===ex.id&&q.type===tid&&q.active);
+    const qs=d.questions.filter(q=>q.examId===ex.id&&q.type===tid&&q.active&&(mockNo==null||q.mockNo===mockNo));
     if(!qs.length)return null;
     return{typeId:tid,meta:tm[tid]||{},questions:qs.slice(0,2),question:null};
   }).filter(Boolean);
   if(hasBoth){
-    const reportQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="report"&&q.active).slice(0,2).map(q=>({...q,_sectionLabel:"Report Writing"}));
-    const precisQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="precis"&&q.active).slice(0,2).map(q=>({...q,_sectionLabel:"Precis Writing"}));
+    const reportQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="report"&&q.active&&(mockNo==null||q.mockNo===mockNo)).slice(0,2).map(q=>({...q,_sectionLabel:"Report Writing"}));
+    const precisQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="precis"&&q.active&&(mockNo==null||q.mockNo===mockNo)).slice(0,2).map(q=>({...q,_sectionLabel:"Precis Writing"}));
     const combined=[...reportQs,...precisQs];
     if(combined.length) secs.push({typeId:"report_precis",meta:{name:"Report / Precis"},questions:combined,question:null,isReportPrecis:true});
   }
-  if(!secs.length){alert("No questions available for this exam. Please add questions in the Admin panel.");return;}
+  if(!secs.length){alert("No questions available for this mock. Please add questions in the Admin panel.");return;}
   MS.s=secs;MS.a={};MS.idx=0;MS.st=Date.now();
   // Start timer immediately and go into fullmock — question picker fires on first section load
   const ex2=MS.currentExam;
