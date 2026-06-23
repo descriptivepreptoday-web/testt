@@ -7,26 +7,25 @@
     "logoUrlDark": "https://i.postimg.cc/W4NFFL3J/Untitled-June-14-2026-at-10-51-00.png",
     "logoUrlLight": "https://i.postimg.cc/SKSxvcz8/Untitled-June-14-2026-at-10-49-05.png",
     "logoUrl": "https://i.postimg.cc/W4NFFL3J/Untitled-June-14-2026-at-10-51-00.png",
-    "accentColor": "#2563eb",
+    "accentColor": "#db2777",
     "fontFamily": "Poppins",
-    "fontSize": 20,
+    "fontSize": 50,
     "darkBg": "#323437",
     "darkText": "#d1d0c5",
     "lightBg": "#ffffff",
     "lightText": "#1f2937",
-    "homeEyebrow": "Free Practice Platform",
-    "homeTitle": "SBI PO Descriptive\nPractice 2026",
-    "homeSub": "Exam-pattern interface · AI evaluation · Model answers · Typing speed tracker",
-    "practiceSectionLabel": "Practice Sections",
-    "toolsLabel": "Tools",
-    "typingCardTitle": "Typing Speed Test",
-    "typingCardDesc": "Check your WPM and accuracy",
-    "typingHeading": "Typing Speed Test",
-    "typingSubhead": "Test your WPM before the exam",
-    "tgStripTitle": "Get daily questions on Telegram",
-    "tgStripSub": "Free PDFs, updates and practice material",
-    "apiProxy": "https://weathered-math-4ca8.descriptivepreptoday.workers.dev/",
-    "offersMsg": ""
+    "homeEyebrow": "",
+    "homeTitle": "Free Descriptive Practice ",
+    "homeSub": "",
+    "practiceSectionLabel": "",
+    "toolsLabel": "",
+    "typingCardTitle": "",
+    "typingCardDesc": "",
+    "typingHeading": "",
+    "typingSubhead": "",
+    "tgStripTitle": "",
+    "tgStripSub": "",
+    "apiProxy": "https://weathered-math-4ca8.descriptivepreptoday.workers.dev/"
   },
   "sectionTypes": [
     {
@@ -94,40 +93,30 @@
     {
       "id": "sbi_po",
       "name": "SBI PO Mains 2026",
-      "key": "sbi_po",
+      "shortName": "SBI PO",
       "duration": 30,
       "status": "active",
       "desc": "New pattern — No essay writing",
+      "icon": "https://i.postimg.cc/4yZmr2mt/state-bank-india-kiosk-banking-registration-apply-sbi-3.png",
       "sections": [
         "email",
         "situation",
         "report",
         "precis"
-      ],
-      "shortName": "SBI PO"
+      ]
     },
     {
       "id": "ibps_po",
       "name": "IBPS PO Mains 2026",
+      "shortName": "IBPS PO",
       "duration": 30,
       "status": "active",
       "desc": "New pattern — Essay & Comprehension (25 marks, Letter Writing removed)",
+      "icon": "https://i.postimg.cc/7YH59RFc/ibps-logo.png",
       "sections": [
         "essay",
         "comprehension"
-      ],
-      "key": "ibps_po",
-      "shortName": "IBPS PO"
-    },
-    {
-      "id": "exam_1782127774770",
-      "name": "se",
-      "shortName": "se",
-      "duration": 30,
-      "status": "active",
-      "desc": "",
-      "icon": "",
-      "sections": []
+      ]
     }
   ],
   "questions": [
@@ -953,19 +942,55 @@
     "The Mains Examination covers various topics from reasoning and computer aptitude, English language, Data Analysis & Interpretation, and general/economy/banking awareness. Computer Aptitude is a part of the Reasoning section in the mains exam. The subject-wise topics that need to be covered for preparing for the SBI PO 2026 Mains Exam have been listed below.",
     "SBI PO Descriptive Test is a part of the mains examination. It is based on two questions for 50 marks for 30 minutes. It is a Test of English Language (Letter Writing & Essay). Besides the preliminary exam and the main exam, an interview process is also conducted for candidates who qualify for the first two phases of the SBI PO exam. The final merit list is made based on marks obtained by a candidate in his/ her main exam and interview process."
   ],
+  "offers": [
+    {
+      "title": "All in One PDF Course Subscription ₹399",
+      "badge": "Verified Discount",
+      "desc": "Get Daily Targets to Crack Bank Prelims + Mains Exam 2026. Get 2024, 2025 & Upcoming Bank Exams Bundle PDF.",
+      "coupon": "PAW12",
+      "link": "https://guidely.in/pdf-course-subscription",
+      "iconUrl": "",
+      "logoUrl": "https://i.postimg.cc/gjdC9Q86/176162780593.png"
+    },
+    {
+      "title": "All in One PDF Course Subscription",
+      "badge": "Verified Discount",
+      "desc": "Get Daily Targets to Crack Bank Prelims + Mains Exam 2026. Get 2024, 2025 & Upcoming Bank Exams Bundle PDF.",
+      "coupon": "PAW12",
+      "link": "https://guidely.in/pdf-course-subscription",
+      "iconUrl": "",
+      "logoUrl": "https://i.postimg.cc/gjdC9Q86/176162780593.png"
+    },
+    {
+      "title": "Smartkeeda CA MockDrill",
+      "badge": "Maximum Discount",
+      "desc": "•Daily/Weekly CA MockDrill Quizzes\n•Daily/Weekly/Monthly/ BA & FA CA MockDrill PDFs\n•Digital, Financial Awareness & RBI circulars",
+      "coupon": "PREP2DAY",
+      "link": "https://testzone.smartkeeda.com/pricing?tabId=ca-mock-drill",
+      "iconUrl": "",
+      "logoUrl": "https://i.postimg.cc/ZRF7Gh3g/thumbnail-logo-review-mobile2x-1755179320.png"
+    }
+  ],
   "mocks": [
     {
-      "id": "sbi_po_1_1782128035727",
+      "id": "sbi_po_1_1782128849992",
       "examId": "sbi_po",
       "mockNo": 1,
-      "title": "Mock 1",
+      "title": "Mock 01",
       "active": true
     },
     {
-      "id": "exam_1782127774770_3_1782128049316",
-      "examId": "exam_1782127774770",
-      "mockNo": 3,
-      "title": "test",
+      "id": "ibps_po_1_1782128879670",
+      "examId": "ibps_po",
+      "mockNo": 1,
+      "title": "Mock 01",
+      "active": true
+    },
+    {
+      "id": "sbi_po_2_1782128900749",
+      "examId": "sbi_po",
+      "mockNo": 2,
+      "title": "Mock 02",
       "active": true
     }
   ]
