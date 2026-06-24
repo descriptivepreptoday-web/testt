@@ -646,7 +646,7 @@ function showS(id,opts){
   if(!opts||!opts.skipHash){
     const hash=(opts&&opts.hash)?opts.hash:id;
     if(NON_LINKABLE_SCREENS.has(id)){
-      history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");
+      // history is managed manually at launch sites (launchExam, startMock etc.)
     }else if(("#"+hash)!==location.hash){
       history.pushState(null,"",location.pathname+location.search+"#"+hash);
     }
@@ -814,7 +814,10 @@ function launchExam(qid){
   startTimer(mins*60,"exam-timer","exam-prog",()=>submitSingle());
   WI=setInterval(()=>calcWPM("exam-ta","exam-wpm"),2000);
   ta.oninput=()=>{if(!tyStarted){tyStarted=true;tStart=Date.now();}updWC("exam-ta","exam-wc","exam-wc-top","exam-pwc");calcWPM("exam-ta","exam-wpm");};
-  showS("exam");setTimeout(()=>ta.focus(),300);
+  // Replace the #qselect entry so back button skips it, then push exam sentinel
+  history.replaceState(null,"",location.pathname+location.search);
+  history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");
+  showS("exam",{skipHash:true});setTimeout(()=>ta.focus(),300);
 }
 let _timerPaused=false;
 function pauseTimer(){
@@ -947,7 +950,10 @@ function startMockAfterInstr(){
   clearInterval(TI);startTimer((ex2.duration||30)*60,"mock-timer","mock-prog",()=>submitMock());
   document.getElementById("mock-total").textContent=MS.s.length;
   document.getElementById("mock-done").innerHTML="0/<span id='mock-total'>"+MS.s.length+"</span>";
-  renderMTabs();showS("fullmock");
+  renderMTabs();
+  history.replaceState(null,"",location.pathname+location.search);
+  history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");
+  showS("fullmock",{skipHash:true});
   loadMS(0);
 }
 
