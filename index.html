@@ -308,6 +308,35 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .oc-coupon{font-family:var(--mono);font-size:.72rem;background:var(--adim);border:1px solid var(--aborder);color:var(--accent);border-radius:5px;padding:3px 8px;margin-bottom:8px;display:inline-block;}
 .oc-link{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:600;color:var(--bg);background:var(--accent);border-radius:var(--rs);padding:5px 11px;text-decoration:none;transition:opacity .15s;}
 .oc-link:hover{opacity:.85;}
+/* ONBOARDING MODAL */
+.ob-cov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;display:none;align-items:flex-end;justify-content:center;padding:0;backdrop-filter:blur(2px)}
+.ob-cov.open{display:flex}
+@media(min-width:480px){.ob-cov{align-items:center;padding:20px}}
+.ob-box{background:linear-gradient(160deg,#0e1117 0%,#161c27 100%);border:1px solid rgba(226,183,20,.28);border-radius:20px 20px 0 0;padding:28px 24px 32px;width:100%;max-width:420px;position:relative;box-shadow:0 -4px 32px rgba(0,0,0,.6),0 0 0 1px rgba(226,183,20,.08)}
+@media(min-width:480px){.ob-box{border-radius:18px;padding:32px 28px}}
+.ob-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;transition:all .15s}
+.ob-close:hover{background:rgba(255,255,255,.12);color:#fff}
+.ob-eyebrow{font-family:var(--mono);font-size:.58rem;color:#e2b714;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.ob-title{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:5px;letter-spacing:-.3px;line-height:1.2}
+.ob-sub{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:22px;line-height:1.55}
+.ob-steps{display:flex;flex-direction:column;gap:13px;margin-bottom:24px}
+.ob-step{display:flex;align-items:flex-start;gap:13px}
+.ob-step-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid}
+.ob-step-icon.s1{background:rgba(226,183,20,.1);border-color:rgba(226,183,20,.3);color:#e2b714}
+.ob-step-icon.s2{background:rgba(76,175,80,.08);border-color:rgba(76,175,80,.25);color:#4caf50}
+.ob-step-icon.s3{background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.3);color:#818cf8}
+.ob-step-icon svg{stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ob-step-body{flex:1}
+.ob-step-t{font-size:.84rem;font-weight:600;color:#e8edf5;margin-bottom:2px}
+.ob-step-d{font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.5}
+.ob-btn{width:100%;padding:11px;border-radius:10px;background:#e2b714;color:#0e1117;font-weight:700;font-size:.85rem;border:none;cursor:pointer;font-family:var(--font);transition:opacity .15s;letter-spacing:.01em}
+.ob-btn:hover{opacity:.9}
+.ob-skip{text-align:center;margin-top:10px;font-size:.7rem;color:rgba(255,255,255,.3);cursor:pointer;transition:color .15s}
+.ob-skip:hover{color:rgba(255,255,255,.6)}
+/* TELEGRAM SHARE BUTTON */
+.tg-share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--rs);background:linear-gradient(135deg,#1a2847,#243358);border:1px solid rgba(226,183,20,.35);color:#e2b714;font-size:.82rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .18s;letter-spacing:.02em}
+.tg-share-btn:hover{background:linear-gradient(135deg,#243358,#2d3f6a);border-color:rgba(226,183,20,.6);transform:translateY(-1px);box-shadow:0 4px 16px rgba(226,183,20,.15)}
+.tg-share-btn svg{stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -491,6 +520,10 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     </div>
     <div class="ract">
       <button class="btn bg" id="r-try-btn" onclick="showS('qselect')">Try Another</button>
+      <button class="tg-share-btn" id="r-share-btn" onclick="shareTelegram('result')" title="Share on Telegram">
+        <svg width="14" height="14" viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 11.5l6 2m13-9L14.5 20l-4-5.5m11-10L8.5 13.5m0 0v5.5l3-3"/></svg>
+        Share on Telegram
+      </button>
       <button class="btn bp" onclick="showS('home')">Home</button>
     </div>
   </div>
@@ -552,7 +585,13 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
         <div class="trc-tile"><div class="trc-v" id="trc-time">-</div><div class="trc-l">Time (sec)</div></div>
       </div>
       <div class="trc-note" id="trc-note"></div>
-      <button class="btn bp" onclick="resetTyping()" style="margin-top:14px">Try Again</button>
+      <div style="display:flex;gap:9px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+        <button class="btn bp" onclick="resetTyping()">Try Again</button>
+        <button class="tg-share-btn" onclick="shareTelegram('typing')" title="Share on Telegram">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M21.5 4.5L2.5 11.5l6 2m13-9L14.5 20l-4-5.5m11-10L8.5 13.5m0 0v5.5l3-3"/></svg>
+          Share on Telegram
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -1782,6 +1821,47 @@ init();
   </div>
 </div>
 
+<!-- ONBOARDING MODAL -->
+<div class="ob-cov" id="ob-cov">
+  <div class="ob-box">
+    <button class="ob-close" onclick="dismissOnboarding()" aria-label="Close">&#x2715;</button>
+    <div class="ob-eyebrow">Welcome</div>
+    <div class="ob-title">3 things you can do here</div>
+    <div class="ob-sub">Free descriptive prep for SBI PO &amp; IBPS PO — no login needed.</div>
+    <div class="ob-steps">
+      <div class="ob-step">
+        <div class="ob-step-icon s1">
+          <svg width="17" height="17" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>
+        </div>
+        <div class="ob-step-body">
+          <div class="ob-step-t">Practice Questions</div>
+          <div class="ob-step-d">Attempt individual questions — Email, Essay, Report, Precis — with a timer and AI scoring.</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-step-icon s2">
+          <svg width="17" height="17" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        </div>
+        <div class="ob-step-body">
+          <div class="ob-step-t">Full Mock Tests</div>
+          <div class="ob-step-d">Take a complete timed mock that mirrors the real SBI PO pattern — all sections, one timer.</div>
+        </div>
+      </div>
+      <div class="ob-step">
+        <div class="ob-step-icon s3">
+          <svg width="17" height="17" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="ob-step-body">
+          <div class="ob-step-t">Track Your Progress</div>
+          <div class="ob-step-d">Every session is saved locally. See scores, WPM, and history — no account needed.</div>
+        </div>
+      </div>
+    </div>
+    <button class="ob-btn" onclick="dismissOnboarding()">Let's go →</button>
+    <div class="ob-skip" onclick="dismissOnboarding()">Skip — I know the site</div>
+  </div>
+</div>
+
 <!-- QUESTION PICKER OVERLAY -->
 <div class="cov" id="qpick-cov">
   <div class="cbox" style="max-width:620px;width:100%;max-height:88vh;overflow-y:auto">
@@ -1833,4 +1913,214 @@ init();
   </div>
 </div>
 </body>
+<!-- ONBOARDING + TELEGRAM SHARE JS -->
+<script>
+/* ── ONBOARDING ── */
+(function(){
+  const OB_KEY = 'dpt_onboarded';
+  function dismissOnboarding(){
+    localStorage.setItem(OB_KEY,'1');
+    document.getElementById('ob-cov').classList.remove('open');
+  }
+  window.dismissOnboarding = dismissOnboarding;
+  // Show on first visit (after short delay so page renders)
+  if(!localStorage.getItem(OB_KEY)){
+    setTimeout(function(){ document.getElementById('ob-cov').classList.add('open'); }, 600);
+  }
+  // Close on backdrop click
+  document.getElementById('ob-cov').addEventListener('click', function(e){
+    if(e.target === this) dismissOnboarding();
+  });
+})();
+
+/* ── TELEGRAM SHARE (canvas screenshot card) ── */
+window.shareTelegram = function(source){
+  const d = (window.D && window.D()) || {};
+  const cfg = d.siteSettings || {};
+  const siteName = cfg.name || 'Descriptive PrepToday';
+  const logoUrl = cfg.logoUrlDark || cfg.logoUrl || '';
+  const tgLink = cfg.tgLink || 'https://t.me/';
+
+  // Gather data depending on source
+  let headline='', sub='', stats=[], badge='', badgeColor='#4caf50';
+
+  if(source === 'typing'){
+    const grade = document.getElementById('trc-grade') ? document.getElementById('trc-grade').textContent : '-';
+    const wpm   = document.getElementById('trc-wpm') ? document.getElementById('trc-wpm').textContent : '-';
+    const acc   = document.getElementById('trc-acc') ? document.getElementById('trc-acc').textContent : '-';
+    const time  = document.getElementById('trc-time') ? document.getElementById('trc-time').textContent : '-';
+    const sub2  = document.getElementById('trc-sub') ? document.getElementById('trc-sub').textContent : '';
+    headline = 'Typing Speed Test';
+    sub = sub2 || 'My result';
+    badge = 'Grade ' + grade;
+    badgeColor = (grade==='A+'||grade==='A') ? '#4caf50' : (grade==='B') ? '#e2b714' : (grade==='C') ? '#e2a014' : '#ca4754';
+    stats = [
+      {label:'WPM', value: wpm},
+      {label:'Accuracy', value: acc},
+      {label:'Time', value: time + 's'},
+      {label:'Grade', value: grade}
+    ];
+  } else {
+    // practice or mock result
+    const isMock = document.getElementById('r-mock') && document.getElementById('r-mock').style.display !== 'none';
+    if(isMock){
+      const title = document.getElementById('r-title') ? document.getElementById('r-title').textContent : 'Mock Result';
+      const subTxt = document.getElementById('r-sub') ? document.getElementById('r-sub').textContent : '';
+      const totScore = document.getElementById('r-total-score') ? document.getElementById('r-total-score').textContent : '—';
+      headline = title;
+      sub = subTxt;
+      badge = 'Full Mock';
+      badgeColor = '#4caf50';
+      stats = [{label:'Total Score', value: totScore}];
+      // Pull more stats from stile tiles
+      const tiles = document.querySelectorAll('#r-mock-stats .stile');
+      tiles.forEach(function(t){
+        const v = t.querySelector('.stile-v'); const l = t.querySelector('.stile-l');
+        if(v && l) stats.push({label: l.textContent, value: v.textContent});
+      });
+      if(stats.length > 4) stats = stats.slice(0,4);
+    } else {
+      const subTxt = document.getElementById('r-sub') ? document.getElementById('r-sub').textContent : '';
+      const score  = document.getElementById('r-score') ? document.getElementById('r-score').textContent : '-';
+      const words  = document.getElementById('r-words') ? document.getElementById('r-words').textContent : '-';
+      const wpm    = document.getElementById('r-wpm')   ? document.getElementById('r-wpm').textContent : '-';
+      const time   = document.getElementById('r-time')  ? document.getElementById('r-time').textContent : '-';
+      headline = 'Practice Score';
+      sub = subTxt;
+      badge = 'AI Score: ' + score;
+      badgeColor = '#e2b714';
+      stats = [
+        {label:'AI Score', value: score},
+        {label:'Words', value: words},
+        {label:'WPM', value: wpm},
+        {label:'Time', value: time}
+      ];
+    }
+  }
+
+  // Draw card on canvas
+  const W=520, H=300;
+  const canvas = document.createElement('canvas');
+  canvas.width = W * 2; canvas.height = H * 2;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(2, 2);
+
+  // Background gradient — navy
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0, '#0b1220');
+  bg.addColorStop(1, '#162040');
+  ctx.fillStyle = bg;
+  ctx.beginPath(); roundRect(ctx,0,0,W,H,14); ctx.fill();
+
+  // Gold border glow
+  ctx.strokeStyle = 'rgba(226,183,20,0.45)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath(); roundRect(ctx,1,1,W-2,H-2,14); ctx.stroke();
+
+  // Subtle inner shine
+  const shine = ctx.createLinearGradient(0,0,0,H*0.5);
+  shine.addColorStop(0,'rgba(255,255,255,0.04)');
+  shine.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle = shine;
+  ctx.beginPath(); roundRect(ctx,1,1,W-2,H/2,14); ctx.fill();
+
+  // Gold accent stripe top
+  const stripe = ctx.createLinearGradient(0,0,W,0);
+  stripe.addColorStop(0,'#e2b714'); stripe.addColorStop(1,'#f5d020');
+  ctx.fillStyle = stripe;
+  ctx.beginPath(); roundRect(ctx,0,0,W,4,{tl:14,tr:14,bl:0,br:0}); ctx.fill();
+
+  // Badge pill
+  ctx.fillStyle = badgeColor + '22';
+  ctx.strokeStyle = badgeColor + '88';
+  ctx.lineWidth = 1;
+  const bw = ctx.measureText(badge).width + 40;
+  ctx.beginPath(); roundRect(ctx,24,22,bw,22,11); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = badgeColor;
+  ctx.font = 'bold 10px monospace';
+  ctx.fillText(badge, 36, 37);
+
+  // Headline
+  ctx.fillStyle = '#e8edf5';
+  ctx.font = 'bold 22px Inter, sans-serif';
+  ctx.fillText(headline, 24, 78);
+
+  // Sub
+  if(sub){
+    ctx.fillStyle = 'rgba(200,210,230,0.55)';
+    ctx.font = '12px Inter, sans-serif';
+    ctx.fillText(sub.slice(0,64), 24, 98);
+  }
+
+  // Divider
+  ctx.strokeStyle = 'rgba(226,183,20,0.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(24,112); ctx.lineTo(W-24,112); ctx.stroke();
+
+  // Stats grid
+  const cols = Math.min(stats.length, 4);
+  const cellW = (W-48) / cols;
+  stats.slice(0,4).forEach(function(s, i){
+    const x = 24 + i * cellW;
+    const y = 124;
+    // Stat value
+    ctx.fillStyle = '#e2b714';
+    ctx.font = 'bold 20px monospace, sans-serif';
+    ctx.fillText(s.value, x, y + 24);
+    // Label
+    ctx.fillStyle = 'rgba(180,196,218,0.6)';
+    ctx.font = '10px Inter, sans-serif';
+    ctx.fillText(s.label.toUpperCase(), x, y + 42);
+  });
+
+  // Bottom branding bar
+  ctx.fillStyle = 'rgba(226,183,20,0.07)';
+  ctx.beginPath(); roundRect(ctx,0,H-44,W,44,{tl:0,tr:0,bl:14,br:14}); ctx.fill();
+
+  // Site name
+  ctx.fillStyle = '#e2b714';
+  ctx.font = 'bold 12px monospace, sans-serif';
+  ctx.fillText('Descriptive', 24, H-24);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.fillText('PrepToday', 24 + ctx.measureText('Descriptive').width + 4, H-24);
+
+  // Telegram CTA text
+  ctx.fillStyle = 'rgba(200,215,235,0.45)';
+  ctx.font = '10px Inter, sans-serif';
+  const ctaTxt = 'Practice free at ' + (location.hostname || 'descriptivepreptoday.com');
+  ctx.fillText(ctaTxt, W - ctx.measureText(ctaTxt).width - 24, H-24);
+
+  // Convert and open share
+  canvas.toBlob(function(blob){
+    if(!blob){ alert('Could not generate image.'); return; }
+    // Try Web Share API with file (mobile)
+    const file = new File([blob], 'my-score.png', {type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({
+        files: [file],
+        title: headline + ' — Descriptive PrepToday',
+        text: headline + ' on Descriptive PrepToday!\n' + tgLink
+      }).catch(function(){});
+      return;
+    }
+    // Fallback: download image then open Telegram
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'my-score.png'; a.click();
+    setTimeout(function(){
+      URL.revokeObjectURL(url);
+      if(tgLink) window.open(tgLink, '_blank');
+    }, 800);
+  }, 'image/png');
+};
+
+function roundRect(ctx, x, y, w, h, r){
+  if(typeof r === 'number') r={tl:r,tr:r,bl:r,br:r};
+  ctx.moveTo(x+r.tl,y);
+  ctx.lineTo(x+w-r.tr,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r.tr);
+  ctx.lineTo(x+w,y+h-r.br); ctx.quadraticCurveTo(x+w,y+h,x+w-r.br,y+h);
+  ctx.lineTo(x+r.bl,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r.bl);
+  ctx.lineTo(x,y+r.tl); ctx.quadraticCurveTo(x,y,x+r.tl,y);
+}
+</script>
 </html>
