@@ -12,6 +12,29 @@
 [data-theme="light-warm"]{--bg:#faf8f5;--bg2:#ffffff;--bg3:#f5f1eb;--bg4:#ede8df;--t:#2c2416;--t2:#7a6e60;--t3:#c8bfb0;--b:#ddd6ca;--accent:#c2460a;--ah:#a83a08;--adim:rgba(194,70,10,.07);--aborder:rgba(194,70,10,.2);--green:#3a7d44;--gdim:rgba(58,125,68,.07);--gborder:rgba(58,125,68,.2);--red:#c0392b;--rdim:rgba(192,57,43,.07);--rborder:rgba(192,57,43,.2);--amber:#b45309;--ch:rgba(0,0,0,.01);--shadow:0 1px 3px rgba(0,0,0,.06);}
 [data-theme="light-clean"]{--bg:#f2f4f8;--bg2:#ffffff;--bg3:#eaedf3;--bg4:#e0e4ec;--t:#1c2237;--t2:#5e6b85;--t3:#bcc4d4;--b:#d4d9e6;--accent:#0f766e;--ah:#0d6560;--adim:rgba(15,118,110,.07);--aborder:rgba(15,118,110,.2);--green:#0f766e;--gdim:rgba(15,118,110,.07);--gborder:rgba(15,118,110,.2);--red:#be123c;--rdim:rgba(190,18,60,.07);--rborder:rgba(190,18,60,.2);--amber:#92400e;--ch:rgba(0,0,0,.01);--shadow:0 1px 3px rgba(0,0,0,.06);}
 :root{--r:10px;--rs:6px;--rl:14px;--fs:15px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.18s ease;}
+/* LIVE TRACKER */
+.lt-empty{text-align:center;padding:48px 20px;color:var(--t2);font-size:.82rem}
+.lt-empty svg{stroke:var(--t3);display:block;margin:0 auto 12px}
+.lt-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--b);transition:background var(--tr)}
+.lt-row:last-child{border-bottom:none}
+.lt-row:hover{background:var(--ch)}
+.lt-logo{width:36px;height:36px;border-radius:7px;border:1px solid var(--b);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:3px}
+.lt-logo img{width:100%;height:100%;object-fit:contain}
+.lt-logo-fb{width:36px;height:36px;border-radius:7px;background:var(--adim);border:1px solid var(--aborder);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.65rem;font-weight:700;font-family:var(--mono);color:var(--accent)}
+.lt-body{flex:1;min-width:0}
+.lt-platform{font-size:.6rem;font-family:var(--mono);color:var(--t2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1px}
+.lt-name{font-size:.82rem;font-weight:600;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.lt-badge{display:inline-flex;align-items:center;gap:4px;font-size:.58rem;font-family:var(--mono);font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;border:1px solid;white-space:nowrap}
+.lt-badge.live{background:rgba(76,175,80,.1);color:#4caf50;border-color:rgba(76,175,80,.3)}
+.lt-badge.live::before{content:'';width:5px;height:5px;border-radius:50%;background:#4caf50;animation:ltpulse 1.4s ease-in-out infinite}
+.lt-badge.upcoming{background:rgba(217,119,6,.1);color:var(--amber);border-color:rgba(217,119,6,.3)}
+.lt-badge.ending{background:rgba(202,71,84,.1);color:var(--red);border-color:rgba(202,71,84,.3)}
+.lt-badge.expired{background:var(--bg3);color:var(--t2);border-color:var(--b)}
+@keyframes ltpulse{0%,100%{opacity:1}50%{opacity:.4}}
+.lt-btn{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;padding:5px 11px;border-radius:var(--rs);background:var(--adim);border:1px solid var(--aborder);color:var(--accent);cursor:pointer;text-decoration:none;transition:all var(--tr);white-space:nowrap;flex-shrink:0;font-family:var(--font)}
+.lt-btn:hover{background:var(--accent);color:var(--bg)}
+.lt-btn svg{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lt-section-lbl{font-size:.6rem;font-family:var(--mono);color:var(--t2);text-transform:uppercase;letter-spacing:.1em;padding:8px 14px 5px;background:var(--bg3);border-bottom:1px solid var(--b)}
 /* PROGRESS */
 .prog-empty{text-align:center;padding:36px 20px;color:var(--t2);font-size:.82rem}
 .prog-empty svg{stroke:var(--t3);margin-bottom:10px}
@@ -362,6 +385,11 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <div class="hc-title">My Progress</div>
       <div class="hc-desc" id="prog-card-desc">View your practice history, scores &amp; typing results</div>
     </div>
+    <div class="hcard" onclick="showLiveTracker()">
+      <div class="hc-icon" style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.3);color:#6366f1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <div class="hc-title">Live Mock Tracker</div>
+      <div class="hc-desc">Live &amp; upcoming mocks across top platforms</div>
+    </div>
   </div>
 </div>
 <div id="qselect" class="screen">
@@ -637,7 +665,7 @@ function ocCopy(code,uid){
    like yoursite.com/#typing or yoursite.com/#qselect-quant.
    "exam","fullmock","result" are deliberately left out of the shareable
    set below (a stale link shouldn't drop someone into a live/expired test). */
-const NON_LINKABLE_SCREENS=new Set(["exam","fullmock","result"]);
+const NON_LINKABLE_SCREENS=new Set(["exam","fullmock","result","mocklist"]);
 function showS(id,opts){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -656,6 +684,7 @@ function routeFromHash(){
   const raw=location.hash.slice(1);
   if(!raw)return;
   if(raw==="exam-guard")return;
+  if(raw==="live-tracker"){showLiveTracker();return;}
   const[screenId,...rest]=raw.split("-");
   const sectionArg=rest.join("-");
   if(screenId==="qselect"&&sectionArg&&typeof goSec==="function"){
@@ -782,6 +811,58 @@ function renderHome(){
     </div>`).join("");
 }
 function goSec(t,opts){renderQS(t);showS("qselect",{skipHash:opts&&opts.skipHash,hash:"qselect-"+t});}
+function showLiveTracker(){
+  renderLiveTracker();
+  showS("live-tracker",{hash:"live-tracker"});
+}
+function renderLiveTracker(){
+  const d=D();
+  const entries=(d.liveTrackerEntries||[]);
+  const cfg=d.siteSettings||{};
+  // Telegram button
+  const tgBtn=document.getElementById("lt-tg-btn");
+  if(tgBtn&&cfg.tgLink){tgBtn.href=cfg.tgLink;tgBtn.style.display="inline-flex";}
+  const list=document.getElementById("lt-list");
+  if(!entries.length){
+    list.innerHTML=`<div class="lt-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>No live mocks listed yet.<br>Check back soon or join our Telegram for updates.</div>`;
+    return;
+  }
+  // Group by status order: live first, then ending, then upcoming, then expired
+  const order={live:0,ending:1,upcoming:2,expired:3};
+  const sorted=[...entries].sort((a,b)=>(order[a.status]??2)-(order[b.status]??2));
+  // Group by platform for section labels
+  const badgeMap={live:"🟢 Live Now",ending:"🔴 Ends Soon",upcoming:"🟡 Upcoming",expired:"Expired"};
+  let html="";
+  let lastStatus="";
+  sorted.forEach(e=>{
+    if(e.status!==lastStatus){
+      const lbl=badgeMap[e.status]||e.status;
+      html+=`<div class="lt-section-lbl">${lbl}</div>`;
+      lastStatus=e.status;
+    }
+    const logoHtml=e.platformLogo
+      ?`<div class="lt-logo"><img src="${e.platformLogo}" alt="${e.platform}" onerror="this.parentElement.className='lt-logo-fb';this.outerHTML='${(e.platform||"?").slice(0,3).toUpperCase()}'"/></div>`
+      :`<div class="lt-logo-fb">${(e.platform||"?").slice(0,3).toUpperCase()}</div>`;
+    const badgeClass=e.status==="live"?"live":e.status==="ending"?"ending":e.status==="upcoming"?"upcoming":"expired";
+    const badgeText=e.status==="live"?"Live Now":e.status==="ending"?"Ends Soon":e.status==="upcoming"?"Upcoming":"Expired";
+    const dateHtml=e.date?`<span style="font-size:.65rem;color:var(--t2);margin-left:6px">${e.date}</span>`:"";
+    const actionHtml=e.link&&e.status!=="expired"
+      ?`<a class="lt-btn" href="${e.link}" target="_blank" rel="noopener">Attempt <svg width="10" height="10" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
+      :e.status==="upcoming"&&e.link
+      ?`<a class="lt-btn" href="${e.link}" target="_blank" rel="noopener" style="background:transparent;color:var(--t2);border-color:var(--b)">View <svg width="10" height="10" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
+      :"";
+    html+=`<div class="lt-row">
+      ${logoHtml}
+      <div class="lt-body">
+        <div class="lt-platform">${e.platform||""}</div>
+        <div class="lt-name">${e.mockName||""}</div>
+        <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap"><span class="lt-badge ${badgeClass}">${badgeText}</span>${dateHtml}</div>
+      </div>
+      ${actionHtml}
+    </div>`;
+  });
+  list.innerHTML=html;
+}
 function renderQS(type){
   const d=D();
   const tm={};d.sectionTypes.forEach(s=>tm[s.id]=s);const sec=tm[type]||{};
@@ -1731,6 +1812,24 @@ init();
       </div>
     </div>
     <div class="hist-list" id="hist-list"></div>
+  </div>
+</div>
+<div id="live-tracker" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="showS('home')"><svg width="13" height="13" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back to Home</button>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px">
+      <div>
+        <div style="font-size:1rem;font-weight:700;margin-bottom:2px">Live Mock Tracker</div>
+        <div style="color:var(--t2);font-size:.78rem">Live &amp; upcoming mocks across top platforms — updated by our team</div>
+      </div>
+      <a id="lt-tg-btn" href="#" target="_blank" style="display:none;align-items:center;gap:5px;font-size:.73rem;font-weight:600;padding:6px 12px;border-radius:var(--rs);border:1px solid var(--aborder);background:var(--adim);color:var(--accent);text-decoration:none;transition:all var(--tr)">
+        <svg width="12" height="12" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 4.5L2.5 11.5l6 2m13-9L14.5 20l-4-5.5m11-10L8.5 13.5m0 0v5.5l3-3"/></svg>
+        Join Telegram for updates
+      </a>
+    </div>
+    <div class="card" style="overflow:hidden" id="lt-card">
+      <div id="lt-list"></div>
+    </div>
   </div>
 </div>
 </body>
