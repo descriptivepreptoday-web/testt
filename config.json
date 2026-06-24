@@ -1636,6 +1636,13 @@
       "mockNo": 5,
       "title": "IBPS PO Mock 5",
       "active": true
+    },
+    {
+      "id": "sbi_po_6_1782277264393",
+      "examId": "sbi_po",
+      "mockNo": 6,
+      "title": "SBI PO Mock 6",
+      "active": true
     }
   ]
 }
