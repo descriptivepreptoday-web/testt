@@ -93,17 +93,17 @@
     {
       "id": "sbi_po",
       "name": "SBI PO Mains 2026",
-      "shortName": "SBI PO",
+      "key": "sbi_po",
       "duration": 30,
-      "status": "upcoming",
-      "desc": "",
-      "icon": "",
+      "status": "active",
+      "desc": "New pattern — No essay. 10 full mocks available.",
       "sections": [
         "email",
         "situation",
         "report",
         "precis"
-      ]
+      ],
+      "shortName": "SBI PO"
     },
     {
       "id": "ibps_po",
@@ -1572,48 +1572,42 @@
       "examId": "sbi_po",
       "mockNo": 1,
       "title": "SBI PO Mock 1",
-      "active": true,
-      "status": "upcoming"
+      "active": true
     },
     {
       "id": "sbi_po_mock_2",
       "examId": "sbi_po",
       "mockNo": 2,
       "title": "SBI PO Mock 2",
-      "active": true,
-      "status": "upcoming"
+      "active": true
     },
     {
       "id": "sbi_po_mock_3",
       "examId": "sbi_po",
       "mockNo": 3,
       "title": "SBI PO Mock 3",
-      "active": true,
-      "status": "upcoming"
+      "active": true
     },
     {
       "id": "sbi_po_mock_4",
       "examId": "sbi_po",
       "mockNo": 4,
       "title": "SBI PO Mock 4",
-      "active": true,
-      "status": "upcoming"
+      "active": true
     },
     {
       "id": "sbi_po_mock_5",
       "examId": "sbi_po",
       "mockNo": 5,
       "title": "SBI PO Mock 5",
-      "active": true,
-      "status": "upcoming"
+      "active": true
     },
     {
       "id": "ibps_po_mock_1",
       "examId": "ibps_po",
       "mockNo": 1,
       "title": "IBPS PO Mock 1",
-      "active": true,
-      "status": "upcoming"
+      "active": true
     },
     {
       "id": "ibps_po_mock_2",
@@ -1642,6 +1636,16 @@
       "mockNo": 5,
       "title": "IBPS PO Mock 5",
       "active": true
+    }
+  ],
+  "liveTrackerEntries": [
+    {
+      "platform": "Guidely",
+      "platformLogo": "https://i.postimg.cc/Bv3JVR25/176162780593.png",
+      "mockName": "SBI PO Prelims Live Mock Test",
+      "status": "live",
+      "date": "Ends 11 July 19:50",
+      "link": "https://postimg.cc/cvDqK996/5e5554bc"
     }
   ]
 }
