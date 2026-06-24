@@ -682,7 +682,7 @@ window.addEventListener("popstate",function(e){
     document.getElementById("back-exit-cov").classList.add("open");
   }
 });
-function closeBackExitCov(){document.getElementById("back-exit-cov").classList.remove("open");}
+function closeBackExitCov(){document.getElementById("back-exit-cov").classList.remove("open");history.pushState(null,"",location.href);}
 function doBackExit(){document.getElementById("back-exit-cov").classList.remove("open");clearInterval(TI);clearInterval(WI);showS("home");}
 function handleBrand(e){e.preventDefault();if(isInActiveExam())askExit("home");else showS("home");}
 function askExit(dest){exitDest=dest;document.getElementById("exit-cov").classList.add("open");}
