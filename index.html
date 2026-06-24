@@ -855,7 +855,7 @@ function tickT(tid,bid){
   if(bid){const p=tTotal>0?(tLeft/tTotal)*100:100;const b=document.getElementById(bid);b.style.width=p+"%";b.style.background=p>40?"var(--accent)":p>15?"var(--amber)":"var(--red)";}
 }
 function cw(t){return t.trim()===""?0:t.trim().split(/\s+/).length;}
-// Locks a textarea: no paste/drop, no double-space, no blank-line skipping (max one Enter at a time)
+// Locks a textarea: no paste/drop, no double-space, no blank-line skipping, no space↔enter mixing
 function restrictTA(ta){
   if(!ta||ta._restricted)return;ta._restricted=true;
   const block=e=>{e.preventDefault();flashLock(ta);};
@@ -864,8 +864,8 @@ function restrictTA(ta){
   ta.addEventListener("contextmenu",e=>e.preventDefault());
   ta.addEventListener("keydown",e=>{
     const v=ta.value,pos=ta.selectionStart,prev=v.slice(0,pos).slice(-1);
-    if(e.key===" "&&prev===" "){e.preventDefault();flashLock(ta);return;}
-    if(e.key==="Enter"&&prev==="\n"){e.preventDefault();flashLock(ta);return;}
+    if(e.key===" "&&(prev===" "||prev==="\n")){e.preventDefault();flashLock(ta);return;}
+    if(e.key==="Enter"&&(prev==="\n"||prev===" ")){e.preventDefault();flashLock(ta);return;}
   });
 }
 let _lockT=null;
