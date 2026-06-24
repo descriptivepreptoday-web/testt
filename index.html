@@ -12,6 +12,35 @@
 [data-theme="light-warm"]{--bg:#faf8f5;--bg2:#ffffff;--bg3:#f5f1eb;--bg4:#ede8df;--t:#2c2416;--t2:#7a6e60;--t3:#c8bfb0;--b:#ddd6ca;--accent:#c2460a;--ah:#a83a08;--adim:rgba(194,70,10,.07);--aborder:rgba(194,70,10,.2);--green:#3a7d44;--gdim:rgba(58,125,68,.07);--gborder:rgba(58,125,68,.2);--red:#c0392b;--rdim:rgba(192,57,43,.07);--rborder:rgba(192,57,43,.2);--amber:#b45309;--ch:rgba(0,0,0,.01);--shadow:0 1px 3px rgba(0,0,0,.06);}
 [data-theme="light-clean"]{--bg:#f2f4f8;--bg2:#ffffff;--bg3:#eaedf3;--bg4:#e0e4ec;--t:#1c2237;--t2:#5e6b85;--t3:#bcc4d4;--b:#d4d9e6;--accent:#0f766e;--ah:#0d6560;--adim:rgba(15,118,110,.07);--aborder:rgba(15,118,110,.2);--green:#0f766e;--gdim:rgba(15,118,110,.07);--gborder:rgba(15,118,110,.2);--red:#be123c;--rdim:rgba(190,18,60,.07);--rborder:rgba(190,18,60,.2);--amber:#92400e;--ch:rgba(0,0,0,.01);--shadow:0 1px 3px rgba(0,0,0,.06);}
 :root{--r:10px;--rs:6px;--rl:14px;--fs:15px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.18s ease;}
+/* PROGRESS */
+.prog-empty{text-align:center;padding:36px 20px;color:var(--t2);font-size:.82rem}
+.prog-empty svg{stroke:var(--t3);margin-bottom:10px}
+.ph-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.ph-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px 8px;text-align:center}
+.ph-v{font-family:var(--mono);font-size:1.2rem;font-weight:700;color:var(--accent);line-height:1}
+.ph-l{font-size:.58rem;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+.hist-list{display:flex;flex-direction:column;gap:8px}
+.hist-item{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:border-color var(--tr)}
+.hist-item:hover{border-color:var(--accent)}
+.hi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.hi-badge{font-size:.62rem;font-family:var(--mono);padding:2px 7px;border-radius:3px;border:1px solid;text-transform:uppercase;letter-spacing:.06em}
+.hi-badge.practice{background:var(--adim);border-color:var(--aborder);color:var(--accent)}
+.hi-badge.mock{background:var(--gdim);border-color:var(--gborder);color:var(--green)}
+.hi-badge.typing{background:rgba(217,119,6,.07);border-color:rgba(217,119,6,.22);color:var(--amber)}
+.hi-title{font-size:.82rem;font-weight:600;color:var(--t);margin-bottom:2px}
+.hi-meta{font-size:.7rem;color:var(--t2)}
+.hi-stats{display:flex;gap:12px;margin-top:7px;flex-wrap:wrap}
+.hi-stat{font-size:.7rem;color:var(--t2)}.hi-stat strong{color:var(--accent);font-family:var(--mono)}
+.hi-expand{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--b)}
+.hi-expand.open{display:block}
+.hi-ans{background:var(--bg3);border:1px solid var(--b);border-radius:var(--rs);padding:9px 11px;font-size:.78rem;line-height:1.7;white-space:pre-wrap;color:var(--t2);max-height:160px;overflow-y:auto}
+.hi-score-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.hi-score-chip{font-size:.68rem;font-family:var(--mono);padding:3px 8px;border-radius:4px;background:var(--bg3);border:1px solid var(--b);color:var(--t2)}
+.prog-tabs{display:flex;gap:5px;margin-bottom:14px}
+.ptab{font-size:.73rem;padding:5px 13px;border-radius:20px;border:1px solid var(--b);background:transparent;color:var(--t2);cursor:pointer;font-family:var(--font);transition:all var(--tr)}
+.ptab:hover,.ptab.on{border-color:var(--accent);color:var(--accent);background:var(--adim)}
+.clr-btn{font-size:.7rem;padding:4px 10px;border-radius:var(--rs);border:1px solid var(--rborder);background:var(--rdim);color:var(--red);cursor:pointer;font-family:var(--font);transition:all var(--tr)}
+.clr-btn:hover{background:var(--red);color:#fff}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:var(--fs)}
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;transition:background var(--tr),color var(--tr);line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -320,6 +349,11 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <div class="hc-title" id="typ-card-t">Typing Speed Test</div>
       <div class="hc-desc" id="typ-card-d">Check your WPM and accuracy with a countdown timer</div>
     </div>
+    <div class="hcard" onclick="showS('progress')">
+      <div class="hc-icon" style="background:var(--gdim);border-color:var(--gborder);color:var(--green)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="hc-title">My Progress</div>
+      <div class="hc-desc" id="prog-card-desc">View your practice history, scores &amp; typing results</div>
+    </div>
   </div>
 </div>
 <div id="qselect" class="screen">
@@ -558,6 +592,7 @@ async function init(){
   // Also try live config.json from server
   try{const r=await fetch("./config.json?v="+Date.now(),{cache:"no-store"});if(r.ok){const d=await r.json();if(d&&d.siteSettings){const ls=localStorage.getItem("dpt_data");const prev=ls?JSON.parse(ls):{};d.siteSettings.apiProxy=d.siteSettings.apiProxy||prev.siteSettings?.apiProxy||"";localStorage.setItem("dpt_data",JSON.stringify(d));}}}catch(e){}
   renderHome();
+  if(typeof updateProgCard === "function") updateProgCard();
 }
 function applyTheme(t,save=true){
   document.documentElement.setAttribute("data-theme",t);
@@ -829,13 +864,7 @@ function flashLock(ta){
 }
 function updWC(ta,wc,top,panel){const v=cw(document.getElementById(ta).value);[wc,top].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=v;});const pe=document.getElementById(panel);if(pe)pe.textContent=v+" words";}
 function calcWPM(ta,wid){if(!tStart||!tyStarted)return;const e=(Date.now()-tStart)/60000,v=cw(document.getElementById(ta).value);const el=document.getElementById(wid);if(el)el.textContent=e>0?Math.round(v/e):0;}
-async function submitSingle(){
-  clearInterval(TI);clearInterval(WI);
-  const ans=document.getElementById("exam-ta").value.trim();
-  const taken=tTotal>0?tTotal-tLeft:Math.round((Date.now()-(tStart||Date.now()))/1000);
-  const wc=cw(ans),el=tyStarted&&tStart?(Date.now()-tStart)/60000:1,wpm=el>0?Math.round(wc/el):0;
-  showResult(ans,wc,wpm,taken);showS("result");await runAI(ans,wc,wpm);
-}
+/* submitSingle moved to progress system below */
 let _pendingMockExamId=null;
 // ── Mock List Screen ──
 function showMockList(examId,opts){
@@ -1023,13 +1052,7 @@ function loadMSContent(idx){
 }
 
 function updMWC(){const v=cw(document.getElementById("mock-ta").value);document.getElementById("mock-wc").textContent=v;document.getElementById("mock-pwc").textContent=v+" words";}
-async function submitMock(){
-  clearInterval(TI);
-  const taken=(EX()?.duration||30)*60-tLeft;
-  showMockResult(taken);
-  showS("result");
-  await runAIMock();
-}
+/* submitMock moved to progress system below */
 function showResult(ans,wc,wpm,taken){
   // Single section practice
   document.getElementById("r-single").style.display="";
@@ -1383,6 +1406,201 @@ function resetTyping(){
   document.querySelectorAll(".tl-btn").forEach(b=>b.classList.remove("on"));document.querySelector("[data-tl='120']").classList.add("on");
   tlSec=120;document.getElementById("tl-cust").classList.remove("show");
 }
+
+/* ============================================================
+   LOCAL PROGRESS SYSTEM — saves to localStorage, zero server
+   ============================================================ */
+const PROG_KEY = 'dpt_progress';
+let _progFilter = 'all';
+
+function getProgress(){
+  try{ return JSON.parse(localStorage.getItem(PROG_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveProgress(entry){
+  const list = getProgress();
+  list.unshift(entry);
+  if(list.length > 200) list.length = 200;
+  localStorage.setItem(PROG_KEY, JSON.stringify(list));
+  updateProgCard();
+}
+function updateProgCard(){
+  const list = getProgress();
+  const el = document.getElementById('prog-card-desc');
+  if(!el) return;
+  if(!list.length){ el.textContent = 'View your practice history, scores & typing results'; return; }
+  const prac = list.filter(x=>x.kind==='practice').length;
+  const mocks = list.filter(x=>x.kind==='mock').length;
+  const typ = list.filter(x=>x.kind==='typing').length;
+  const parts = [];
+  if(prac) parts.push(prac+' practice');
+  if(mocks) parts.push(mocks+' mock'+(mocks>1?'s':''));
+  if(typ) parts.push(typ+' typing');
+  el.textContent = parts.length ? parts.join(' · ') + ' saved' : 'View your practice history, scores & typing results';
+}
+
+/* ---- Hook: Practice submit ---- */
+async function submitSingle(){
+  clearInterval(TI);clearInterval(WI);
+  const ans = document.getElementById('exam-ta').value.trim();
+  const taken = tTotal>0 ? tTotal-tLeft : Math.round((Date.now()-(tStart||Date.now()))/1000);
+  const wc = cw(ans), el2 = tyStarted&&tStart ? (Date.now()-tStart)/60000 : 1, wpm2 = el2>0 ? Math.round(wc/el2) : 0;
+  showResult(ans,wc,wpm2,taken); showS('result');
+  await runAI(ans,wc,wpm2);
+  const scoreEl = document.getElementById('r-score');
+  saveProgress({
+    kind: 'practice',
+    date: new Date().toISOString(),
+    examId: CQ ? CQ.examId||'' : '',
+    type: CQ ? CQ.type||'' : '',
+    typeName: (function(){ try{ const d=D(),tm={};d.sectionTypes.forEach(function(s){tm[s.id]=s;}); return tm[CQ&&CQ.type]&&tm[CQ.type].name||CQ&&CQ.type||''; }catch(e){return '';} })(),
+    question: CQ&&CQ.text ? CQ.text.slice(0,120) : '',
+    answer: ans.slice(0,800),
+    wc: wc, wpm: wpm2, timeSec: taken,
+    score: scoreEl ? scoreEl.textContent : '',
+    marks: CQ ? CQ.marks||0 : 0,
+    questionId: CQ ? CQ.id||'' : ''
+  });
+}
+
+/* ---- Hook: Mock submit ---- */
+async function submitMock(){
+  clearInterval(TI);
+  const taken = (EX()&&EX().duration||30)*60 - tLeft;
+  showMockResult(taken); showS('result');
+  await runAIMock();
+  const ex = MS.currentExam || EX() || {};
+  const attempted = Object.values(MS.a).filter(function(a){return a&&a.trim();}).length;
+  const totalWC = Object.values(MS.a).reduce(function(s,a){return s+cw(a||'');},0);
+  const totScoreEl = document.getElementById('r-total-score');
+  saveProgress({
+    kind: 'mock',
+    date: new Date().toISOString(),
+    examName: ex.name||'Mock',
+    sections: MS.s.map(function(s,i){
+      return {
+        name: s.meta&&s.meta.name||s.typeId||'Section',
+        answer: (MS.a[i]||'').slice(0,400),
+        wc: cw(MS.a[i]||''),
+        marks: s.question&&s.question.marks||0
+      };
+    }),
+    attempted: attempted, totalWC: totalWC, timeSec: taken,
+    totalScore: totScoreEl ? totScoreEl.textContent : '--'
+  });
+}
+
+/* ---- Hook: Typing finish ---- */
+const _origDoFinishTyping = doFinishTyping;
+doFinishTyping = function(val, elapsedSec){
+  _origDoFinishTyping(val, elapsedSec);
+  const elapsed = Math.max(1, elapsedSec||1);
+  const pwArr = tyPara.trim().split(/\s+/).filter(Boolean);
+  const twArr = val.trim().split(/\s+/).filter(Boolean);
+  const correct = twArr.filter(function(w,i){return w===pwArr[i];}).length;
+  const acc = twArr.length>0 ? Math.round((correct/twArr.length)*100) : 0;
+  const wpm = Math.round(twArr.length/(elapsed/60));
+  const grade = wpm>=50&&acc>=95?'A+':wpm>=40&&acc>=90?'A':wpm>=30&&acc>=85?'B':wpm>=20?'C':'D';
+  saveProgress({ kind:'typing', date:new Date().toISOString(), wpm:wpm, acc:acc, timeSec:Math.round(elapsed), grade:grade });
+};
+
+/* ---- Override showS to render progress screen on open ---- */
+const _showSOrig = showS;
+showS = function(id, opts){
+  _showSOrig(id, opts);
+  if(id === 'progress') renderProgressScreen();
+};
+
+function filterProg(kind, btn){
+  _progFilter = kind;
+  document.querySelectorAll('.ptab').forEach(function(b){b.classList.remove('on');});
+  if(btn) btn.classList.add('on');
+  renderHistList();
+}
+
+function renderProgressScreen(){
+  const list = getProgress();
+  const prac = list.filter(function(x){return x.kind==='practice';});
+  const mocks = list.filter(function(x){return x.kind==='mock';});
+  const typs = list.filter(function(x){return x.kind==='typing';});
+  const bestWPM = typs.length ? Math.max.apply(null, typs.map(function(t){return t.wpm||0;})) : 0;
+  document.getElementById('prog-overview').innerHTML =
+    '<div class="ph-tile"><div class="ph-v">'+(prac.length+mocks.length)+'</div><div class="ph-l">Sessions</div></div>'+
+    '<div class="ph-tile"><div class="ph-v">'+typs.length+'</div><div class="ph-l">Typing Tests</div></div>'+
+    '<div class="ph-tile"><div class="ph-v">'+(bestWPM||'--')+'</div><div class="ph-l">Best WPM</div></div>';
+  renderHistList();
+}
+
+function renderHistList(){
+  const list = getProgress();
+  const filtered = _progFilter==='all' ? list : list.filter(function(x){return x.kind===_progFilter;});
+  const container = document.getElementById('hist-list');
+  if(!filtered.length){
+    container.innerHTML = '<div class="prog-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 10px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'+(list.length?'No entries for this filter yet.':'No progress saved yet. Complete a practice or mock to start tracking!')+'</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(entry){
+    const dateStr = entry.date ? new Date(entry.date).toLocaleString('en-IN',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    if(entry.kind==='practice'){
+      const q = entry.question ? entry.question.slice(0,80)+(entry.question.length>80?'...':'') : 'Practice attempt';
+      const ansHtml = (entry.answer||'(none)').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+      return '<div class="hist-item" onclick="toggleHiExpand(this)">'+
+        '<div class="hi-top"><span class="hi-badge practice">'+(entry.typeName||entry.type||'Practice')+'</span><span style="font-size:.68rem;color:var(--t2)">'+dateStr+'</span></div>'+
+        '<div class="hi-title" style="margin-top:5px">'+q+'</div>'+
+        '<div class="hi-stats">'+
+          (entry.score?'<div class="hi-stat">Score <strong>'+entry.score+'</strong></div>':'')+
+          '<div class="hi-stat">Words <strong>'+(entry.wc||0)+'</strong></div>'+
+          '<div class="hi-stat">WPM <strong>'+(entry.wpm||0)+'</strong></div>'+
+          '<div class="hi-stat">Time <strong>'+(entry.timeSec?Math.floor(entry.timeSec/60)+'m '+entry.timeSec%60+'s':'--')+'</strong></div>'+
+        '</div>'+
+        '<div class="hi-expand">'+
+          (entry.score?'<div class="hi-score-row"><span class="hi-score-chip">Score: '+entry.score+'</span></div>':'')+
+          '<div style="font-size:.62rem;font-family:var(--mono);color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Your Answer</div>'+
+          '<div class="hi-ans">'+ansHtml+'</div>'+
+        '</div>'+
+      '</div>';
+    } else if(entry.kind==='mock'){
+      const secHtml = (entry.sections||[]).map(function(s){
+        return '<div style="margin-bottom:8px"><div style="font-size:.62rem;font-family:var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">'+(s.name||'')+' \u00b7 '+(s.wc||0)+' words</div><div class="hi-ans">'+(s.answer||'(not attempted)').replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div></div>';
+      }).join('');
+      return '<div class="hist-item" onclick="toggleHiExpand(this)">'+
+        '<div class="hi-top"><span class="hi-badge mock">Mock</span><span style="font-size:.68rem;color:var(--t2)">'+dateStr+'</span></div>'+
+        '<div class="hi-title" style="margin-top:5px">'+(entry.examName||'Full Mock')+'</div>'+
+        '<div class="hi-stats">'+
+          (entry.totalScore&&entry.totalScore!='--'?'<div class="hi-stat">Score <strong>'+entry.totalScore+'</strong></div>':'')+
+          '<div class="hi-stat">Sections <strong>'+(entry.attempted||0)+'/'+(entry.sections&&entry.sections.length||0)+'</strong></div>'+
+          '<div class="hi-stat">Words <strong>'+(entry.totalWC||0)+'</strong></div>'+
+          '<div class="hi-stat">Time <strong>'+(entry.timeSec?Math.floor(entry.timeSec/60)+'m '+entry.timeSec%60+'s':'--')+'</strong></div>'+
+        '</div>'+
+        '<div class="hi-expand">'+secHtml+'</div>'+
+      '</div>';
+    } else {
+      const col = entry.grade==='A+'||entry.grade==='A' ? 'var(--green)' : entry.grade==='B' ? 'var(--accent)' : entry.grade==='C' ? 'var(--amber)' : 'var(--red)';
+      return '<div class="hist-item">'+
+        '<div class="hi-top"><span class="hi-badge typing">Typing</span><span style="font-size:.68rem;color:var(--t2)">'+dateStr+'</span></div>'+
+        '<div class="hi-stats" style="margin-top:6px">'+
+          '<div class="hi-stat">WPM <strong>'+(entry.wpm||0)+'</strong></div>'+
+          '<div class="hi-stat">Accuracy <strong>'+(entry.acc||0)+'%</strong></div>'+
+          '<div class="hi-stat">Time <strong>'+(entry.timeSec||0)+'s</strong></div>'+
+          '<div class="hi-stat">Grade <strong style="color:'+col+'">'+(entry.grade||'--')+'</strong></div>'+
+        '</div>'+
+      '</div>';
+    }
+  }).join('');
+}
+
+function toggleHiExpand(el){
+  const exp = el.querySelector('.hi-expand');
+  if(exp) exp.classList.toggle('open');
+}
+
+function clearAllProgress(){
+  if(!confirm('Delete all saved progress? This cannot be undone.')) return;
+  localStorage.removeItem(PROG_KEY);
+  renderProgressScreen();
+  updateProgCard();
+}
+
 init();
 </script>
 <!-- REPORT/PRECIS CHOICE OVERLAY -->
@@ -1467,5 +1685,28 @@ init();
   </div>
 </div>
 
+
+<div id="progress" class="screen">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="showS('home')"><svg width="13" height="13" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Back to Home</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+      <div>
+        <div style="font-size:1rem;font-weight:700;margin-bottom:2px">My Progress</div>
+        <div style="color:var(--t2);font-size:.78rem">Saved locally in your browser — no account needed</div>
+      </div>
+      <button class="clr-btn" onclick="clearAllProgress()">Clear All</button>
+    </div>
+    <div class="ph-row" id="prog-overview"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div class="prog-tabs">
+        <button class="ptab on" onclick="filterProg('all',this)">All</button>
+        <button class="ptab" onclick="filterProg('practice',this)">Practice</button>
+        <button class="ptab" onclick="filterProg('mock',this)">Mock</button>
+        <button class="ptab" onclick="filterProg('typing',this)">Typing</button>
+      </div>
+    </div>
+    <div class="hist-list" id="hist-list"></div>
+  </div>
+</div>
 </body>
 </html>
