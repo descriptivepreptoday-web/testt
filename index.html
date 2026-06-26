@@ -308,6 +308,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .oc-coupon{font-family:var(--mono);font-size:.72rem;background:var(--adim);border:1px solid var(--aborder);color:var(--accent);border-radius:5px;padding:3px 8px;margin-bottom:8px;display:inline-block;}
 .oc-link{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:600;color:var(--bg);background:var(--accent);border-radius:var(--rs);padding:5px 11px;text-decoration:none;transition:opacity .15s;}
 .oc-link:hover{opacity:.85;}
+
 </style>
 </head>
 <body>
@@ -552,7 +553,9 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
         <div class="trc-tile"><div class="trc-v" id="trc-time">-</div><div class="trc-l">Time (sec)</div></div>
       </div>
       <div class="trc-note" id="trc-note"></div>
-      <button class="btn bp" onclick="resetTyping()" style="margin-top:14px">Try Again</button>
+      <div style="display:flex;gap:9px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+        <button class="btn bp" onclick="resetTyping()">Try Again</button>
+      </div>
     </div>
   </div>
 </div>
@@ -665,7 +668,7 @@ function ocCopy(code,uid){
    like yoursite.com/#typing or yoursite.com/#qselect-quant.
    "exam","fullmock","result" are deliberately left out of the shareable
    set below (a stale link shouldn't drop someone into a live/expired test). */
-const NON_LINKABLE_SCREENS=new Set(["exam","fullmock","result","mocklist"]);
+const NON_LINKABLE_SCREENS=new Set(["exam","fullmock","result"]);
 function showS(id,opts){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -675,8 +678,14 @@ function showS(id,opts){
     const hash=(opts&&opts.hash)?opts.hash:id;
     if(NON_LINKABLE_SCREENS.has(id)){
       // history is managed manually at launch sites (launchExam, startMock etc.)
-    }else if(("#"+hash)!==location.hash){
-      history.pushState(null,"",location.pathname+location.search+"#"+hash);
+    }else{
+      // If navigating away from an exam-guard URL (post-submit flow), replace instead
+      // of push so the stale #exam-guard entry is removed from the browser stack.
+      if(location.hash==="#exam-guard"){
+        history.replaceState(null,"",location.pathname+location.search+"#"+hash);
+      }else if(("#"+hash)!==location.hash){
+        history.pushState(null,"",location.pathname+location.search+"#"+hash);
+      }
     }
   }
 }
@@ -997,6 +1006,8 @@ function showMockList(examId,opts){
   }
   showS("mocklist",{skipHash:opts&&opts.skipHash,hash:"mocks-"+examId});
 }
+// Ensure mocklist hash is handled correctly for deep-link and back-button
+// (mocklist is now a normal linkable screen, so routeFromHash can restore it)
 function startMockByNo(examId,mockNo){
   _pendingMockExamId=examId;
   _pendingMockNo=mockNo;
