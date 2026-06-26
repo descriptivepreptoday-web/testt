@@ -125,10 +125,10 @@
       "examId": "sbi_po",
       "type": "email",
       "text": "You are a PO at SBI. A customer Mr. Ramesh Gupta has complained that his net banking access has been blocked for 3 days. Write a formal email explaining the reason (scheduled maintenance) and the resolution timeline.",
+      "modelAnswer": "To:rameshgupta@email.com\nSubject: Temporary Unavailability of Net Banking Services\nDear Mr. Ramesh Gupta\n\nThank you for contacting us regarding your net banking issue. We regret the inconvenience caused due to the temporary blockage of your net banking access.\nYour account has been affected because of scheduled maintenance of our online banking system. This maintenance is being carried out to improve the security and performance of our services. As a result, some customers have been unable to access net banking during this period.\nOur technical team is working to complete the maintenance as quickly as possible. We expect your net banking access to be restored within the next 24 hours. You can then log in using your existing User ID and password.\nWe appreciate your patience and understanding. If the issue continues after the mentioned time, please reply to this email or contact our customer care for further assistance.\nRegards,\n\nPawan Sharma\nProbationary Officer (PO)\nState Bank of India",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
-      "modelAnswer": "To: ramesh.gupta@email.com\nSubject: Resolution of Net Banking Access Issue\n\nDear Mr. Gupta,\n\nI sincerely apologise for the inconvenience caused due to the disruption in your net banking services.\n\nThe temporary suspension was due to scheduled server maintenance from 14th to 16th June 2026. Your net banking access has been restored. Please reset your password if you face any difficulty.\n\nFor assistance, contact 1800-11-2211.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI",
       "active": true,
       "mockNo": 1
     },
