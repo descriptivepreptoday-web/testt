@@ -946,6 +946,7 @@ function tickT(tid,bid){
 }
 function cw(t){return t.trim()===""?0:t.trim().split(/\s+/).length;}
 // Locks a textarea: no paste/drop, no double-space, no blank-line skipping, no space↔enter mixing
+// Also blocks mouse-click cursor repositioning — navigation only via arrow keys
 function restrictTA(ta){
   if(!ta||ta._restricted)return;ta._restricted=true;
   const block=e=>{e.preventDefault();flashLock(ta);};
@@ -955,7 +956,29 @@ function restrictTA(ta){
   ta.addEventListener("keydown",e=>{
     const v=ta.value,pos=ta.selectionStart,prev=v.slice(0,pos).slice(-1);
     if(e.key===" "&&(prev===" "||prev==="\n")){e.preventDefault();flashLock(ta);return;}
-    if(e.key==="Enter"&&(prev==="\n"||prev===" ")){e.preventDefault();flashLock(ta);return;}
+    if(e.key==="Enter"&&prev===" "){e.preventDefault();flashLock(ta);return;}
+    if(e.key==="Enter"&&v.slice(0,pos).slice(-2)==="\n\n"){e.preventDefault();flashLock(ta);return;}
+  });
+  // Block mouse clicks from repositioning the cursor anywhere other than the end
+  ta.addEventListener("mousedown",e=>{
+    e.preventDefault();
+    ta.focus();
+    const end=ta.value.length;
+    ta.setSelectionRange(end,end);
+  });
+  ta.addEventListener("mouseup",e=>{
+    e.preventDefault();
+    const end=ta.value.length;
+    ta.setSelectionRange(end,end);
+  });
+  ta.addEventListener("click",e=>{
+    e.preventDefault();
+    const end=ta.value.length;
+    ta.setSelectionRange(end,end);
+  });
+  ta.addEventListener("select",e=>{
+    const end=ta.value.length;
+    ta.setSelectionRange(end,end);
   });
 }
 let _lockT=null;
