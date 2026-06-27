@@ -125,7 +125,7 @@
       "examId": "sbi_po",
       "type": "email",
       "text": "You are a PO at SBI. A customer Mr. Ramesh Gupta has complained that his net banking access has been blocked for 3 days. Write a formal email explaining the reason (scheduled maintenance) and the resolution timeline.",
-      "modelAnswer": "To:rameshgupta@email.com\nSubject: Temporary Unavailability of Net Banking Services\nDear Mr. Ramesh Gupta\n\nThank you for contacting us regarding your net banking issue. We regret the inconvenience caused due to the temporary blockage of your net banking access.\nYour account has been affected because of scheduled maintenance of our online banking system. This maintenance is being carried out to improve the security and performance of our services. As a result, some customers have been unable to access net banking during this period.\nOur technical team is working to complete the maintenance as quickly as possible. We expect your net banking access to be restored within the next 24 hours. You can then log in using your existing User ID and password.\nWe appreciate your patience and understanding. If the issue continues after the mentioned time, please reply to this email or contact our customer care for further assistance.\nRegards,\n\nPawan Sharma\nProbationary Officer (PO)\nState Bank of India",
+      "modelAnswer": "To:rameshgupta@email.com\nSubject: Temporary Unavailability of Net Banking Services\n\nDear Mr. Ramesh Gupta\nThank you for contacting us regarding your net banking issue. We regret the inconvenience caused due to the temporary blockage of your net banking access.\nYour account has been affected because of scheduled maintenance of our online banking system. This maintenance is being carried out to improve the security and performance of our services. As a result, some customers have been unable to access net banking during this period.\nOur technical team is working to complete the maintenance as quickly as possible. We expect your net banking access to be restored within the next 24 hours. You can then log in using your existing User ID and password.\nWe appreciate your patience and understanding. If the issue continues after the mentioned time, please reply to this email or contact our customer care for further assistance.\nRegards,\n\nPawan Sharma\nProbationary Officer (PO)\nState Bank of India",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
@@ -148,11 +148,11 @@
       "id": "q3",
       "examId": "sbi_po",
       "type": "report",
-      "text": "You recently participated in a Financial Literacy Camp in the village of Rampur on 5th June 2026. Write a formal report to your Branch Manager covering objectives, activities, attendance, outcomes and recommendations.",
+      "text": "You are Manager of a Bank, and you conducted a customer connect camp for account opening of economically weaker sections of public. Write a Report to your Head Office on the camp.",
+      "modelAnswer": "Date: February 7, 2025\nTo: Head Office\nFrom: Amit Sharma, Branch Manager\n\nSubject: Report on Customer Connect Camp for Account Opening\n\nDear Sir/Madam,\nI am pleased to submit a report on the successful Customer Connect Camp conducted at our branch aimed at facilitating account openings for economically weaker sections of the community. The camp was held on February 5, 2025, and focused on offering easy access to banking services to individuals from underserved backgrounds.\nThe event was strategically organized to cater to people who may not have access to traditional banking facilities or find the account opening process cumbersome. The camp was held at a local community hall and was attended by approximately 150 individuals. We provided on-the-spot assistance for account openings, explaining the benefits of savings accounts, financial inclusion, and digital banking.\nOur team was on hand to guide attendees through the process, ensuring that all documentation requirements were clear and easily understandable. Special attention was given to the elderly, women, and first-time account holders. In addition, our staff also shared information on government schemes such as Pradhan Mantri Jan Dhan Yojana and various subsidy programs.\nBy the end of the camp, we successfully opened 120 new accounts and raised awareness about the importance of financial inclusion. Feedback from participants has been overwhelmingly positive, with many appreciating the ease and convenience provided during the event.\nWe look forward to continuing such initiatives to further promote financial inclusion.\n\nBest regards,\nAmit Sharma\nBranch Manager\nPre-Recruitment Branch",
       "wordLimit": "200-250 words",
       "marks": 15,
-      "difficulty": "easy",
-      "modelAnswer": "REPORT ON FINANCIAL LITERACY CAMP — RAMPUR VILLAGE\n\nDate: 6th June 2026\nTo: The Branch Manager, SBI\nSubject: Financial Literacy Camp — 5th June 2026\n\nA Financial Literacy Camp was organised at Gram Panchayat Hall, Rampur on 5th June 2026. The camp covered PMJDY accounts, RuPay card benefits, UPI usage, and banking fraud awareness.\n\n180 villagers attended including 110 women. 42 new PMJDY accounts were opened and 8 RuPay cards activated.\n\nRecommendation: Monthly camps should be organised targeting remaining hamlets and a dedicated Business Correspondent should be deployed.\n\nSubmitted by:\n[Your Name] | PO",
+      "difficulty": "medium",
       "active": true,
       "mockNo": 1
     },
@@ -221,10 +221,10 @@
       "examId": "sbi_po",
       "type": "email",
       "text": "You are a Branch Manager at SBI. A customer's cheque for Rs 85,000 has bounced due to insufficient funds. Write a formal email to the customer informing them of the dishonour and the applicable charges as per bank policy.",
+      "modelAnswer": "To: customer.email@example.com\nSubject: Notification: Dishonour of Cheque No. 452109\n\nDear Customer,\nThis is to inform you that Cheque No. 452109 for Rs. 85,000, drawn on your savings account, has been returned unpaid by the clearing house due to insufficient funds.\nAs per official State Bank of India policy, a cheque bounce penalty charge of Rs. 500 plus applicable GST has been debited from your account.\nTo avoid legal complications under Section 138 of the Negotiable Instruments Act and to maintain a healthy credit score, we request you to immediately deposit sufficient funds into your account to clear this obligation. Kindly ensure adequate balances for all future transactions to prevent similar issues.\nFor any further assistance or clarification regarding this matter, feel free to visit our branch or contact us at 011-23456789.\nThank you for your cooperation and banking with us.\n\nYours faithfully,\nAmit Sharma\nBranch Manager\nState Bank of India\nMain Branch, New Delhi",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
-      "modelAnswer": "Dear Customer,\n\nThis is to inform you that your cheque no. 003421 for Rs 85,000 dated 12th June 2026 has been returned unpaid due to insufficient funds in your account.\n\nAs per bank policy, a cheque bounce charge of Rs 590 (plus applicable GST) has been debited to your account. Please note that repeated dishonour of cheques may affect your credit history and could attract penal action under Section 138 of the Negotiable Instruments Act.\n\nWe request you to maintain sufficient balance before issuing cheques in future and ensure the payee is informed accordingly.\n\nFor any clarification, please contact our branch at 1800-11-2211.\n\nYours sincerely,\n[Your Name]\nBranch Manager, SBI",
       "active": true,
       "mockNo": 2
     },
@@ -232,11 +232,11 @@
       "id": "q_email_3",
       "examId": "sbi_po",
       "type": "email",
-      "text": "You are a PO at SBI handling SME accounts. A corporate client, M/s Sharma Textiles, has been waiting two weeks for disbursement of an approved working capital loan due to pending verification of collateral documents. Write an email explaining the delay and the documents still required.",
+      "text": "You are a Customer Relationship Officer at State Bank of India. An elderly customer’s monthly pension was not credited to their account on the scheduled date due to a technical glitch in the central server. Write a formal email to the customer explaining the reason for the delay, apologizing for the inconvenience, and stating when the funds will be available.",
+      "modelAnswer": "To: rk.mishra45@email.com\nSubject: Update Regarding Delay in Monthly Pension Credit\n\nDear Mr. Mishra,\nThis is with reference to your monthly pension account held with State Bank of India. We understand how crucial these funds are for your monthly expenses, and we sincerely apologize for the delay in crediting your pension for this month.\nThe delay was caused by a sudden technical glitch in our central processing server, which temporarily halted automated transfers. Our technical team has been working on this issue on high priority, and the system is now fully restored.\nWe want to reassure you that your safety and convenience are our highest priorities. Your complete pension amount will be credited directly to your account within the next 24 hours.\nWe deeply regret the inconvenience caused to you. For any immediate financial assistance, please visit our branch directly, and our staff will assist you on priority.\nThank you for your patience.\n\nYours faithfully,\nAnanya Sen\nCustomer Relationship Officer\nState Bank of India\nKolkata Main Branch",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
-      "modelAnswer": "Dear Sir/Madam,\n\nWith reference to your approved working capital loan of Rs 25 lakh, we regret the delay in disbursement, which is due to pending verification of your collateral documents.\n\nOur records show that the registered valuation report and the latest property tax receipt for the mortgaged premises are still awaited from your end. Once received, disbursement will be processed within 3 working days.\n\nWe value your business relationship and apologise for the inconvenience caused. Please submit the pending documents at your earliest to avoid further delay.\n\nFor assistance, contact your Relationship Manager directly.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI",
       "active": true,
       "mockNo": 3
     },
@@ -245,10 +245,10 @@
       "examId": "sbi_po",
       "type": "email",
       "text": "A customer's ATM card was retained by the machine during a failed transaction at your branch's ATM kiosk. Write an email to the customer explaining the reason, the retrieval process, and the expected timeline.",
+      "modelAnswer": "To: vikram.singh@email.com\nSubject: Retrieval Process: ATM Card Retained at Branch Kiosk\n\nDear Mr. Singh,\nThis is with reference to your visit to our branch ATM kiosk today, where your debit card was retained by the machine during a failed transaction. We sincerely regret the inconvenience caused by this incident.\nThe card was captured automatically due to a temporary power fluctuation in the ATM network during your session. This is a built-in security feature designed to protect your account data from misuse.\nYour card has been safely recovered by our branch team and is currently in secure custody. You can collect it directly from our branch counter starting tomorrow morning by presenting a valid government ID proof. Alternatively, if you prefer, we can block this card and dispatch a fresh one to your registered address within five working days.\nPlease let us know your preference. Thank you for your patience and cooperation.\n\nYours faithfully,\nRahul Verma\nCustomer Service Officer\nState Bank of India\nConnaught Place Branch, New Delhi",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
-      "modelAnswer": "Dear Mr./Ms. [Customer],\n\nWe understand your ATM card was retained by our machine at the Branch ATM kiosk during a failed transaction on 15th June 2026. This typically occurs due to a network timeout during card processing.\n\nYour card has been safely captured and deposited with our branch. You may collect it from the branch counter along with a valid photo ID between 10 AM and 4 PM on any working day.\n\nAlternatively, if you wish, we can arrange to send you a replacement card by post within 5-7 working days.\n\nWe apologise for the inconvenience caused.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI",
       "active": true,
       "mockNo": 4
     },
@@ -257,10 +257,10 @@
       "examId": "sbi_po",
       "type": "email",
       "text": "You are a PO at SBI. A customer has not paid the annual locker rent due for the last two months despite a reminder. Write an email to the customer requesting payment within 15 days and explaining the consequence of continued non-payment as per bank policy.",
+      "modelAnswer": "To: sandeep.mehta@email.com\nSubject: Urgent Notice: Overdue Annual Locker Rent for Locker No. 245\n\nDear Mr. Mehta,\nThis is with reference to safe deposit Locker No. 245 allocated to you at our branch. We are writing to remind you that the annual locker rent has been overdue for the last two months, despite a previous reminder sent to your registered mobile number.\nAs per State Bank of India policy, locker operations are subject to timely annual payments. We kindly request you to clear the outstanding rent along with applicable late fees within 15 days of receiving this email, either through net banking or by visiting the branch.\nPlease note that continued non-payment beyond this period will compel the bank to suspend your locker operations. In accordance with Reserve Bank of India guidelines, the bank also reserves the right to break open the locker to recover dues if the account remains unoperated and unpaid.\nThank you for your prompt cooperation.\n\nYours faithfully,\nKaran Malhotra\nProbationary Officer\nState Bank of India\nM.G. Road Branch, Bengaluru",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
-      "modelAnswer": "Dear Customer,\n\nThis is a reminder that your annual locker rent of Rs 3,500 for Locker No. 214 has remained unpaid despite our earlier notice dated 1st June 2026.\n\nWe request you to clear the outstanding dues within 15 days of this email. Please note that as per bank policy, continued non-payment of locker rent beyond the stipulated period may result in temporary suspension of locker access and, if unresolved, the bank may proceed with the breaking open of the locker as per due process.\n\nWe value you as our customer and request your immediate attention to avoid inconvenience.\n\nYours sincerely,\n[Your Name]\nProbationary Officer, SBI",
       "active": true,
       "mockNo": 5
     },
@@ -268,11 +268,11 @@
       "id": "q_email_6",
       "examId": "sbi_po",
       "type": "email",
-      "text": "RBI has issued a revised circular on periodic KYC updation requirements for all bank branches, effective from next month. Write an email to all branch staff explaining the key changes and the action required from them.",
+      "text": "You are a Probationary Officer at a rural branch of State Bank of India. The local Village Panchayat Head (Sarpanch) has requested you to organize a financial literacy camp. Write a formal email to the Sarpanch accepting the request, suggesting a date, and listing the specific banking schemes (like PMJDY or PMSBY) that your team will explain to the villagers. (Word count: 130–150 words)",
+      "modelAnswer": "To: sarpanch.rampurgram@email.com\nSubject: Collaboration Request: Organizing Financial Literacy Camp at Rampur\n\nDear Mr. Singh,\nThank you for your email requesting State Bank of India to organize a financial literacy camp in your village. We highly appreciate your initiative to promote financial awareness among the residents of Rampur.\nWe are pleased to accept your request and propose organizing the camp on Saturday, July 11, 2026, at the community hall. Our team of officers will visit the venue to guide the villagers on safe banking habits.\nDuring the session, we will specifically focus on enrolling eligible residents in beneficial government schemes, including the Pradhan Mantri Jan Dhan Yojana (PMJDY) for zero-balance accounts and the Pradhan Mantri Suraksha Bima Yojana (PMSBY) for low-cost accident insurance.\nKindly confirm if the proposed date suits your schedule so we can make the necessary arrangements.\n\nYours faithfully,\nVijay Kumar\nProbationary Officer\nState Bank of India\nRampur Branch",
       "wordLimit": "150-200 words",
       "marks": 20,
       "difficulty": "medium",
-      "modelAnswer": "Dear Team,\n\nPlease note that RBI has issued a revised circular on periodic KYC updation, effective 1st July 2026. Key changes include a reduced re-KYC cycle for high-risk customers (from 2 years to 1 year) and mandatory digital KYC verification through Aadhaar-based e-KYC wherever possible.\n\nAll staff handling account opening and KYC updation must complete the online training module on our learning portal by 25th June. Branch heads are requested to identify customers due for KYC updation this quarter and initiate outreach accordingly.\n\nFor any queries, please reach out to the Compliance desk.\n\nRegards,\n[Your Name]\nProbationary Officer, SBI",
       "active": true,
       "mockNo": 6
     },
@@ -437,10 +437,10 @@
       "examId": "sbi_po",
       "type": "report",
       "text": "You organised a Digital Banking Literacy Camp at a government degree college on 8th June 2026. Write a formal report to your Branch Manager covering objectives, activities, attendance and outcomes.",
+      "modelAnswer": "Date: June 10, 2026\nTo: The Branch Manager, State Bank of India\nFrom: Amit Sharma, Probationary Officer\n\nSubject: Report on Digital Banking Literacy Camp at Government Degree College\n\nA one-day Digital Banking Literacy Camp was organized by our branch team at the local Government Degree College on June 8, 2026. The primary objective of this initiative was to educate young college students about secure digital banking channels, promote financial literacy, and raise awareness against rampant online financial frauds.\n\nKey Activities:\n1. The camp was conducted in the college auditorium and featured several key operational segments:\n2. YONO App Demonstration: Live training was provided on using the YONO SBI application for paperless banking, instant money transfers, and managing student accounts.\n3. Cyber Security Workshop: An interactive session was held highlighting safe digital habits, emphasizing the critical importance of never sharing OTPs, passwords, or clicking on unverified phishing links.\n4. Help Desk Operations: A temporary counter was set up to resolve queries regarding online scholarship credits and new student debit card applications.\n\nAttendance and Outcomes\nThe event witnessed enthusiastic participation, with approximately 210 students and 15 faculty members in attendance.\n\nThe tangible outcomes of the camp include:\n1. 115 new registrations successfully completed on the YONO platform on the spot.\n2. Distribution of 200 cybersecurity guides to help students spread awareness within their families.\n3. Highly positive feedback from the college administration, who requested an annual continuation of this camp.\nThis initiative has successfully strengthened our bank's footprint among the youth demographic.\n\nReport Prepared By:\nAmit Sharma\nProbationary Officer\nCollege Road Branch",
       "wordLimit": "200-250 words",
       "marks": 15,
       "difficulty": "easy",
-      "modelAnswer": "REPORT ON DIGITAL BANKING LITERACY CAMP\n\nDate: 9th June 2026\nTo: The Branch Manager, SBI\nSubject: Digital Banking Literacy Camp at Govt. Degree College — 8th June 2026\n\nA Digital Banking Literacy Camp was organised at the college auditorium on 8th June 2026 to educate students about UPI, mobile banking, and online fraud prevention.\n\n220 students attended the session. Live demonstrations of the YONO app and UPI transactions were conducted, along with a Q&A session on common digital frauds.\n\n65 students opened new savings accounts on the spot, and 40 downloaded the YONO app during the camp.\n\nRecommendation: Conduct similar camps each semester and partner with the college for a student banking cell.\n\nSubmitted by:\n[Your Name] | PO",
       "active": true,
       "mockNo": 2
     },
@@ -1559,6 +1559,18 @@
       "difficulty": "medium",
       "active": false,
       "mockNo": null
+    },
+    {
+      "id": "q_1782540921759",
+      "examId": "sbi_po",
+      "type": "email",
+      "text": "You are an Assistant Manager at State Bank of India. A customer recently reported a fraudulent transaction of Rs 15,000 on their debit card, which occurred because they accidentally shared their OTP. Write a formal email informing the customer about the bank's investigation status, explaining the liability policy regarding OTP sharing, and outlining the next steps.",
+      "modelAnswer": "To: ramesh.kumar@email.com\nSubject: Investigation Update: Fraudulent Transaction on Debit Card\n\nDear Mr. Kumar,\nThis is with reference to your complaint regarding the unauthorized debit of Rs 15,000 from your account via your debit card.\nOur cyber security cell immediately blocked your card to prevent further loss and has initiated a formal investigation. However, our preliminary review indicates that the transaction was validated using a One-Time Password (OTP) shared from your registered mobile number.\nAs per State Bank of India safety guidelines, sharing an OTP or PIN transfers the liability of the financial loss to the account holder, making a direct reversal difficult. Nevertheless, we have raised a dispute token with the merchant gateway to trace the funds.\nWe will update you on the final investigation report within seven working days. For your security, please never share banking credentials with anyone.\nThank you for your cooperation.\n\nYours faithfully,\nSneha Reddy\nAssistant Manager\nState Bank of India\nHyderabad Branch",
+      "wordLimit": "150-200",
+      "marks": 20,
+      "difficulty": "medium",
+      "active": true,
+      "mockNo": null
     }
   ],
   "typingParas": [
@@ -1566,7 +1578,8 @@
     "Every challenge presents an opportunity to learn something valuable. People who succeed are not necessarily the most talented, but they are often the most persistent. They understand that failure is a temporary setback rather than a permanent obstacle. By analyzing mistakes, adapting strategies, and maintaining discipline, individuals gradually develop the confidence and skills needed to achieve meaningful success in both personal and professional life.",
     "The banking sector plays a crucial role in supporting economic growth by providing loans, encouraging savings, and facilitating financial transactions. Digital banking has made services faster and more convenient, allowing customers to transfer funds, pay bills, and monitor accounts using mobile applications. However, users should remain cautious and never share confidential information such as passwords, OTPs, or PINs with anyone.",
     "Health is our greatest wealth. Eating fresh fruits and vegetables keeps us healthy. Regular exercise and proper sleep are also important. Drinking enough water every day helps the body stay active and fresh.",
-    "A good friend is always honest and helpful. Friends support us during difficult times and share our happiness. We should respect our friends and treat them with kindness. True friendship is based on trust and understanding."
+    "A good friend is always honest and helpful. Friends support us during difficult times and share our happiness. We should respect our friends and treat them with kindness. True friendship is based on trust and understanding.",
+    "Computers have become an important part of daily life. They help people study, work, and communicate with others. Many tasks that once took hours can now be completed in minutes. Learning computer skills is useful for everyone."
   ],
   "mocks": [
     {
