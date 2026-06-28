@@ -361,7 +361,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     </div>
   </div>
 </div>
-<div id="home" class="screen active">
+<div id="home" class="screen active" style="visibility:hidden">
   <div class="eyebrow" id="h-eyebrow">Free Practice Platform</div>
   <h1 class="h-title" id="h-title">SBI PO Descriptive<br>Practice 2026</h1>
   <p class="h-sub" id="h-sub">Exam-pattern interface · AI evaluation · Model answers · Typing speed tracker</p>
@@ -631,6 +631,7 @@ async function init(){
   // Also try live config.json from server
   try{const r=await fetch("./config.json?v="+Date.now(),{cache:"no-store"});if(r.ok){const d=await r.json();if(d&&d.siteSettings){const ls=localStorage.getItem("dpt_data");const prev=ls?JSON.parse(ls):{};d.siteSettings.apiProxy=d.siteSettings.apiProxy||prev.siteSettings?.apiProxy||"";localStorage.setItem("dpt_data",JSON.stringify(d));}}}catch(e){}
   renderHome();
+  document.getElementById("home").style.visibility="visible";
   if(typeof updateProgCard === "function") updateProgCard();
 }
 function applyTheme(t,save=true){
