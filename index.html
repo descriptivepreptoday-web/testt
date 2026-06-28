@@ -713,6 +713,8 @@ window.addEventListener("DOMContentLoaded",routeFromHash);
 function isInActiveExam(){return document.getElementById("exam").classList.contains("active")||document.getElementById("fullmock").classList.contains("active");}
 // Refresh guard — browser shows its own dialog ("Refresh page? Changes you made may not be saved")
 window.addEventListener("beforeunload",function(e){if(isInActiveExam()){e.preventDefault();e.returnValue="";}});
+// Block mouse-wheel / trackpad scroll during exam — scrollbar dragging still works (not a wheel event)
+document.addEventListener("wheel",function(e){if(isInActiveExam())e.preventDefault();},{passive:false});
 // Back-button guard — intercept popstate and show in-app confirm dialog
 window.addEventListener("popstate",function(e){
   if(isInActiveExam()){
