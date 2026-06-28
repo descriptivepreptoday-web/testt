@@ -961,27 +961,35 @@ function restrictTA(ta){
     if(e.key==="Enter"&&prev===" "){e.preventDefault();flashLock(ta);return;}
     if(e.key==="Enter"&&v.slice(0,pos).slice(-2)==="\n\n"){e.preventDefault();flashLock(ta);return;}
   });
-  // Block mouse clicks from repositioning the cursor anywhere other than the end
+  // Block mouse clicks from repositioning cursor — use mousedown WITHOUT preventDefault
+  // so the scrollbar inside the textarea still works (scrollbar drag also fires mousedown).
+  // We snap cursor back to end on mouseup instead, which is after the click lands.
   ta.addEventListener("mousedown",e=>{
-    e.preventDefault();
-    ta.focus();
+    // Only snap if clicking inside the text content, not on the scrollbar
+    // (scrollbar clicks have offsetX near the right edge of the element)
+    const onScrollbar = e.offsetX > ta.clientWidth;
+    if(!onScrollbar){
+      e.preventDefault();
+      ta.focus();
+    }
     const end=ta.value.length;
     ta.setSelectionRange(end,end);
   });
   ta.addEventListener("mouseup",e=>{
-    e.preventDefault();
     const end=ta.value.length;
-    ta.setSelectionRange(end,end);
+    // Only snap if not on the scrollbar
+    if(e.offsetX<=ta.clientWidth){
+      ta.setSelectionRange(end,end);
+    }
   });
   ta.addEventListener("click",e=>{
-    e.preventDefault();
-    const end=ta.value.length;
-    ta.setSelectionRange(end,end);
+    if(e.offsetX<=ta.clientWidth){
+      const end=ta.value.length;
+      ta.setSelectionRange(end,end);
+    }
   });
-  ta.addEventListener("select",e=>{
-    const end=ta.value.length;
-    ta.setSelectionRange(end,end);
-  });
+  // NOTE: removed "select" listener — it caused an infinite loop on some browsers
+  // (setSelectionRange triggers another "select" event)
 }
 let _lockT=null;
 function flashLock(ta){
