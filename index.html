@@ -725,7 +725,7 @@ window.addEventListener("popstate",function(e){
 });
 function closeBackExitCov(){document.getElementById("back-exit-cov").classList.remove("open");history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");}
 function doBackExit(){document.getElementById("back-exit-cov").classList.remove("open");clearInterval(TI);clearInterval(WI);showS("home");}
-function handleBrand(e){e.preventDefault();if(isInActiveExam())askExit("home");else showS("home");}
+function handleBrand(e){e.preventDefault();if(isInActiveExam())askExit("home");else if(document.getElementById("home").classList.contains("active"))location.reload();else showS("home");}
 function askExit(dest){exitDest=dest;document.getElementById("exit-cov").classList.add("open");}
 function closeCov(){document.getElementById("exit-cov").classList.remove("open");exitDest=null;}
 function doExit(){clearInterval(TI);clearInterval(WI);document.getElementById("exit-cov").classList.remove("open");if(exitDest)showS(exitDest);exitDest=null;}
