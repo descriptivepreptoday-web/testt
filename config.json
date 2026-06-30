@@ -202,7 +202,7 @@
       "difficulty": "medium",
       "modelAnswer": "Artificial Intelligence is rapidly reshaping the banking sector, fundamentally altering how financial institutions interact with customers and manage risk. From chatbots handling routine queries around the clock to algorithms detecting fraudulent transactions in real time, AI has become central to modern banking operations.\n\nIn customer service, AI-powered virtual assistants now resolve a large share of routine queries instantly, freeing human staff to focus on complex grievances and relationship management. Personalised product recommendations based on a customer's transaction history have improved cross-selling while enhancing satisfaction. Voice and chat interfaces in regional languages are also making banking more accessible to non-English speaking customers.\n\nOn the risk management front, AI models analyse vast volumes of transaction data to identify unusual patterns indicative of fraud, often flagging suspicious activity within seconds — far faster than traditional rule-based systems. Credit scoring has similarly benefited, with machine learning models incorporating alternative data such as utility payments to assess creditworthiness for customers without a formal credit history.\n\nDespite these benefits, AI adoption raises concerns. Algorithmic bias can disadvantage certain customer segments if training data is not carefully curated. Over-reliance on automated decisions may reduce human oversight in sensitive cases, while data privacy remains a persistent challenge as more customer information is processed.\n\nGoing forward, banks must adopt AI responsibly — ensuring transparency, regular algorithm audits, and robust data protection. Deployed thoughtfully, AI can make banking more efficient, inclusive and secure for millions of customers across India.",
       "active": true,
-      "mockNo": 1
+      "mockNo": null
     },
     {
       "id": "q10",
@@ -226,7 +226,7 @@
       "marks": 20,
       "difficulty": "medium",
       "active": true,
-      "mockNo": 1
+      "mockNo": null
     },
     {
       "id": "q_email_3",
