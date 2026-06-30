@@ -1047,14 +1047,15 @@ function resumeTimer(){
 }
 function startTimer(sec,tid,bid,onEnd){
   clearInterval(TI);tLeft=sec;tTotal=sec;_timerPaused=false;
-  if(sec===0){document.getElementById(tid).textContent="inf";return;}
+  if(sec===0){const tEl=document.getElementById(tid);if(tEl)tEl.textContent="inf";return;}
   tickT(tid,bid);
   TI=setInterval(()=>{if(_timerPaused)return;tLeft--;tickT(tid,bid);if(tLeft<=0){clearInterval(TI);if(onEnd)onEnd();}},1000);
 }
 function tickT(tid,bid){
   const m=Math.floor(tLeft/60),s=tLeft%60;
-  document.getElementById(tid).textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
-  if(bid){const p=tTotal>0?(tLeft/tTotal)*100:100;const b=document.getElementById(bid);b.style.width=p+"%";b.style.background=p>40?"var(--accent)":p>15?"var(--amber)":"var(--red)";}
+  const tEl=document.getElementById(tid);
+  if(tEl) tEl.textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+  if(bid){const p=tTotal>0?(tLeft/tTotal)*100:100;const b=document.getElementById(bid);if(b){b.style.width=p+"%";b.style.background=p>40?"var(--accent)":p>15?"var(--amber)":"var(--red)";}}
 }
 function cw(t){return t.trim()===""?0:t.trim().split(/\s+/).length;}
 // Grows a textarea to fit its content so the page (not the textarea) scrolls.
