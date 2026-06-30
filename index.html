@@ -66,7 +66,10 @@
 html{font-size:var(--fs)}
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;transition:background var(--tr),color var(--tr);line-height:1.6;-webkit-font-smoothing:antialiased}
 /* HEADER */
-header{background:var(--bg2);border-bottom:1px solid var(--b);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:100}
+header{background:var(--bg2);border-bottom:1px solid var(--b);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:100;gap:12px}
+.h-exam-ctl{display:flex;align-items:center;gap:10px;flex:1;min-width:0;justify-content:flex-end;padding-right:6px}
+.h-exam-ctl .prog-track{display:none}
+@media(min-width:760px){.h-exam-ctl .prog-track{display:block;width:80px}}
 .h-brand{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none;color:inherit;border-radius:var(--rs);padding:4px 8px;margin:-4px -8px;transition:background var(--tr);flex-shrink:1;min-width:0;overflow:hidden}
 .h-brand:hover{background:var(--bg3)}
 .site-logo{height:26px;width:auto;display:none;border-radius:4px;flex-shrink:0;background:transparent;padding:2px 4px;}
@@ -359,7 +362,15 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <span class="site-name-bot">PrepToday</span>
     </span>
   </a>
-  <div class="h-right">
+  <div class="h-exam-ctl" id="h-exam-ctl" style="display:none">
+    <div class="bstat"><div class="bval" id="mock-timer">--:--</div><div class="blbl">Mock Time</div></div>
+    <div class="prog-track"><div class="prog-fill" id="mock-prog" style="width:100%"></div></div>
+    <div class="bstat"><div class="bval" id="mock-done">0/<span id="mock-total">0</span></div><div class="blbl">Done</div></div>
+    <button class="btn bg bsm" onclick="askExit('home')"><svg width="11" height="11" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exit</button>
+    <button class="btn bp bsm" id="mock-submit-btn" disabled onclick="submitMock()">Submit All</button>
+    <div class="submit-guard-hint" id="mock-submit-hint">Write at least 15 words to unlock</div>
+  </div>
+  <div class="h-right" id="h-right">
     <a class="tg-hbtn" id="tg-hbtn" href="#" target="_blank">
       <svg width="13" height="13" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 4.5L2.5 11.5l6 2m13-9L14.5 20l-4-5.5m11-10L8.5 13.5m0 0v5.5l3-3"/></svg>
       <span id="tg-ht">Telegram</span>
@@ -477,21 +488,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   </div>
 </div>
 <div id="fullmock" class="screen">
-  <div class="exam-bar">
-    <div class="bar-l">
-      <div class="bstat"><div class="bval" id="mock-timer">--:--</div><div class="blbl">Mock Time</div></div>
-      <div class="prog-track"><div class="prog-fill" id="mock-prog" style="width:100%"></div></div>
-      <div class="bstat"><div class="bval" id="mock-done">0/<span id="mock-total">0</span></div><div class="blbl">Done</div></div>
-    </div>
-    <div style="display:flex;gap:6px;flex-shrink:0">
-      <button class="btn bg bsm" onclick="askExit('home')"><svg width="11" height="11" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exit</button>
-      <button class="btn bp bsm" id="mock-submit-btn" disabled onclick="submitMock()">Submit All</button>
-      <div class="submit-guard-hint" id="mock-submit-hint">Write at least 15 words to unlock</div>
-    </div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
-    <div style="font-family:var(--mono);font-size:.6rem;color:var(--t2);letter-spacing:.08em;text-transform:uppercase">SBI PO Mains · Real Pattern · Email → Situation → Report/Precis</div>
-    <div style="font-family:var(--mono);font-size:.6rem;color:var(--t2)">30 min combined timer</div>
+  <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:6px">
+    <div id="mock-name-lbl" style="font-family:var(--mono);font-size:.62rem;color:var(--t2);letter-spacing:.06em;text-transform:uppercase"></div>
   </div>
   <div class="mock-tabs" id="mock-tabs"></div>
   <div class="exam-layout">
@@ -721,6 +719,12 @@ function showS(id,opts){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   window.scrollTo(0,0);
+  const hec=document.getElementById("h-exam-ctl");
+  if(hec) hec.style.display=(id==="fullmock")?"flex":"none";
+  const brand=document.getElementById("h-brand");
+  if(brand) brand.style.display=(id==="fullmock")?"none":"";
+  const tg=document.getElementById("tg-hbtn");
+  if(tg) tg.style.display=(id==="fullmock")?"none":"";
   ["fp","tp"].forEach(id=>document.getElementById(id).classList.remove("open"));
   if(!opts||!opts.skipHash){
     const hash=(opts&&opts.hash)?opts.hash:id;
@@ -1225,6 +1229,8 @@ function startMockAfterInstr(){
   if(_msh){_msh.textContent="Write at least 15 words to unlock";_msh.className="submit-guard-hint";}
   document.getElementById("mock-total").textContent=MS.s.length;
   document.getElementById("mock-done").innerHTML="0/<span id='mock-total'>"+MS.s.length+"</span>";
+  const nameLbl=document.getElementById("mock-name-lbl");
+  if(nameLbl) nameLbl.textContent=ex2.name+(mockNo!=null?" · Mock "+mockNo:" · Full Mock");
   renderMTabs();
   history.replaceState(null,"",location.pathname+location.search);
   history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");
