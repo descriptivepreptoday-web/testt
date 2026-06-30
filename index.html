@@ -156,7 +156,9 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .blbl{font-size:.56rem;color:var(--t2);margin-top:2px;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
 .prog-track{width:100px;height:3px;background:var(--b);border-radius:2px;overflow:hidden;flex-shrink:0}
 .prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 1s linear,background .5s}
-.exam-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;height:calc(100vh - 160px);max-height:640px;min-height:340px}
+.exam-grid{display:flex;flex-direction:column;gap:11px;height:calc(100vh - 160px);max-height:640px;min-height:340px}
+.exam-grid>.panel:first-child{flex:0 0 auto;max-height:34%;min-height:120px}
+.exam-grid>.panel:last-child{flex:1;min-height:0}
 .panel{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;min-height:0}
 .ph{background:var(--bg3);padding:7px 12px;font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
 .pb{padding:13px;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
@@ -306,7 +308,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .cbox-t{font-size:.95rem;font-weight:700;margin-bottom:7px}
 .cbox-s{font-size:.78rem;color:var(--t2);margin-bottom:20px;line-height:1.6}
 .cbox-btns{display:flex;gap:8px;justify-content:center}
-@media(max-width:640px){.exam-grid{grid-template-columns:1fr;height:auto;max-height:none}.exam-grid .panel{height:42vh;max-height:42vh}.score-row{grid-template-columns:repeat(2,1fr)}.trc-grid{grid-template-columns:repeat(2,1fr)}.h-title{font-size:1.55rem}.tm-grid{grid-template-columns:1fr}.bar-l{gap:10px}.prog-track{display:none}}
+@media(max-width:640px){.exam-grid{height:auto;max-height:none}.score-row{grid-template-columns:repeat(2,1fr)}.trc-grid{grid-template-columns:repeat(2,1fr)}.h-title{font-size:1.55rem}.tm-grid{grid-template-columns:1fr}.bar-l{gap:10px}.prog-track{display:none}}
 /* OFFERS HOME BUTTON */
 #home{position:relative;}
 .offers-home-btn{position:absolute;top:0;right:24px;display:flex;align-items:center;gap:7px;background:var(--adim);border:1px solid var(--aborder);border-radius:var(--r);padding:9px 14px;cursor:pointer;font-family:var(--font);transition:all var(--tr);z-index:5;}
