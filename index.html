@@ -70,6 +70,17 @@ header{background:var(--bg2);border-bottom:1px solid var(--b);height:54px;displa
 .h-exam-ctl{display:flex;align-items:center;gap:10px;flex:1;min-width:0;justify-content:flex-end;padding-right:6px}
 .h-exam-ctl .prog-track{display:none}
 @media(min-width:760px){.h-exam-ctl .prog-track{display:block;width:80px}}
+header{position:relative}
+.h-exam-info{display:none;flex-direction:column;line-height:1.2;min-width:0;overflow:hidden;max-width:170px}
+.h-exam-info.show{display:flex}
+.h-exam-info .hei-exam{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.h-exam-info .hei-mock{font-family:var(--mono);font-size:.62rem;color:var(--accent);white-space:nowrap;font-weight:600}
+.h-brand.center-mode{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:2px 6px;margin:0}
+.h-brand.center-mode .site-logo{height:18px}
+.h-brand.center-mode .site-name-top,.h-brand.center-mode .site-name-bot{font-size:.6rem}
+.es-timer{background:var(--adim);border:1px solid var(--aborder);border-radius:var(--rs);padding:9px 10px;text-align:center}
+.es-timer-val{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--accent);line-height:1}
+.es-timer-lbl{font-size:.58rem;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
 .h-brand{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none;color:inherit;border-radius:var(--rs);padding:4px 8px;margin:-4px -8px;transition:background var(--tr);flex-shrink:1;min-width:0;overflow:hidden}
 .h-brand:hover{background:var(--bg3)}
 .site-logo{height:26px;width:auto;display:none;border-radius:4px;flex-shrink:0;background:transparent;padding:2px 4px;}
@@ -362,13 +373,16 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <span class="site-name-bot">PrepToday</span>
     </span>
   </a>
+  <div class="h-exam-info" id="h-exam-info">
+    <div class="hei-exam" id="hei-exam-name"></div>
+    <div class="hei-mock" id="hei-mock-no"></div>
+  </div>
   <div class="h-exam-ctl" id="h-exam-ctl" style="display:none">
-    <div class="bstat"><div class="bval" id="mock-timer">--:--</div><div class="blbl">Mock Time</div></div>
     <div class="prog-track"><div class="prog-fill" id="mock-prog" style="width:100%"></div></div>
-    <div class="bstat"><div class="bval" id="mock-done">0/<span id="mock-total">0</span></div><div class="blbl">Done</div></div>
     <button class="btn bg bsm" onclick="askExit('home')"><svg width="11" height="11" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exit</button>
     <button class="btn bp bsm" id="mock-submit-btn" disabled onclick="submitMock()">Submit All</button>
     <div class="submit-guard-hint" id="mock-submit-hint">Write at least 15 words to unlock</div>
+    <div id="mock-done" style="display:none">0/<span id="mock-total">0</span></div>
   </div>
   <div class="h-right" id="h-right">
     <a class="tg-hbtn" id="tg-hbtn" href="#" target="_blank">
@@ -488,9 +502,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   </div>
 </div>
 <div id="fullmock" class="screen">
-  <div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:6px">
-    <div id="mock-name-lbl" style="font-family:var(--mono);font-size:.62rem;color:var(--t2);letter-spacing:.06em;text-transform:uppercase"></div>
-  </div>
   <div class="mock-tabs" id="mock-tabs"></div>
   <div class="exam-layout">
     <div class="exam-main">
@@ -722,7 +733,9 @@ function showS(id,opts){
   const hec=document.getElementById("h-exam-ctl");
   if(hec) hec.style.display=(id==="fullmock")?"flex":"none";
   const brand=document.getElementById("h-brand");
-  if(brand) brand.style.display=(id==="fullmock")?"none":"";
+  if(brand) brand.classList.toggle("center-mode",id==="fullmock");
+  const heinfo=document.getElementById("h-exam-info");
+  if(heinfo) heinfo.classList.toggle("show",id==="fullmock");
   const tg=document.getElementById("tg-hbtn");
   if(tg) tg.style.display=(id==="fullmock")?"none":"";
   ["fp","tp"].forEach(id=>document.getElementById(id).classList.remove("open"));
@@ -1229,8 +1242,10 @@ function startMockAfterInstr(){
   if(_msh){_msh.textContent="Write at least 15 words to unlock";_msh.className="submit-guard-hint";}
   document.getElementById("mock-total").textContent=MS.s.length;
   document.getElementById("mock-done").innerHTML="0/<span id='mock-total'>"+MS.s.length+"</span>";
-  const nameLbl=document.getElementById("mock-name-lbl");
-  if(nameLbl) nameLbl.textContent=ex2.name+(mockNo!=null?" · Mock "+mockNo:" · Full Mock");
+  const nameLbl=document.getElementById("hei-exam-name");
+  const mockLbl=document.getElementById("hei-mock-no");
+  if(nameLbl) nameLbl.textContent=ex2.name;
+  if(mockLbl) mockLbl.textContent=mockNo!=null?"Mock "+mockNo:"Full Mock";
   renderMTabs();
   history.replaceState(null,"",location.pathname+location.search);
   history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");
@@ -1349,6 +1364,10 @@ function renderExamSide(){
   }
 
   el.innerHTML=`
+    <div class="es-timer">
+      <div class="es-timer-val" id="mock-timer">--:--</div>
+      <div class="es-timer-lbl">Time Remaining</div>
+    </div>
     <div class="es-stat-grid">
       <div class="es-stat"><div class="es-badge green">${answered}</div>Answered</div>
       <div class="es-stat"><div class="es-badge orange">${notAnswered}</div>Not<br>Answered</div>
