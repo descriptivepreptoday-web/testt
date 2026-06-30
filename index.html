@@ -156,23 +156,13 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .blbl{font-size:.56rem;color:var(--t2);margin-top:2px;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
 .prog-track{width:100px;height:3px;background:var(--b);border-radius:2px;overflow:hidden;flex-shrink:0}
 .prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width 1s linear,background .5s}
-.exam-grid{display:flex;flex-direction:column;gap:11px;height:calc(100vh - 160px);max-height:640px;min-height:340px}
-.exam-grid>.panel:first-child{flex:0 0 auto;max-height:34%;min-height:120px}
-.exam-grid>.panel:last-child{flex:1;min-height:0}
-.panel{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.exam-grid{display:flex;flex-direction:column;gap:11px}
+.panel{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);overflow:visible;display:flex;flex-direction:column}
 .ph{background:var(--bg3);padding:7px 12px;font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
-.pb{padding:13px;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
-.pb::-webkit-scrollbar{width:6px}
-.pb::-webkit-scrollbar-track{background:transparent}
-.pb::-webkit-scrollbar-thumb{background:var(--b);border-radius:3px}
-.pb::-webkit-scrollbar-thumb:hover{background:var(--t2)}
+.pb{padding:13px}
 .q-text{font-size:.83rem;line-height:1.8;white-space:pre-wrap}
 .q-meta{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
-.answer-ta{width:100%;min-height:160px;flex:1;background:var(--bg);border:1px solid var(--b);border-radius:var(--rs);color:var(--t);font-family:var(--font);font-size:.83rem;line-height:1.8;padding:11px;resize:none;outline:none;transition:border-color var(--tr);display:block;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
-.answer-ta::-webkit-scrollbar{width:6px}
-.answer-ta::-webkit-scrollbar-track{background:transparent}
-.answer-ta::-webkit-scrollbar-thumb{background:var(--b);border-radius:3px}
-.answer-ta::-webkit-scrollbar-thumb:hover{background:var(--t2)}
+.answer-ta{width:100%;min-height:340px;background:var(--bg);border:1px solid var(--b);border-radius:var(--rs);color:var(--t);font-family:var(--font);font-size:.83rem;line-height:1.8;padding:11px;resize:none;outline:none;transition:border-color var(--tr);display:block;overflow:hidden}
 .answer-ta:focus{border-color:var(--accent)}
 .answer-ta::placeholder{color:var(--t3)}
 .answer-ta.ta-locked{border-color:#ef4444!important;animation:taShake .2s}
@@ -193,9 +183,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 /* ── Exam status sidebar (mock exam layout) ── */
 .exam-layout{display:grid;grid-template-columns:1fr 230px;gap:11px;align-items:start}
 .exam-main{min-width:0}
-.exam-side{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 160px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--b) transparent}
-.exam-side::-webkit-scrollbar{width:6px}
-.exam-side::-webkit-scrollbar-thumb{background:var(--b);border-radius:3px}
+.exam-side{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:10px;position:sticky;top:64px}
 .es-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .es-stat{display:flex;align-items:center;gap:7px;font-size:.66rem;color:var(--t2);line-height:1.3}
 .es-badge{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.68rem;font-weight:700;color:#fff;flex-shrink:0}
@@ -481,7 +469,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     </div>
     <div class="panel">
       <div class="ph"><span>Your Answer</span><span id="exam-pwc" style="color:var(--t2)">0 words</span></div>
-      <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px;min-height:0;overflow-y:hidden">
+      <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
         <textarea class="answer-ta" id="exam-ta" placeholder="Start writing here…"></textarea>
         <div class="ta-footer"><div class="wc-lbl">Words: <strong id="exam-wc">0</strong></div></div>
       </div>
@@ -515,7 +503,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
         </div>
         <div class="panel">
           <div class="ph"><span>Your Answer</span><span id="mock-pwc" style="color:var(--t2)">0 words</span></div>
-          <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px;min-height:0;overflow-y:hidden">
+          <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
             <textarea class="answer-ta" id="mock-ta" placeholder="Start writing here…"></textarea>
             <div class="ta-footer">
               <div class="wc-lbl">Words: <strong id="mock-wc">0</strong></div>
@@ -999,7 +987,7 @@ function launchExam(qid){
   document.getElementById("exam-wl").textContent=CQ.wordLimit;
   document.getElementById("exam-qtext").textContent=CQ.text;
   document.getElementById("exam-qmeta").innerHTML=`<span class="chip">${CQ.wordLimit}</span><span class="chip">${CQ.marks} marks</span>`;
-  const ta=document.getElementById("exam-ta");ta.value="";tyStarted=false;tStart=null;
+  const ta=document.getElementById("exam-ta");ta.value="";tyStarted=false;tStart=null;autoGrow(ta);
   // Reset submit guard for new question
   const _sb=document.getElementById("exam-submit-btn");
   const _sh=document.getElementById("exam-submit-hint");
@@ -1052,10 +1040,18 @@ function tickT(tid,bid){
   if(bid){const p=tTotal>0?(tLeft/tTotal)*100:100;const b=document.getElementById(bid);b.style.width=p+"%";b.style.background=p>40?"var(--accent)":p>15?"var(--amber)":"var(--red)";}
 }
 function cw(t){return t.trim()===""?0:t.trim().split(/\s+/).length;}
+// Grows a textarea to fit its content so the page (not the textarea) scrolls.
+function autoGrow(ta){
+  if(!ta)return;
+  ta.style.height="auto";
+  ta.style.height=Math.max(ta.scrollHeight,340)+"px";
+}
 // Locks a textarea: no paste/drop, no double-space, no blank-line skipping, no space↔enter mixing
 // Also blocks mouse-click cursor repositioning — navigation only via arrow keys
 function restrictTA(ta){
   if(!ta||ta._restricted)return;ta._restricted=true;
+  autoGrow(ta);
+  ta.addEventListener("input",()=>autoGrow(ta));
   const block=e=>{e.preventDefault();flashLock(ta);};
   ta.addEventListener("paste",block);
   ta.addEventListener("drop",block);
@@ -1416,7 +1412,7 @@ function loadMSContent(idx){
   document.getElementById("mock-wl").textContent=s.question.wordLimit;
   document.getElementById("mock-qtext").textContent=s.question.text;
   document.getElementById("mock-qmeta").innerHTML=`<span class="chip">${s.question.wordLimit}</span><span class="chip">${s.question.marks} marks</span>`;
-  const ta=document.getElementById("mock-ta");ta.value=MS.a[idx]||"";updMWC();
+  const ta=document.getElementById("mock-ta");ta.value=MS.a[idx]||"";updMWC();autoGrow(ta);
   restrictTA(ta);
   updateMRButton();
   ta.oninput=()=>{
