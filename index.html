@@ -1204,10 +1204,16 @@ function startMockAfterInstr(){
     return{typeId:tid,meta:tm[tid]||{},questions:qs.slice(0,2),question:null};
   }).filter(Boolean);
   if(hasBoth){
-    const reportQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="report"&&q.active&&(mockNo==null||q.mockNo===mockNo)).slice(0,2).map(q=>({...q,_sectionLabel:"Report Writing"}));
-    const precisQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="precis"&&q.active&&(mockNo==null||q.mockNo===mockNo)).slice(0,2).map(q=>({...q,_sectionLabel:"Precis Writing"}));
-    const combined=[...reportQs,...precisQs];
-    if(combined.length) secs.push({typeId:"report_precis",meta:{name:"Report / Precis"},questions:combined,question:null,isReportPrecis:true});
+    const reportQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="report"&&q.active&&(mockNo==null||q.mockNo===mockNo)).slice(0,2);
+    const precisQs=d.questions.filter(q=>q.examId===ex.id&&q.type==="precis"&&q.active&&(mockNo==null||q.mockNo===mockNo)).slice(0,2);
+    if(reportQs.length||precisQs.length){
+      secs.push({
+        typeId:"report_precis",meta:{name:"Report / Precis"},
+        isReportPrecis:true,
+        choices:{report:{name:"Report Writing",questions:reportQs},precis:{name:"Precis Writing",questions:precisQs}},
+        chosenType:null,questions:[],question:null
+      });
+    }
   }
   if(!secs.length){alert("No questions available for this mock. Please add questions in the Admin panel.");return;}
   MS.s=secs;MS.a={};MS.idx=0;MS.st=Date.now();MS.mr={};
@@ -1228,75 +1234,64 @@ function startMockAfterInstr(){
   loadMS(0);
 }
 
-// Show the question picker overlay for a section (on first visit or when changing question)
-function showQPicker(secIdx, isChange){
-  const sec=MS.s[secIdx];if(!sec)return;
-  const qs=sec.questions||[];
-  if(!qs.length){loadMSContent(secIdx);return;}
+// Type picker overlay — used ONLY for the SBI PO "choose Report OR Precis" case.
+// Normal sections with 2 question options never show a popup; their options
+// are picked directly via numbered tiles in the right sidebar (renderExamSide).
+function showTypePicker(secIdx){
+  const sec=MS.s[secIdx];if(!sec||!sec.isReportPrecis)return;
   const overlay=document.getElementById("qpick-cov");
-  document.getElementById("qpick-title").textContent=(sec.meta.name||sec.typeId)+" — Choose a question";
+  document.getElementById("qpick-title").textContent="Choose your question type";
   const subtitle=overlay.querySelector(".cbox-s");
-  if(subtitle) subtitle.textContent=sec.isReportPrecis
-    ?"Pick one question from either Report Writing or Precis Writing."
-    :"Pick one of the two options below to attempt.";
-  // Build question list HTML
-  let html="";
-  if(sec.isReportPrecis){
-    const groups={};
-    qs.forEach((q,i)=>{const lbl=q._sectionLabel||"Other";if(!groups[lbl])groups[lbl]=[];groups[lbl].push({q,i});});
-    Object.entries(groups).forEach(([lbl,items])=>{
-      html+=`<div style="font-size:.6rem;font-family:var(--mono);color:var(--t2);text-transform:uppercase;letter-spacing:.09em;padding:6px 2px 6px;border-bottom:1px solid var(--b);margin-bottom:8px">${lbl}</div>`;
-      items.forEach(({q,i})=>{
-        const isCurrent=sec.question&&sec.question.id===q.id;
-        html+=`<button class="qpick-btn" style="margin-bottom:8px;${isCurrent?"border-color:var(--accent);background:var(--adim)":""}" onclick="pickQ(${secIdx},${i})">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
-            <span style="font-size:.62rem;font-family:var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em">Option ${i+1}</span>
-            ${isCurrent?`<span style="font-size:.58rem;font-family:var(--mono);color:var(--green);background:var(--gdim);border:1px solid var(--gborder);border-radius:4px;padding:1px 6px">Current</span>`:""}
-          </div>
-          <div style="font-size:.83rem;line-height:1.75;color:var(--t);text-align:left;white-space:pre-wrap;margin-bottom:8px">${q.text}</div>
-          <div style="display:flex;gap:5px;flex-wrap:wrap"><span class="chip">${q.wordLimit}</span><span class="chip">${q.marks} marks</span></div>
-          <div style="margin-top:8px;font-size:.72rem;color:var(--accent);font-weight:600;text-align:left">→ Tap to attempt</div>
-        </button>`;
-      });
-    });
-  } else {
-    html=qs.slice(0,2).map((q,i)=>{
-      const isCurrent=sec.question&&sec.question.id===q.id;
-      const sep=i===0?`<div style="text-align:center;font-size:.65rem;font-family:var(--mono);color:var(--t2);margin:6px 0">— OR —</div>`:"";
-      return`<button class="qpick-btn" style="${isCurrent?"border-color:var(--accent);background:var(--adim)":""}" onclick="pickQ(${secIdx},${i})">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
-          <span style="font-size:.62rem;font-family:var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em">Option ${i+1}</span>
-          ${isCurrent?`<span style="font-size:.58rem;font-family:var(--mono);color:var(--green);background:var(--gdim);border:1px solid var(--gborder);border-radius:4px;padding:1px 6px">Current</span>`:""}
-        </div>
-        <div style="font-size:.83rem;line-height:1.75;color:var(--t);text-align:left;white-space:pre-wrap;margin-bottom:8px">${q.text}</div>
-        <div style="display:flex;gap:5px;flex-wrap:wrap"><span class="chip">${q.wordLimit}</span><span class="chip">${q.marks} marks</span></div>
-        <div style="margin-top:8px;font-size:.72rem;color:var(--accent);font-weight:600;text-align:left">→ Tap to attempt</div>
-      </button>${sep}`;
-    }).join("");
-  }
-  document.getElementById("qpick-list").innerHTML=html;
+  if(subtitle) subtitle.textContent="As per the exam pattern, attempt ONE of the following. This cannot be changed once selected.";
+  const order=["report","precis"];
+  document.getElementById("qpick-list").innerHTML=order.map(tid=>{
+    const c=sec.choices[tid];if(!c||!c.questions.length)return"";
+    return `<button class="qpick-btn" onclick="pickType(${secIdx},'${tid}')">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:.85rem;font-weight:700;color:var(--t)">${c.name}</span>
+        <span style="font-size:.68rem;color:var(--accent);font-weight:600">→ Select</span>
+      </div>
+      <div style="font-size:.7rem;color:var(--t2);margin-top:4px">${c.questions.length} question option${c.questions.length!==1?"s":""} available</div>
+    </button>`;
+  }).join("");
   pauseTimer();
   overlay.classList.add("open");
 }
 
-function pickQ(secIdx,qIdx){
+function pickType(secIdx,typeId){
   document.getElementById("qpick-cov").classList.remove("open");
   resumeTimer();
   const sec=MS.s[secIdx];
+  sec.chosenType=typeId;
+  sec.typeId=typeId;
+  sec.meta=tmMeta(typeId)||{name:sec.choices[typeId].name};
+  sec.questions=sec.choices[typeId].questions;
+  sec.question=sec.questions[0]||null;
+  renderMTabs();
+  if(sec.question) loadMSContent(secIdx);
+}
+function tmMeta(typeId){
+  try{const d=D();return (d.sectionTypes||[]).find(s=>s.id===typeId);}catch(e){return null;}
+}
+
+// Direct, popup-free question switch — clicking a numbered tile in the
+// sidebar for the currently open section.
+function selectQuestion(secIdx,qIdx){
+  const sec=MS.s[secIdx];if(!sec)return;
+  const q=sec.questions[qIdx];if(!q)return;
   const prevId=sec.question?.id;
-  sec.question=sec.questions[qIdx];
-  if(sec.isReportPrecis) sec.typeId=sec.question.type;
-  // If question changed, clear saved answer for this section
-  if(prevId && prevId!==sec.question.id) delete MS.a[secIdx];
+  sec.question=q;
+  if(prevId&&prevId!==q.id) delete MS.a[secIdx];
   loadMSContent(secIdx);
+  renderExamSide();
 }
 
 function renderMTabs(){
   document.getElementById("mock-tabs").innerHTML=MS.s.map((s,i)=>{
     const done=MS.a[i]?.trim()?"done":"";
     const active=i===MS.idx?"on":"";
-    const name=s.question&&s.isReportPrecis?(s.question.type==="report"?"Report Writing":"Precis Writing"):(s.meta.name||s.typeId);
-    const pending=!s.question?`<span style="font-size:.55rem;opacity:.65;margin-left:3px">· pick</span>`:"";
+    const name=s.isReportPrecis?(s.chosenType?s.choices[s.chosenType].name:"Report / Precis"):(s.meta.name||s.typeId);
+    const pending=(s.isReportPrecis&&!s.chosenType)?`<span style="font-size:.55rem;opacity:.65;margin-left:3px">· pick type</span>`:"";
     return `<button class="mtab ${active} ${done}" onclick="loadMS(${i})">${name}${pending}</button>`;
   }).join("");
   renderExamSide();
@@ -1310,13 +1305,45 @@ function renderExamSide(){
   let answered=0,notVisited=0,marked=0;
   MS.s.forEach((s,i)=>{
     const hasAnswer=!!(MS.a[i]&&MS.a[i].trim());
-    const visited=!!s.question;
+    const visited=s.isReportPrecis?!!s.chosenType:!!s.question;
     const isMarked=!!MS.mr[i];
     if(isMarked)marked++;
     if(hasAnswer)answered++;
     else if(!visited)notVisited++;
   });
   const notAnswered=total-answered;
+
+  const cur=MS.s[MS.idx];
+  let paletteHtml="";
+  if(cur){
+    if(cur.isReportPrecis&&!cur.chosenType){
+      paletteHtml=`<div class="es-sec-title on">${cur.meta.name||"Report / Precis"}</div>
+        <div style="font-size:.72rem;color:var(--t2);padding:8px 2px;line-height:1.5">
+          You must choose ONE question type for this section.
+          <span style="color:var(--accent);font-weight:600;cursor:pointer;text-decoration:underline" onclick="showTypePicker(${MS.idx})">Choose now →</span>
+        </div>`;
+    } else {
+      const secLabel=cur.isReportPrecis?cur.choices[cur.chosenType].name:(cur.meta.name||cur.typeId);
+      const qs=cur.questions||[];
+      paletteHtml=`<div class="es-sec-title on">${secLabel}</div>
+        <div style="font-size:.65rem;color:var(--t2);padding:4px 2px 2px">${qs.length>1?"Choose a Question":"Question"}</div>
+        <div class="es-qgrid">
+          ${qs.map((q,qi)=>{
+            const isCurrentQ=cur.question&&cur.question.id===q.id;
+            const hasAns=isCurrentQ&&!!(MS.a[MS.idx]&&MS.a[MS.idx].trim());
+            const isMarkedQ=isCurrentQ&&!!MS.mr[MS.idx];
+            let cls="es-notvisited";
+            if(isMarkedQ&&hasAns)cls="es-marked es-marked-done";
+            else if(isMarkedQ)cls="es-marked";
+            else if(hasAns)cls="es-done";
+            else if(isCurrentQ)cls="es-notdone";
+            if(isCurrentQ)cls+=" es-current";
+            return `<button class="es-qbtn ${cls}" onclick="selectQuestion(${MS.idx},${qi})">${qi+1}</button>`;
+          }).join("")}
+        </div>`;
+    }
+  }
+
   el.innerHTML=`
     <div class="es-stat-grid">
       <div class="es-stat"><div class="es-badge green">${answered}</div>Answered</div>
@@ -1324,11 +1351,12 @@ function renderExamSide(){
       <div class="es-stat"><div class="es-badge grey">${notVisited}</div>Not<br>Visited</div>
       <div class="es-stat"><div class="es-badge purple">${marked}</div>Marked For<br>Review</div>
     </div>
-    <div class="es-sec-title on">Choose a Question</div>
+    ${paletteHtml}
+    <div class="es-sec-title" style="margin-top:6px">All Sections</div>
     <div class="es-qgrid">
       ${MS.s.map((s,i)=>{
         const hasAnswer=!!(MS.a[i]&&MS.a[i].trim());
-        const visited=!!s.question;
+        const visited=s.isReportPrecis?!!s.chosenType:!!s.question;
         const isCurrent=i===MS.idx;
         const isMarked=!!MS.mr[i];
         let cls="es-notvisited";
@@ -1339,7 +1367,11 @@ function renderExamSide(){
         if(isCurrent)cls+=" es-current";
         return `<button class="es-qbtn ${cls}" onclick="loadMS(${i})" title="${s.meta.name||s.typeId}${isMarked?' (marked for review)':''}">${i+1}</button>`;
       }).join("")}
-    </div>`;
+    </div>
+    <button class="btn bp" style="width:100%;margin-top:8px" id="exam-side-submit" onclick="submitMock()">Submit Test</button>`;
+  const ssb=document.getElementById("exam-side-submit");
+  const topBtn=document.getElementById("mock-submit-btn");
+  if(ssb&&topBtn) ssb.disabled=topBtn.disabled;
 }
 
 // Toggle "Marked for Review" on the currently open section.
@@ -1362,11 +1394,12 @@ function updateMRButton(){
 function loadMS(idx){
   const s=MS.s[idx];if(!s)return;MS.idx=idx;
   renderMTabs();
-  if(!s.question){
-    // First visit — show question picker immediately
-    showQPicker(idx,false);
+  if(s.isReportPrecis&&!s.chosenType){
+    showTypePicker(idx);
     return;
   }
+  if(!s.question&&s.questions&&s.questions.length) s.question=s.questions[0];
+  if(!s.question)return;
   loadMSContent(idx);
 }
 
@@ -1380,10 +1413,7 @@ function loadMSContent(idx){
   document.getElementById("mock-type-lbl").textContent=(typeMeta.name||s.meta.name||"").toUpperCase();
   document.getElementById("mock-wl").textContent=s.question.wordLimit;
   document.getElementById("mock-qtext").textContent=s.question.text;
-  // "Change question" button shown only if there are 2+ options
-  const canChange=s.questions&&s.questions.length>1;
-  const changeBtn=canChange?`<button class="btn bg bsm" style="margin-top:8px" onclick="showQPicker(${idx},true)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>Change question</button>`:"";
-  document.getElementById("mock-qmeta").innerHTML=`<span class="chip">${s.question.wordLimit}</span><span class="chip">${s.question.marks} marks</span>${changeBtn}`;
+  document.getElementById("mock-qmeta").innerHTML=`<span class="chip">${s.question.wordLimit}</span><span class="chip">${s.question.marks} marks</span>`;
   const ta=document.getElementById("mock-ta");ta.value=MS.a[idx]||"";updMWC();
   restrictTA(ta);
   updateMRButton();
