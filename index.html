@@ -378,7 +378,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="hei-mock" id="hei-mock-no"></div>
   </div>
   <div class="h-exam-ctl" id="h-exam-ctl" style="display:none">
-    <div class="prog-track"><div class="prog-fill" id="mock-prog" style="width:100%"></div></div>
     <button class="btn bg bsm" onclick="askExit('home')"><svg width="11" height="11" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exit</button>
     <button class="btn bp bsm" id="mock-submit-btn" disabled onclick="submitMock()">Submit All</button>
     <div class="submit-guard-hint" id="mock-submit-hint">Write at least 15 words to unlock</div>
@@ -476,8 +475,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 <div id="exam" class="screen">
   <div class="exam-bar">
     <div class="bar-l">
-      <div class="bstat"><div class="bval" id="exam-timer">--:--</div><div class="blbl">Time</div></div>
-      <div class="prog-track"><div class="prog-fill" id="exam-prog" style="width:100%"></div></div>
       <div class="bstat"><div class="bval" id="exam-wpm">0</div><div class="blbl">WPM</div></div>
       <div class="bstat"><div class="bval" id="exam-wc-top">0</div><div class="blbl">Words</div></div>
     </div>
@@ -487,17 +484,36 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       <div class="submit-guard-hint" id="exam-submit-hint">Write at least half the required words to unlock</div>
     </div>
   </div>
-  <div class="exam-grid">
-    <div class="panel">
-      <div class="ph"><span id="exam-type-lbl">Question</span><span id="exam-wl" style="color:var(--t2)"></span></div>
-      <div class="pb"><div class="q-text" id="exam-qtext"></div><div class="q-meta" id="exam-qmeta"></div></div>
-    </div>
-    <div class="panel">
-      <div class="ph"><span>Your Answer</span><span id="exam-pwc" style="color:var(--t2)">0 words</span></div>
-      <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
-        <textarea class="answer-ta" id="exam-ta" placeholder="Start writing here…"></textarea>
-        <div class="ta-footer"><div class="wc-lbl">Words: <strong id="exam-wc">0</strong></div></div>
+  <div class="exam-layout">
+    <div class="exam-main">
+      <div class="exam-grid">
+        <div class="panel">
+          <div class="ph"><span id="exam-type-lbl">Question</span><span id="exam-wl" style="color:var(--t2)"></span></div>
+          <div class="pb"><div class="q-text" id="exam-qtext"></div><div class="q-meta" id="exam-qmeta"></div></div>
+        </div>
+        <div class="panel">
+          <div class="ph"><span>Your Answer</span><span id="exam-pwc" style="color:var(--t2)">0 words</span></div>
+          <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
+            <textarea class="answer-ta" id="exam-ta" placeholder="Start writing here…"></textarea>
+            <div class="ta-footer"><div class="wc-lbl">Words: <strong id="exam-wc">0</strong></div></div>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="exam-side" id="practice-side">
+      <div class="es-timer">
+        <div class="es-timer-val" id="exam-timer">--:--</div>
+        <div class="es-timer-lbl">Time Remaining</div>
+      </div>
+      <div class="es-stat-grid">
+        <div class="es-stat"><div class="es-badge orange" id="ps-status-badge">1</div><span id="ps-status-lbl">Not<br>Answered</span></div>
+        <div class="es-stat"><div class="es-badge grey">1</div>Total<br>Question</div>
+      </div>
+      <div class="es-sec-title" style="margin-top:2px">Practice Question</div>
+      <div class="es-qgrid">
+        <button class="es-qbtn es-current es-notdone" id="ps-qbtn">1</button>
+      </div>
+      <div style="font-size:.62rem;color:var(--t2);line-height:1.5;padding:4px 2px 0">Practice mode — this single-question layout mirrors the real exam interface.</div>
     </div>
   </div>
 </div>
@@ -1005,6 +1021,9 @@ function launchExam(qid){
   document.getElementById("exam-qtext").textContent=CQ.text;
   document.getElementById("exam-qmeta").innerHTML=`<span class="chip">${CQ.wordLimit}</span><span class="chip">${CQ.marks} marks</span>`;
   const ta=document.getElementById("exam-ta");ta.value="";tyStarted=false;tStart=null;autoGrow(ta);
+  // Reset practice sidebar status
+  const badge=document.getElementById("ps-status-badge");const lbl=document.getElementById("ps-status-lbl");const qbtn=document.getElementById("ps-qbtn");
+  if(badge){badge.className="es-badge orange";}if(lbl){lbl.innerHTML="Not<br>Answered";}if(qbtn){qbtn.className="es-qbtn es-current es-notdone";}
   // Reset submit guard for new question
   const _sb=document.getElementById("exam-submit-btn");
   const _sh=document.getElementById("exam-submit-hint");
@@ -1013,9 +1032,27 @@ function launchExam(qid){
   restrictTA(ta);
   updWC("exam-ta","exam-wc","exam-wc-top","exam-pwc");
   clearInterval(TI);clearInterval(WI);
-  startTimer(mins*60,"exam-timer","exam-prog",()=>submitSingle());
+  startTimer(mins*60,"exam-timer",null,()=>submitSingle());
   WI=setInterval(()=>calcWPM("exam-ta","exam-wpm"),2000);
-  ta.oninput=()=>{if(!tyStarted){tyStarted=true;tStart=Date.now();}updWC("exam-ta","exam-wc","exam-wc-top","exam-pwc");calcWPM("exam-ta","exam-wpm");};
+  ta.oninput=()=>{
+    if(!tyStarted){tyStarted=true;tStart=Date.now();}
+    updWC("exam-ta","exam-wc","exam-wc-top","exam-pwc");
+    calcWPM("exam-ta","exam-wpm");
+    // Update practice side badge
+    const wc=ta.value.trim().split(/\s+/).filter(Boolean).length;
+    const badge=document.getElementById("ps-status-badge");
+    const lbl=document.getElementById("ps-status-lbl");
+    const qbtn=document.getElementById("ps-qbtn");
+    if(badge&&lbl&&qbtn){
+      if(wc===0){
+        badge.className="es-badge orange";lbl.innerHTML="Not<br>Answered";
+        qbtn.className="es-qbtn es-current es-notdone";
+      } else {
+        badge.className="es-badge green";lbl.innerHTML="Answered";
+        qbtn.className="es-qbtn es-current es-answered";
+      }
+    }
+  };
   // Replace the #qselect entry so back button skips it, then push exam sentinel
   history.replaceState(null,"",location.pathname+location.search);
   history.pushState({exam:true},"",location.pathname+location.search+"#exam-guard");
