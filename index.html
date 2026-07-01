@@ -576,10 +576,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
           </div>
         </div>
       </div>
-      <div style="margin-top:12px;display:flex;align-items:center;gap:10px">
-        <button class="btn bp" id="exam-submit-btn" disabled onclick="submitSingle()" style="padding:10px 22px;font-size:.82rem">Submit Answer</button>
-        <div class="submit-guard-hint" id="exam-submit-hint">Write at least half the required words to unlock</div>
-      </div>
     </div>
     <div class="exam-side" id="practice-side">
       <div class="es-timer">
@@ -595,6 +591,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
         <button class="es-qbtn es-current es-notdone" id="ps-qbtn">1</button>
       </div>
       <div style="font-size:.62rem;color:var(--t2);line-height:1.5;padding:4px 2px 0">Practice mode — this single-question layout mirrors the real exam interface.</div>
+      <button class="btn bp" style="width:100%;margin-top:8px" id="exam-submit-btn" disabled onclick="submitSingle()">Submit Answer</button>
+      <div class="submit-guard-hint" id="exam-submit-hint" style="margin-top:6px">Write at least half the required words to unlock</div>
     </div>
   </div>
 </div>
