@@ -808,6 +808,8 @@ function ocCopy(code,uid){
    set below (a stale link shouldn't drop someone into a live/expired test). */
 const NON_LINKABLE_SCREENS=new Set(["exam","fullmock","result","typing"]);
 function showS(id,opts){
+  // Clear result snapshot when user deliberately navigates away
+  if(id!=='result') sessionStorage.removeItem('dpt_result_html');
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
   window.scrollTo(0,0);
@@ -858,7 +860,22 @@ function routeFromHash(){
   if(el&&el.classList.contains("screen"))showS(screenId,{skipHash:true});
 }
 window.addEventListener("hashchange",routeFromHash);
-window.addEventListener("DOMContentLoaded",routeFromHash);
+window.addEventListener("DOMContentLoaded",function(){
+  // Restore result page if user refreshed while on it
+  const savedHtml=sessionStorage.getItem('dpt_result_html');
+  const savedKind=sessionStorage.getItem('dpt_result_kind');
+  if(savedHtml){
+    const resultEl=document.getElementById('result');
+    if(resultEl){
+      resultEl.innerHTML=savedHtml;
+      // Restore exam-mode class if needed
+      document.body.classList.remove('exam-mode');
+      showS('result',{skipHash:true});
+      return; // skip normal hash routing
+    }
+  }
+  routeFromHash();
+});
 function isInActiveExam(){return document.getElementById("exam").classList.contains("active")||document.getElementById("fullmock").classList.contains("active");}
 function isInActiveTyping(){return document.getElementById("typing").classList.contains("active")&&tyTStarted&&!tyDone;}
 // Refresh guard — browser shows its own dialog ("Refresh page? Changes you made may not be saved")
@@ -2037,6 +2054,9 @@ async function submitSingle(){
   const taken = tTotal>0 ? tTotal-tLeft : Math.round((Date.now()-(tStart||Date.now()))/1000);
   const wc = cw(ans), el2 = tyStarted&&tStart ? (Date.now()-tStart)/60000 : 1, wpm2 = el2>0 ? Math.round(wc/el2) : 0;
   showResult(ans,wc,wpm2,taken); showS('result');
+  // Snapshot for refresh persistence
+  sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
+  sessionStorage.setItem('dpt_result_kind', 'practice');
   await runAI(ans,wc,wpm2);
   const scoreEl = document.getElementById('r-score');
   saveProgress({
@@ -2052,6 +2072,8 @@ async function submitSingle(){
     marks: CQ ? CQ.marks||0 : 0,
     questionId: CQ ? CQ.id||'' : ''
   });
+  // Update snapshot with final AI score
+  sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
 }
 
 /* ---- Hook: Mock submit ---- */
@@ -2061,19 +2083,22 @@ async function submitMock(){
   if(_mockTotalWC<15){
     const _btn=document.getElementById("mock-submit-btn");
     if(!_btn||_btn.disabled){
-      // Timer-triggered auto-submit with nothing written
       const banner=document.createElement("div");
       banner.style.cssText="position:fixed;top:0;left:0;right:0;z-index:9999;background:#c0392b;color:#fff;font-size:.82rem;font-family:var(--font,Inter),sans-serif;padding:12px 16px;text-align:center;font-weight:600;";
       banner.textContent="⏱ Time is up — but no answer was recorded. The submission has been cancelled.";
       document.body.appendChild(banner);
       setTimeout(function(){banner.remove();},6000);
     }
-    return; // ← HARD BLOCK: API never fires
+    return;
   }
   clearInterval(TI);
   const taken = (EX()&&EX().duration||30)*60 - tLeft;
   showMockResult(taken); showS('result');
+  // Save result snapshot to sessionStorage so refresh works
+  sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
+  sessionStorage.setItem('dpt_result_kind', 'mock');
   await runAIMock();
+  // Now AI is done — save progress with real total score
   const ex = MS.currentExam || EX() || {};
   const attempted = Object.values(MS.a).filter(function(a){return a&&a.trim();}).length;
   const totalWC = Object.values(MS.a).reduce(function(s,a){return s+cw(a||'');},0);
@@ -2093,6 +2118,8 @@ async function submitMock(){
     attempted: attempted, totalWC: totalWC, timeSec: taken,
     totalScore: totScoreEl ? totScoreEl.textContent : '--'
   });
+  // Update snapshot with final AI-evaluated scores
+  sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
 }
 
 /* ---- Hook: Typing finish ---- */
