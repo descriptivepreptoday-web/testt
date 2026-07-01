@@ -43,6 +43,8 @@
 [data-theme="light-default"] body.exam-mode .mock-tabs{background:#f0f5ff;border-color:#cfd9ee;}
 [data-theme="light-default"] body.exam-mode .mtab{color:#526080;}
 [data-theme="light-default"] body.exam-mode .mtab.on{background:#2563eb;color:#fff;}
+[data-theme="light-default"] body.exam-mode .mock-tabs .btn.bg{border-color:#cfd9ee;color:#526080;background:#fff;}
+[data-theme="light-default"] body.exam-mode .mock-tabs .btn.bg:hover{border-color:#dc2626;color:#dc2626;background:#fff5f5;}
 /* Exam top bar (WPM/Words + buttons strip) */
 [data-theme="light-default"] body.exam-mode .exam-bar{background:#fff;border:1px solid #cfd9ee;border-radius:8px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
 [data-theme="light-default"] body.exam-mode .exam-bar .bval{color:#2563eb;}
@@ -266,7 +268,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .submit-guard-hint{font-size:.62rem;font-family:var(--mono);color:var(--t2);margin-top:3px;transition:color .3s;}
 .submit-guard-hint.ready{color:var(--green);font-weight:600;}
 .btn.bp[disabled]{opacity:.38;cursor:not-allowed;pointer-events:none;filter:grayscale(.4);}
-.mock-tabs{display:flex;gap:4px;overflow-x:auto;background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:4px;margin-bottom:10px}
+.mock-tabs{display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:4px;margin-bottom:10px;overflow-x:auto;}
+.mock-tabs-inner{display:flex;gap:4px;flex:1;overflow-x:auto;}
 .mtab{font-size:.72rem;padding:5px 12px;border-radius:var(--rs);cursor:pointer;white-space:nowrap;transition:all var(--tr);color:var(--t2);background:transparent;border:1px solid transparent;font-family:var(--font)}
 .mtab:hover{color:var(--t)}
 .mtab.on{background:var(--accent);color:var(--bg);font-weight:600}
@@ -457,9 +460,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="hei-mock" id="hei-mock-no"></div>
   </div>
   <div class="h-exam-ctl" id="h-exam-ctl" style="display:none">
-    <button class="btn bg bsm" onclick="askExit('home')"><svg width="11" height="11" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exit</button>
     <button class="btn bp bsm" id="mock-submit-btn" disabled onclick="submitMock()">Submit All</button>
-    <div class="submit-guard-hint" id="mock-submit-hint">Write at least 15 words to unlock</div>
+    <div class="submit-guard-hint" id="mock-submit-hint">Write 150+ words & wait for 2/3 time to unlock</div>
     <div id="mock-done" style="display:none">0/<span id="mock-total">0</span></div>
   </div>
   <div class="h-right" id="h-right">
@@ -1451,13 +1453,16 @@ function selectQuestion(secIdx,qIdx){
 }
 
 function renderMTabs(){
-  document.getElementById("mock-tabs").innerHTML=MS.s.map((s,i)=>{
+  const tabs=MS.s.map((s,i)=>{
     const done=MS.a[i]?.trim()?"done":"";
     const active=i===MS.idx?"on":"";
     const name=s.isReportPrecis?(s.chosenType?s.choices[s.chosenType].name:"Report / Precis"):(s.meta.name||s.typeId);
     const pending=(s.isReportPrecis&&!s.chosenType)?`<span style="font-size:.55rem;opacity:.65;margin-left:3px">· pick type</span>`:"";
     return `<button class="mtab ${active} ${done}" onclick="loadMS(${i})">${name}${pending}</button>`;
   }).join("");
+  document.getElementById("mock-tabs").innerHTML=
+    `<div class="mock-tabs-inner">${tabs}</div>`+
+    `<button class="btn bg bsm" style="flex-shrink:0;margin-left:4px" onclick="askExit('home')"><svg width="11" height="11" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Exit</button>`;
   renderExamSide();
 }
 
