@@ -58,14 +58,6 @@
 [data-theme="light-default"] body.exam-mode .es-timer{background:#f0f5ff;border-color:#cfd9ee;}
 [data-theme="light-default"] body.exam-mode .es-timer-val{color:#2563eb;}
 [data-theme="light-default"] body.exam-mode .chip{background:#f0f5ff;border-color:#cfd9ee;color:#526080;}
-/* ── SITE-WIDE VISUAL ENHANCEMENTS (all themes) ── */
-/* Richer home cards */
-.hcard{box-shadow:0 1px 4px rgba(30,58,120,.06);}
-.hcard:hover{box-shadow:0 4px 16px rgba(37,99,235,.13);}
-/* Section label pill */
-.sec-lbl{background:var(--adim);border:1px solid var(--aborder);border-radius:20px;padding:2px 10px;display:inline-block;}
-/* Hero eyebrow dot */
-.eyebrow::before{content:"●";margin-right:6px;font-size:.5rem;vertical-align:middle;opacity:.7;}
 /* Teal accent for teal-able elements */
 .hi-badge.mock{background:var(--tealdim);border-color:var(--tealborder);color:var(--teal);}
 /* Progress tiles */
@@ -206,11 +198,16 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .tgs-title{font-size:.825rem;font-weight:600;margin-bottom:1px}
 .tgs-sub{font-size:.72rem;color:var(--t2)}
 .tgs-cta{flex-shrink:0;background:var(--accent);color:var(--bg);border:none;padding:6px 14px;border-radius:var(--rs);font-size:.72rem;font-weight:700;cursor:pointer;font-family:var(--font)}
-.sec-lbl{font-size:.63rem;font-family:var(--mono);color:var(--t2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:9px}
+.sec-lbl{font-size:.63rem;font-family:var(--mono);color:var(--t2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.sec-lbl::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);flex-shrink:0}
+.sec-lbl.sl-mock::before{background:var(--teal)}
+.sec-lbl.sl-tools::before{background:var(--coral)}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px;margin-bottom:30px}
 .hcard{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:17px;cursor:pointer;transition:border-color var(--tr),background var(--tr),transform var(--tr),box-shadow var(--tr);position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(30,58,120,.06);}
 .hcard::after{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,#3b82f6,#06b6d4);opacity:0;transition:opacity var(--tr);border-radius:3px 0 0 3px;}
 .hcard:hover{border-color:var(--accent);background:linear-gradient(135deg,rgba(37,99,235,.03) 0%,rgba(6,182,212,.02) 100%);transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.12);}
+.hcard.exam-card:hover{border-color:var(--teal);background:linear-gradient(135deg,rgba(13,148,136,.05) 0%,rgba(13,148,136,.02) 100%);box-shadow:0 6px 20px rgba(13,148,136,.14);}
+.hc-icon.hc-tool{background:var(--coraldim);border-color:var(--coralborder);color:var(--coral)}
 .hcard:hover::after{opacity:1}
 .hc-icon{width:32px;height:32px;background:var(--adim);border:1px solid var(--aborder);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:10px}
 .hc-icon svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -513,13 +510,13 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   <div class="sec-lbl" style="display:flex;align-items:center;gap:7px;margin-bottom:9px" id="offers-home-lbl-sec"><span style="font-size:1rem;color:#eab308">🎓</span> <span>Recommended Courses</span></div>
   <div id="offers-home-cards" style="margin-bottom:26px"></div>
   <div class="sec-divider"></div>
-  <div class="sec-lbl">Full Mock Tests</div>
+  <div class="sec-lbl sl-mock">Full Mock Tests</div>
   <div class="card-grid" id="sec-cards" style="margin-bottom:26px"></div>
   <div class="sec-divider"></div>
-  <div class="sec-lbl" id="h-tlbl">Tools</div>
+  <div class="sec-lbl sl-tools" id="h-tlbl">Tools</div>
   <div class="card-grid">
     <div class="hcard" onclick="showS('typing')">
-      <div class="hc-icon"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg></div>
+      <div class="hc-icon hc-tool"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg></div>
       <div class="hc-title" id="typ-card-t">Typing Speed Test</div>
       <div class="hc-desc" id="typ-card-d">Check your WPM and accuracy with a countdown timer</div>
     </div>
@@ -1038,8 +1035,8 @@ function renderHome(){
   const examCards=activeExams.map(ex=>{
     const qCount=d.questions.filter(q=>q.examId===ex.id&&q.active).length;
     const iconHtml=ex.icon?`<img src="${ex.icon}" style="width:20px;height:20px;object-fit:contain"/>`:`<svg width="16" height="16" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>`;
-    const iconStyle=ex.icon?"background:#fff;border-color:#fff;":"background:var(--accent);border-color:var(--accent);color:var(--bg)";
-    return `<div class="hcard exam-card" onclick="showMockList('${ex.id}')" style="border-color:var(--aborder);background:var(--adim)">
+    const iconStyle=ex.icon?"background:#fff;border-color:#fff;":"background:var(--teal);border-color:var(--teal);color:var(--bg)";
+    return `<div class="hcard exam-card" onclick="showMockList('${ex.id}')" style="border-color:var(--tealborder);background:var(--tealdim)">
       <div class="hc-icon" style="${iconStyle}">${iconHtml}</div>
       <div class="hc-title">${ex.name}</div>
       <div class="hc-desc">${ex.desc||""}</div>
@@ -1050,7 +1047,7 @@ function renderHome(){
   // Practice section — Typing Speed Test first, then section types
   const allSections=d.sectionTypes;
   const typingCardHTML=`<div class="hcard" onclick="showS('typing')">
-    <div class="hc-icon"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg></div>
+    <div class="hc-icon hc-tool"><svg width="16" height="16" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></svg></div>
     <div class="hc-title" id="typ-pcard-t">${cfg.typingCardTitle||"Typing Speed Test"}</div>
     <div class="hc-desc" id="typ-pcard-d">${cfg.typingCardDesc||"Check your WPM and accuracy with a countdown timer"}</div>
   </div>`;
