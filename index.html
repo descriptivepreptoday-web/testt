@@ -9,7 +9,7 @@
 [data-theme="dark-simple"]{--bg:#18181b;--bg2:#1f1f23;--bg3:#27272a;--bg4:#2e2e32;--t:#f0f0f0;--t2:#a0a0a8;--t3:#404048;--b:#303038;--accent:#6366f1;--ah:#4f52e0;--adim:rgba(99,102,241,.08);--aborder:rgba(99,102,241,.22);--green:#4ade80;--gdim:rgba(74,222,128,.08);--gborder:rgba(74,222,128,.22);--red:#f87171;--rdim:rgba(248,113,113,.08);--rborder:rgba(248,113,113,.22);--amber:#fbbf24;--ch:rgba(255,255,255,.025);--shadow:0 1px 3px rgba(0,0,0,.6);}
 [data-theme="light-default"]{--bg:#eef3fb;--bg2:#ffffff;--bg3:#e6edf8;--bg4:#d8e3f4;--t:#18243a;--t2:#526080;--t3:#b4c2d8;--b:#cfd9ee;--accent:#2563eb;--ah:#1d4ed8;--adim:rgba(37,99,235,.08);--aborder:rgba(37,99,235,.22);--teal:#0d9488;--tealdim:rgba(13,148,136,.08);--tealborder:rgba(13,148,136,.22);--green:#16a34a;--gdim:rgba(22,163,74,.08);--gborder:rgba(22,163,74,.22);--red:#dc2626;--rdim:rgba(220,38,38,.07);--rborder:rgba(220,38,38,.2);--amber:#b45309;--coral:#e05a3a;--coraldim:rgba(224,90,58,.07);--coralborder:rgba(224,90,58,.2);--ch:rgba(37,99,235,.03);--shadow:0 2px 8px rgba(30,58,120,.08);--ex-hbg:#1e3a5f;--ex-hborder:#2a4f7c;--ex-ht:#e8f0fe;--ex-ht2:#93b4da;}
 [data-theme="light-warm"]{--bg:#faf8f5;--bg2:#ffffff;--bg3:#f5f1eb;--bg4:#ede8df;--t:#2c2416;--t2:#7a6e60;--t3:#c8bfb0;--b:#ddd6ca;--accent:#c2460a;--ah:#a83a08;--adim:rgba(194,70,10,.07);--aborder:rgba(194,70,10,.2);--green:#3a7d44;--gdim:rgba(58,125,68,.07);--gborder:rgba(58,125,68,.2);--red:#c0392b;--rdim:rgba(192,57,43,.07);--rborder:rgba(192,57,43,.2);--amber:#b45309;--ch:rgba(0,0,0,.01);--shadow:0 1px 3px rgba(0,0,0,.06);}
-:root{--r:10px;--rs:6px;--rl:14px;--fs:16px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.18s ease;}
+:root{--r:10px;--rs:6px;--rl:14px;--fs:16px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.2s cubic-bezier(.16,1,.3,1);}
 /* ── EXAM MODE: light-default theme ONLY ── */
 [data-theme="light-default"] body.exam-mode header{background:#1e3a5f;border-bottom:1px solid #2a4f7c;box-shadow:0 2px 8px rgba(0,0,0,.25);}
 [data-theme="light-default"] body.exam-mode header .site-name-top{color:#93c5fd;}
@@ -73,6 +73,8 @@
 /* Scrollbar — thicker and more visible */
 ::-webkit-scrollbar{width:7px;height:7px;}
 ::-webkit-scrollbar-track{background:var(--bg3);border-radius:4px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px;}
+textarea:focus-visible,input:focus-visible{outline-offset:0;}
 ::-webkit-scrollbar-thumb{background:var(--t3);border-radius:4px;}
 ::-webkit-scrollbar-thumb:hover{background:var(--t2);}
 /* Extra visible scrollbar in exam panels */
@@ -144,7 +146,7 @@ body.exam-mode .exam-side::-webkit-scrollbar-thumb:hover{background:#2563eb;}
 html{font-size:var(--fs)}
 body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;transition:background var(--tr),color var(--tr);line-height:1.6;-webkit-font-smoothing:antialiased}
 /* HEADER */
-header{background:var(--bg2);border-bottom:1px solid var(--b);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:100;gap:12px;box-shadow:0 1px 6px rgba(30,58,120,.06);transition:background .22s,border-color .22s;}
+header{background:color-mix(in srgb,var(--bg2) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--b);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:100;gap:12px;box-shadow:0 1px 6px rgba(30,58,120,.06);transition:background .22s,border-color .22s;}
 .h-exam-ctl{display:flex;align-items:center;gap:10px;flex:1;min-width:0;justify-content:flex-end;padding-right:6px}
 .h-exam-ctl .prog-track{display:none}
 @media(min-width:760px){.h-exam-ctl .prog-track{display:block;width:80px}}
@@ -154,8 +156,8 @@ header{position:relative}
 .h-exam-info .hei-exam{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--t);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .h-exam-info .hei-mock{font-family:var(--mono);font-size:.62rem;color:var(--accent);white-space:nowrap;font-weight:600}
 .h-brand.center-mode{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:2px 6px;margin:0}
-.h-brand.center-mode .site-logo{height:18px}
-.h-brand.center-mode .site-name-top,.h-brand.center-mode .site-name-bot{font-size:.6rem}
+.h-brand.center-mode .site-logo{height:32px}
+.h-brand.center-mode .site-name-top,.h-brand.center-mode .site-name-bot{font-size:.72rem}
 .es-timer{background:var(--adim);border:1px solid var(--aborder);border-radius:var(--rs);padding:9px 10px;text-align:center}
 .es-timer-val{font-family:var(--mono);font-size:1.3rem;font-weight:700;color:var(--accent);line-height:1}
 .es-timer-lbl{font-size:.58rem;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
@@ -193,9 +195,10 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .back-btn svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 /* HOME */
 #home{max-width:1100px;margin:0 auto;padding:52px 32px 40px}
-.eyebrow{font-family:var(--mono);font-size:.63rem;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
-.h-title{font-size:2rem;font-weight:700;letter-spacing:-.4px;line-height:1.18;margin-bottom:10px}
-.h-sub{color:var(--t2);font-size:.88rem;line-height:1.7;margin-bottom:36px;max-width:640px}
+.eyebrow{font-family:var(--mono);font-size:.63rem;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.h-title{font-size:2.1rem;font-weight:800;letter-spacing:-.6px;line-height:1.15;margin-bottom:12px}
+.h-sub{color:var(--t2);font-size:.9rem;line-height:1.7;margin-bottom:36px;max-width:640px}
 .tg-strip{display:none;align-items:center;gap:12px;background:var(--adim);border:1px solid var(--aborder);border-radius:var(--r);padding:12px 16px;margin-bottom:28px}
 .tg-strip.show{display:flex}
 .tg-strip svg{flex-shrink:0}
@@ -251,6 +254,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .exam-grid{display:flex;flex-direction:column;gap:11px}
 .panel{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);overflow:visible;display:flex;flex-direction:column}
 .ph{background:var(--bg3);padding:7px 12px;font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.ph span:last-child{color:var(--t2)}
 .pb{padding:13px}
 .q-text{font-size:.83rem;line-height:1.8;white-space:pre-wrap}
 .q-meta{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
@@ -301,7 +305,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--rs);font-size:.78rem;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:all var(--tr);white-space:nowrap}
 .btn svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.bp{background:var(--accent);color:var(--bg)}.bp:hover{opacity:.88}
+.bp{background:var(--accent);color:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.08);}.bp:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.22);}.bp:active{transform:translateY(0);box-shadow:0 1px 2px rgba(0,0,0,.08);}
 .bg{background:transparent;border:1px solid var(--b);color:var(--t2)}.bg:hover{border-color:var(--accent);color:var(--accent)}
 .bsm{padding:4px 10px;font-size:.7rem}
 /* RESULT */
@@ -563,11 +567,11 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="exam-main">
       <div class="exam-grid">
         <div class="panel">
-          <div class="ph"><span id="exam-type-lbl">Question</span><span id="exam-wl" style="color:var(--t2)"></span></div>
+          <div class="ph"><span id="exam-type-lbl">Question</span><span id="exam-wl"></span></div>
           <div class="pb"><div class="q-text" id="exam-qtext"></div><div class="q-meta" id="exam-qmeta"></div></div>
         </div>
         <div class="panel">
-          <div class="ph"><span>Your Answer</span><span id="exam-pwc" style="color:var(--t2)">0 words</span></div>
+          <div class="ph"><span>Your Answer</span><span id="exam-pwc">0 words</span></div>
           <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
             <textarea class="answer-ta" id="exam-ta" placeholder="Start writing here…"></textarea>
             <div class="ta-footer"><div class="wc-lbl">Words: <strong id="exam-wc">0</strong></div></div>
@@ -600,11 +604,11 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
     <div class="exam-main">
       <div class="exam-grid">
         <div class="panel">
-          <div class="ph"><span id="mock-type-lbl">Question</span><span id="mock-wl" style="color:var(--t2)"></span></div>
+          <div class="ph"><span id="mock-type-lbl">Question</span><span id="mock-wl"></span></div>
           <div class="pb"><div class="q-text" id="mock-qtext"></div><div class="q-meta" id="mock-qmeta"></div></div>
         </div>
         <div class="panel">
-          <div class="ph"><span>Your Answer</span><span id="mock-pwc" style="color:var(--t2)">0 words</span></div>
+          <div class="ph"><span>Your Answer</span><span id="mock-pwc">0 words</span></div>
           <div class="pb" style="padding:10px;display:flex;flex-direction:column;gap:6px">
             <textarea class="answer-ta" id="mock-ta" placeholder="Start writing here…"></textarea>
             <div class="ta-footer">
@@ -629,7 +633,6 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
         <div class="stile"><div class="stile-v" id="r-wpm">-</div><div class="stile-l">WPM</div></div>
         <div class="stile"><div class="stile-v" id="r-time">-</div><div class="stile-l">Time</div></div>
       </div>
-      <div class="rcard"><div class="rcard-h">Score Breakdown</div><div class="rcard-b" id="sbars"></div></div>
       <div class="rcard"><div class="rcard-h">Your Answer</div><div class="rcard-b"><div class="ans-box" id="r-ans"></div></div></div>
       <div class="rcard"><div class="rcard-h">AI Feedback</div><div class="rcard-b"><div id="r-ai"><div class="loading-row"><div class="spin"></div>Evaluating...</div></div></div></div>
       <div class="rcard"><div class="rcard-h">✓ Model Answer</div><div class="rcard-b"><div class="model-box" id="r-model"></div></div></div>
@@ -882,6 +885,21 @@ window.addEventListener("DOMContentLoaded",function(){
   const savedHtml=sessionStorage.getItem('dpt_result_html');
   const savedKind=sessionStorage.getItem('dpt_result_kind');
   if(savedHtml){
+    // Rehydrate the underlying state (CQ / _lastAIArgs / MS) that the Retry
+    // button's onclick handlers rely on — without this, Retry silently does
+    // nothing after a refresh because those globals are empty on reload.
+    try{
+      const savedData=sessionStorage.getItem('dpt_result_data');
+      if(savedData){
+        const d=JSON.parse(savedData);
+        if(d.kind==='practice'){
+          CQ=d.CQ;
+          _lastAIArgs={ans:d.ans,wc:d.wc,wpm:d.wpm,q:d.CQ,fails:d.fails||1};
+        } else if(d.kind==='mock'){
+          MS=d.MS;
+        }
+      }
+    }catch(e){}
     const resultEl=document.getElementById('result');
     if(resultEl){
       resultEl.innerHTML=savedHtml;
@@ -1464,6 +1482,11 @@ function renderMTabs(){
 // plus a number grid (one button per section, like a real exam's question palette).
 function renderExamSide(){
   const el=document.getElementById("exam-side");if(!el)return;
+  // Preserve the live timer text across re-renders (this function runs on every
+  // keystroke via renderMTabs) so it doesn't flash back to the --:-- placeholder.
+  const _existingTimerEl=document.getElementById("mock-timer");
+  const _curTimerText=_existingTimerEl?_existingTimerEl.textContent:"--:--";
+  const _curTimerPaused=_existingTimerEl?_existingTimerEl.style.opacity:"";
   const total=MS.s.length;
   let answered=0,notVisited=0,marked=0;
   MS.s.forEach((s,i)=>{
@@ -1509,7 +1532,7 @@ function renderExamSide(){
 
   el.innerHTML=`
     <div class="es-timer">
-      <div class="es-timer-val" id="mock-timer">--:--</div>
+      <div class="es-timer-val" id="mock-timer" style="opacity:${_curTimerPaused||''}">${_curTimerText}</div>
       <div class="es-timer-lbl">Time Remaining</div>
     </div>
     <div class="es-stat-grid">
@@ -1538,6 +1561,7 @@ function renderExamSide(){
     <button class="btn bp" style="width:100%;margin-top:8px" id="exam-side-submit" onclick="submitMock()" disabled>Submit Test</button>
     <div class="submit-guard-hint" id="mock-submit-hint" style="margin-top:6px">Write 150+ words & wait for 2/3 time to unlock</div>`;
   updateMockSubmitGuard();
+  if(typeof _timerPaused!=="undefined"&&_timerPaused)pauseTimer();
 }
 
 // Toggle "Marked for Review" on the currently open section.
@@ -1644,7 +1668,6 @@ function showResult(ans,wc,wpm,taken){
   document.getElementById("r-ans").textContent=ans||"(No answer submitted)";
   document.getElementById("r-model").textContent=CQ?.modelAnswer||"";
   document.getElementById("r-ai").innerHTML='<div class="loading-row"><div class="spin"></div>Evaluating...</div>';
-  document.getElementById("sbars").innerHTML="";
 }
 function showMockResult(taken){
   document.getElementById("r-single").style.display="none";
@@ -1747,6 +1770,10 @@ async function retryMockAI(idx){
     MS.aiFails=MS.aiFails||{};MS.aiFails[idx]=(MS.aiFails[idx]||1)+1;
     if(aiEl)aiEl.innerHTML=aiFailHTML("retryMockAI("+idx+")","manualEvalMock("+idx+")",MS.aiFails[idx]);
   }
+  try{
+    sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
+    sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'mock',MS:MS}));
+  }catch(e){}
 }
 async function evalWithAI(q,ans,wc,wpm){
   const d=D(),cfg=d.siteSettings||{};
@@ -1897,7 +1924,7 @@ function renderAIBlock(result,max){
   const s=(result.strengths||[]).map(x=>`<span class="ftag ftag-g">${x}</span>`).join("");
   const imp=(result.improvements||[]).map(x=>`<span class="ftag ftag-a">${x}</span>`).join("");
   return`<div style="border-top:1px solid var(--b);padding-top:10px">
-    <div style="font-size:.6rem;font-family:var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">AI Feedback · ${result.totalScore}/${max} (${pct}%)</div>
+    <div style="font-size:.6rem;font-family:var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Score: ${result.totalScore}/${max} (${pct}%)</div>
     ${bars}
     ${s?`<div style="margin-top:10px"><div class="blbl-s">Strengths</div><div class="ftags">${s}</div></div>`:""}
     ${imp?`<div style="margin-top:8px"><div class="blbl-s">Improve</div><div class="ftags">${imp}</div></div>`:""}
@@ -1911,11 +1938,6 @@ async function runAI(ans,wc,wpm){
   const result=await evalWithAI(q,ans,wc,wpm);
   if(result){
     document.getElementById("r-score").textContent=result.totalScore+"/"+q.marks;
-    document.getElementById("sbars").innerHTML=(result.parameters||[]).map(p=>{
-      const p100=Math.round((p.score/p.max)*100);
-      const col=p100>=70?"var(--green,#22c55e)":p100>=45?"var(--amber,#f59e0b)":"var(--red,#ef4444)";
-      return`<div class="sbar"><div class="sbar-top"><span>${p.name}</span><span>${p.score}/${p.max}</span></div><div class="sbar-track"><div class="sbar-fill" style="width:${p100}%;background:${col}"></div></div><div class="sbar-note">${p.comment}</div></div>`;
-    }).join("");
     document.getElementById("r-ai").innerHTML=renderAIBlock(result,q.marks);
   } else {
     const d=D(),cfg=d.siteSettings||{};let ep="";
@@ -1937,16 +1959,15 @@ async function retryRunAI(){
   const result=await evalWithAI(q,ans,wc,wpm);
   if(result){
     document.getElementById("r-score").textContent=result.totalScore+"/"+q.marks;
-    document.getElementById("sbars").innerHTML=(result.parameters||[]).map(p=>{
-      const p100=Math.round((p.score/p.max)*100);
-      const col=p100>=70?"var(--green,#22c55e)":p100>=45?"var(--amber,#f59e0b)":"var(--red,#ef4444)";
-      return`<div class="sbar"><div class="sbar-top"><span>${p.name}</span><span>${p.score}/${p.max}</span></div><div class="sbar-track"><div class="sbar-fill" style="width:${p100}%;background:${col}"></div></div><div class="sbar-note">${p.comment}</div></div>`;
-    }).join("");
     aiEl.innerHTML=renderAIBlock(result,q.marks);
   } else {
     _lastAIArgs.fails=(_lastAIArgs.fails||1)+1;
     aiEl.innerHTML=aiFailHTML("retryRunAI()","manualEvalPractice()",_lastAIArgs.fails);
   }
+  try{
+    sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
+    sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'practice',CQ:q,ans:ans,wc:wc,wpm:wpm,fails:_lastAIArgs.fails||0}));
+  }catch(e){}
 }
 let tlSec=120;
 function selMode(m){tyMode=m;document.getElementById("tm-given").classList.toggle("on",m==="given");document.getElementById("tm-custom").classList.toggle("on",m==="custom");document.getElementById("paste-sec").style.display=m==="custom"?"block":"none";}
@@ -2165,9 +2186,10 @@ async function submitSingle(){
   const taken = tTotal>0 ? tTotal-tLeft : Math.round((Date.now()-(tStart||Date.now()))/1000);
   const wc = cw(ans), el2 = tyStarted&&tStart ? (Date.now()-tStart)/60000 : 1, wpm2 = el2>0 ? Math.round(wc/el2) : 0;
   showResult(ans,wc,wpm2,taken); showS('result');
-  // Snapshot for refresh persistence
+  // Snapshot for refresh persistence (HTML + underlying data needed for Retry to work)
   sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
   sessionStorage.setItem('dpt_result_kind', 'practice');
+  sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'practice',CQ:CQ,ans:ans,wc:wc,wpm:wpm2,taken:taken}));
   await runAI(ans,wc,wpm2);
   const scoreEl = document.getElementById('r-score');
   saveProgress({
@@ -2185,6 +2207,7 @@ async function submitSingle(){
   });
   // Update snapshot with final AI score
   sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
+  sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'practice',CQ:CQ,ans:ans,wc:wc,wpm:wpm2,taken:taken,fails:(_lastAIArgs&&_lastAIArgs.fails)||0}));
 }
 
 /* ---- Hook: Mock submit ---- */
@@ -2205,9 +2228,10 @@ async function submitMock(){
   clearInterval(TI);
   const taken = (EX()&&EX().duration||30)*60 - tLeft;
   showMockResult(taken); showS('result');
-  // Save result snapshot to sessionStorage so refresh works
+  // Save result snapshot to sessionStorage so refresh works (HTML + underlying MS state for Retry)
   sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
   sessionStorage.setItem('dpt_result_kind', 'mock');
+  sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'mock',MS:MS,taken:taken}));
   await runAIMock();
   // Now AI is done — save progress with real total score
   const ex = MS.currentExam || EX() || {};
@@ -2231,6 +2255,7 @@ async function submitMock(){
   });
   // Update snapshot with final AI-evaluated scores
   sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
+  sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'mock',MS:MS,taken:taken}));
 }
 
 /* ---- Hook: Typing finish ---- */
