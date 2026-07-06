@@ -9,7 +9,14 @@
 [data-theme="dark-simple"]{--bg:#18181b;--bg2:#1f1f23;--bg3:#27272a;--bg4:#2e2e32;--t:#f0f0f0;--t2:#a0a0a8;--t3:#404048;--b:#303038;--accent:#6366f1;--ah:#4f52e0;--adim:rgba(99,102,241,.08);--aborder:rgba(99,102,241,.22);--green:#4ade80;--gdim:rgba(74,222,128,.08);--gborder:rgba(74,222,128,.22);--red:#f87171;--rdim:rgba(248,113,113,.08);--rborder:rgba(248,113,113,.22);--amber:#fbbf24;--ch:rgba(255,255,255,.025);--shadow:0 1px 3px rgba(0,0,0,.6);}
 [data-theme="light-default"]{--bg:#eef3fb;--bg2:#ffffff;--bg3:#e6edf8;--bg4:#d8e3f4;--t:#18243a;--t2:#526080;--t3:#b4c2d8;--b:#cfd9ee;--accent:#2563eb;--ah:#1d4ed8;--adim:rgba(37,99,235,.08);--aborder:rgba(37,99,235,.22);--teal:#0d9488;--tealdim:rgba(13,148,136,.08);--tealborder:rgba(13,148,136,.22);--green:#16a34a;--gdim:rgba(22,163,74,.08);--gborder:rgba(22,163,74,.22);--red:#dc2626;--rdim:rgba(220,38,38,.07);--rborder:rgba(220,38,38,.2);--amber:#b45309;--coral:#e05a3a;--coraldim:rgba(224,90,58,.07);--coralborder:rgba(224,90,58,.2);--ch:rgba(37,99,235,.03);--shadow:0 2px 8px rgba(30,58,120,.08);--ex-hbg:#1e3a5f;--ex-hborder:#2a4f7c;--ex-ht:#e8f0fe;--ex-ht2:#93b4da;}
 [data-theme="light-warm"]{--bg:#faf8f5;--bg2:#ffffff;--bg3:#f5f1eb;--bg4:#ede8df;--t:#2c2416;--t2:#7a6e60;--t3:#c8bfb0;--b:#ddd6ca;--accent:#c2460a;--ah:#a83a08;--adim:rgba(194,70,10,.07);--aborder:rgba(194,70,10,.2);--green:#3a7d44;--gdim:rgba(58,125,68,.07);--gborder:rgba(58,125,68,.2);--red:#c0392b;--rdim:rgba(192,57,43,.07);--rborder:rgba(192,57,43,.2);--amber:#b45309;--ch:rgba(0,0,0,.01);--shadow:0 1px 3px rgba(0,0,0,.06);}
-:root{--r:10px;--rs:6px;--rl:14px;--fs:16px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.2s cubic-bezier(.16,1,.3,1);}
+:root{--r:10px;--rs:6px;--rl:14px;--fs:16px;--font:"Inter",sans-serif;--mono:"JetBrains Mono",monospace;--tr:.2s cubic-bezier(.16,1,.3,1);
+  --ink-shadow-sm:3px 3px 0 rgba(0,0,0,.85);--ink-shadow:4px 4px 0 rgba(0,0,0,.85);--ink-shadow-lg:6px 6px 0 rgba(0,0,0,.85);--ink-tr:.12s cubic-bezier(.2,.8,.3,1);}
+/* Keep Practice & Mock exam screens visually untouched by the Neo-Brutalist treatment below — .btn is a shared class, so explicitly revert it here (body.exam-mode is only ever active on the #exam and #fullmock screens). */
+body.exam-mode .btn{border:none;box-shadow:none;transition:all var(--tr);}
+body.exam-mode .btn:hover{transform:none;box-shadow:none;}
+body.exam-mode .btn:active{transform:none;box-shadow:none;}
+body.exam-mode .bp:hover{opacity:.88;filter:none;}
+body.exam-mode .bg{border:1px solid var(--b);}
 /* ── EXAM MODE: light-default theme ONLY ── */
 [data-theme="light-default"] body.exam-mode header{background:#1e3a5f;border-bottom:1px solid #2a4f7c;box-shadow:0 2px 8px rgba(0,0,0,.25);}
 [data-theme="light-default"] body.exam-mode header .site-name-top{color:#93c5fd;}
@@ -60,8 +67,6 @@
 [data-theme="light-default"] body.exam-mode .chip{background:#f0f5ff;border-color:#cfd9ee;color:#526080;}
 /* Teal accent for teal-able elements */
 .hi-badge.mock{background:var(--tealdim);border-color:var(--tealborder);color:var(--teal);}
-/* Progress tiles */
-.ph-tile{box-shadow:0 1px 4px rgba(30,58,120,.06);}
 /* Scrollbar — thicker and more visible */
 ::-webkit-scrollbar{width:7px;height:7px;}
 ::-webkit-scrollbar-track{background:var(--bg3);border-radius:4px;}
@@ -109,7 +114,7 @@ body.exam-mode .exam-side::-webkit-scrollbar-thumb:hover{background:#2563eb;}
 .prog-empty{text-align:center;padding:36px 20px;color:var(--t2);font-size:.82rem}
 .prog-empty svg{stroke:var(--t3);margin-bottom:10px}
 .ph-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
-.ph-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:12px 8px;text-align:center}
+.ph-tile{background:var(--bg2);border:2px solid var(--t);border-radius:var(--r);padding:12px 8px;text-align:center;box-shadow:var(--ink-shadow-sm);}
 .ph-v{font-family:var(--mono);font-size:1.2rem;font-weight:700;color:var(--accent);line-height:1}
 .ph-l{font-size:.58rem;color:var(--t2);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
 .hist-list{display:flex;flex-direction:column;gap:8px}
@@ -203,10 +208,10 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .sec-lbl.sl-mock::before{background:var(--teal)}
 .sec-lbl.sl-tools::before{background:var(--coral)}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px;margin-bottom:30px}
-.hcard{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:17px;cursor:pointer;transition:border-color var(--tr),background var(--tr),transform var(--tr),box-shadow var(--tr);position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(30,58,120,.06);}
+.hcard{background:var(--bg2);border:2px solid var(--t);border-radius:var(--r);padding:17px;cursor:pointer;transition:border-color var(--tr),background var(--tr),transform var(--ink-tr),box-shadow var(--ink-tr);position:relative;overflow:hidden;box-shadow:var(--ink-shadow);}
 .hcard::after{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,#3b82f6,#06b6d4);opacity:0;transition:opacity var(--tr);border-radius:3px 0 0 3px;}
-.hcard:hover{border-color:var(--accent);background:linear-gradient(135deg,rgba(37,99,235,.03) 0%,rgba(6,182,212,.02) 100%);transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.12);}
-.hcard.exam-card:hover{border-color:var(--teal);background:linear-gradient(135deg,rgba(13,148,136,.05) 0%,rgba(13,148,136,.02) 100%);box-shadow:0 6px 20px rgba(13,148,136,.14);}
+.hcard:hover{border-color:var(--accent);background:linear-gradient(135deg,rgba(37,99,235,.03) 0%,rgba(6,182,212,.02) 100%);transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(37,99,235,.35);}
+.hcard.exam-card:hover{border-color:var(--teal);background:linear-gradient(135deg,rgba(13,148,136,.05) 0%,rgba(13,148,136,.02) 100%);box-shadow:6px 6px 0 rgba(13,148,136,.35);}
 .hc-icon.hc-tool{background:var(--coraldim);border-color:var(--coralborder);color:var(--coral)}
 .hcard:hover::after{opacity:1}
 .hc-icon{width:32px;height:32px;background:var(--adim);border:1px solid var(--aborder);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:10px}
@@ -300,10 +305,13 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 @media(max-width:900px){.exam-layout{grid-template-columns:1fr}.exam-side{max-height:none;flex-direction:row;flex-wrap:wrap;overflow-x:auto}.es-stat-grid{display:flex;gap:10px;flex:1 1 100%}.es-qgrid{grid-template-columns:repeat(8,1fr);flex:1 1 100%}}
 #mock-mr-btn.mr-active{border-color:#7c3aed;color:#7c3aed;background:rgba(124,58,237,.1)}
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--rs);font-size:.78rem;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:all var(--tr);white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--rs);font-size:.78rem;font-weight:600;cursor:pointer;border:2px solid var(--t);font-family:var(--font);transition:transform var(--ink-tr),box-shadow var(--ink-tr),background var(--tr),color var(--tr),border-color var(--tr);white-space:nowrap;box-shadow:var(--ink-shadow-sm);}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 rgba(0,0,0,.85);}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(0,0,0,.85);}
 .btn svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.bp{background:var(--accent);color:var(--bg);box-shadow:0 1px 2px rgba(0,0,0,.08);}.bp:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,.22);}.bp:active{transform:translateY(0);box-shadow:0 1px 2px rgba(0,0,0,.08);}
-.bg{background:transparent;border:1px solid var(--b);color:var(--t2)}.bg:hover{border-color:var(--accent);color:var(--accent)}
+.bp{background:var(--accent);color:var(--bg);border-color:var(--t);}
+.bp:hover{background:var(--accent);filter:brightness(1.08);}
+.bg{background:transparent;border:2px solid var(--t);color:var(--t2)}.bg:hover{border-color:var(--accent);color:var(--accent)}
 .bsm{padding:4px 10px;font-size:.7rem}
 /* RESULT */
 #result{max-width:920px;margin:0 auto;padding:34px 28px}
@@ -311,12 +319,16 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .r-top h2{font-size:1.35rem;font-weight:700;margin-bottom:3px;letter-spacing:-.3px}
 .r-top p{color:var(--t2);font-size:.78rem}
 .score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:16px}
-.stile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:13px 8px;text-align:center}
+.stile{background:var(--bg2);border:2px solid var(--t);border-radius:var(--r);padding:13px 8px;text-align:center;box-shadow:var(--ink-shadow-sm);}
 .stile-v{font-family:var(--mono);font-size:1.35rem;font-weight:600;color:var(--accent);line-height:1;margin-bottom:4px}
 .stile-l{font-size:.58rem;color:var(--t2);text-transform:uppercase;letter-spacing:.07em}
-.rcard{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);overflow:hidden;margin-bottom:10px}
+.rcard{background:var(--bg2);border:2px solid var(--t);border-radius:var(--r);overflow:hidden;margin-bottom:14px;box-shadow:var(--ink-shadow-sm);}
 .rcard-h{background:var(--bg3);padding:7px 14px;font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--b)}
 .rcard-b{padding:14px}
+.card{background:var(--bg2);border:2px solid var(--t);border-radius:var(--r);overflow:hidden;box-shadow:var(--ink-shadow-sm);}
+.ch{background:var(--bg3);padding:10px 14px;border-bottom:1px solid var(--b)}
+.cht{font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.cb{padding:16px}
 .ans-box{background:var(--bg3);border:1px solid var(--b);border-radius:var(--rs);padding:11px;font-size:.8rem;line-height:1.75;white-space:pre-wrap;color:var(--t2)}
 .model-box{background:var(--bg3);border:1px solid var(--gborder);border-left:3px solid var(--green);border-radius:var(--rs);padding:11px;font-size:.8rem;line-height:1.8;white-space:pre-wrap}
 .loading-row{display:flex;align-items:center;gap:8px;color:var(--t2);font-size:.8rem;padding:12px 0}
@@ -408,7 +420,8 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .offers-scroll-row::-webkit-scrollbar-track{background:transparent;}
 .offers-scroll-row::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px;}
 /* OFFER CARD — Option C */
-.offer-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--r);padding:14px;position:relative;overflow:hidden;flex:0 0 230px;min-width:0;display:flex;flex-direction:column;}
+.offer-card{background:var(--bg2);border:2px solid var(--t);border-radius:var(--r);padding:14px;position:relative;overflow:hidden;flex:0 0 230px;min-width:0;display:flex;flex-direction:column;box-shadow:var(--ink-shadow-sm);transition:transform var(--ink-tr),box-shadow var(--ink-tr);}
+.offer-card:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 rgba(0,0,0,.85);}
 .offer-card.featured{border:2px solid var(--accent);}
 .oc-top-badge{position:absolute;top:0;right:0;font-family:var(--mono);font-size:.5rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:0 var(--r) 0 var(--rs);background:var(--accent);color:var(--bg);line-height:1.6;z-index:2;}
 /* icon area — kept exactly as before */
@@ -591,7 +604,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
       </div>
       <div style="font-size:.62rem;color:var(--t2);line-height:1.5;padding:4px 2px 0">Practice mode — this single-question layout mirrors the real exam interface.</div>
       <button class="btn bp" style="width:100%;margin-top:8px" id="exam-submit-btn" disabled onclick="submitSingle()">Submit Answer</button>
-      <div class="submit-guard-hint" id="exam-submit-hint" style="margin-top:6px">Write at least half the required words to unlock</div>
+      <div class="submit-guard-hint" id="exam-submit-hint" style="margin-top:6px">Write at least two-thirds of the required words to unlock</div>
     </div>
   </div>
 </div>
@@ -891,7 +904,7 @@ window.addEventListener("DOMContentLoaded",function(){
         const d=JSON.parse(savedData);
         if(d.kind==='practice'){
           CQ=d.CQ;
-          _lastAIArgs={ans:d.ans,wc:d.wc,wpm:d.wpm,q:d.CQ,fails:d.fails||1};
+          _lastAIArgs={ans:d.ans,wc:d.wc,wpm:d.wpm,q:d.CQ,fails:d.fails||1,progressId:d.progressId};
         } else if(d.kind==='mock'){
           MS=d.MS;
         }
@@ -935,37 +948,38 @@ function askExit(dest){exitDest=dest;document.getElementById("exit-cov").classLi
 function closeCov(){document.getElementById("exit-cov").classList.remove("open");exitDest=null;}
 function doExit(){clearInterval(TI);clearInterval(WI);document.getElementById("exit-cov").classList.remove("open");if(exitDest)showS(exitDest);exitDest=null;}
 function setT(id,v){const e=document.getElementById(id);if(e&&v)e.textContent=v;}
-function openTG(){const l=D().siteSettings?.tgLink||"";if(l)window.open(l,"_blank");}
-function updateSiteName(name){
-  // name format: "Descriptive Prep Today" or any string — split at first space boundary for two lines
-  // Always show "Descriptive" on top and "PrepToday" on bottom regardless of stored name
-  const el=document.getElementById("site-name");
-  if(!el)return;
-  const parts=name?name.split(" "):[""]; 
-  // Use first word as top, rest joined as bottom
-  const top=parts[0]||"Descriptive";
-  const bot=parts.slice(1).join("")||"PrepToday";
-  const topEl=el.querySelector(".site-name-top");
-  const botEl=el.querySelector(".site-name-bot");
-  if(topEl)topEl.textContent=top;
-  if(botEl)botEl.textContent=bot;
+// Deterministic PRNG (mulberry32) so the same seed always produces the same shuffle order —
+// this is what lets all visitors within the same hour see the same order, and lets it change
+// automatically once the hour rolls over, with no server/storage needed.
+function seededRandom(seed){
+  return function(){
+    seed|=0;seed=seed+0x6D2B79F5|0;
+    let t=Math.imul(seed^seed>>>15,1|seed);
+    t=t+Math.imul(t^t>>>7,61|t)^t;
+    return((t^t>>>14)>>>0)/4294967296;
+  };
 }
-function renderHome(){
-  const d=D(),cfg=d.siteSettings||{};
-  if(cfg.name)updateSiteName(cfg.name);
-  updateLogo(localStorage.getItem("dpt_theme")||"light-default");
-  setT("h-eyebrow",cfg.homeEyebrow);
-  const ht=document.getElementById("h-title");if(ht&&cfg.homeTitle)ht.innerHTML=cfg.homeTitle.replace("\n","<br>");
-  setT("h-sub",cfg.homeSub);setT("h-plbl",cfg.practiceSectionLabel);setT("h-tlbl",cfg.toolsLabel);
-  setT("typ-card-t",cfg.typingCardTitle);setT("typ-card-d",cfg.typingCardDesc);
-  setT("typ-head",cfg.typingHeading);setT("typ-sub",cfg.typingSubhead);
-  if(cfg.tgLink){
-    setT("tgs-title",cfg.tgStripTitle);setT("tgs-sub",cfg.tgStripSub);
-    const hb=document.getElementById("tg-hbtn");if(hb){hb.href=cfg.tgLink;hb.classList.add("show");}setT("tg-ht",cfg.tgText||"Telegram");
+function seededShuffle(arr,seed){
+  const a=arr.slice();
+  const rnd=seededRandom(seed);
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(rnd()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
   }
-  // Course card icon/link logic removed — cards now managed via Offers & Discounts in admin
-  // Offers & Discounts page
-  const offers=d.offers||[];
+  return a;
+}
+let _lastOfferHourSeed=null;
+function renderOfferCards(){
+  const d=D(),cfg=d.siteSettings||{};
+  const offersPageMsgEl=document.getElementById("offers-page-msg");
+  if(cfg.offersMsg&&offersPageMsgEl)offersPageMsgEl.textContent=cfg.offersMsg;
+  const hourSeed=Math.floor(Date.now()/3600000); // changes once per hour, same for everyone within that hour
+  _lastOfferHourSeed=hourSeed;
+  // Keep featured cards first (they're pinned promotions), shuffle the rest
+  const rawOffers=d.offers||[];
+  const featured=rawOffers.filter(o=>o.featured);
+  const rest=seededShuffle(rawOffers.filter(o=>!o.featured),hourSeed);
+  const offers=[...featured,...rest];
   const offerCardHtml=(o,idx)=>{
     const uid=`oc_${idx}`;
     const couponCopyFn=o.coupon?`ocCopy('${o.coupon}','${uid}')`:null;
@@ -1015,20 +1029,54 @@ function renderHome(){
         </div>
       </div>`;
   };
+  const offersPageCardsEl=document.getElementById("offers-page-cards");
+  const homeCardsEl=document.getElementById("offers-home-cards");
   if(offers.length>0){
-    if(cfg.offersMsg)document.getElementById("offers-page-msg").textContent=cfg.offersMsg;
-    document.getElementById("offers-page-cards").innerHTML=offers.map((o,i)=>offerCardHtml(o,i)).join("");
-    // Render on home page: fill a row (auto with card-grid), then show "See More" at end
-    const homeCardsEl=document.getElementById("offers-home-cards");
+    if(offersPageCardsEl)offersPageCardsEl.innerHTML=offers.map((o,i)=>offerCardHtml(o,i)).join("");
     if(homeCardsEl){
-      // Use card-grid layout; add a "See More" link card at the end of the row
       homeCardsEl.innerHTML=`<div class="offers-scroll-row">${offers.map((o,i)=>offerCardHtml(o,i)).join("")}<div class="offer-card" style="display:flex;align-items:center;justify-content:center;cursor:pointer;border-style:dashed;min-width:140px;" onclick="showS('offers')"><span style="font-size:.8rem;font-weight:700;color:var(--accent);text-align:center;">See More Offers &amp; Discounts →</span></div></div>`;
     }
   } else {
-    const homeCardsEl=document.getElementById("offers-home-cards");
-    if(homeCardsEl) homeCardsEl.innerHTML="<div style='color:var(--t2);font-size:.78rem;padding:8px 0'>No offers available right now.</div>";
-    document.getElementById("offers-page-cards").innerHTML="<div style='color:var(--t2);font-size:.78rem;padding:8px 0'>No offers available right now.</div>";
+    if(homeCardsEl)homeCardsEl.innerHTML="<div style='color:var(--t2);font-size:.78rem;padding:8px 0'>No offers available right now.</div>";
+    if(offersPageCardsEl)offersPageCardsEl.innerHTML="<div style='color:var(--t2);font-size:.78rem;padding:8px 0'>No offers available right now.</div>";
   }
+}
+// Watch for the hour rolling over while the site stays open, and reshuffle automatically —
+// checked every 2 minutes, but only actually re-renders when the hour bucket has changed.
+setInterval(()=>{
+  const h=Math.floor(Date.now()/3600000);
+  if(h!==_lastOfferHourSeed)renderOfferCards();
+},120000);
+function openTG(){const l=D().siteSettings?.tgLink||"";if(l)window.open(l,"_blank");}
+function updateSiteName(name){
+  // name format: "Descriptive Prep Today" or any string — split at first space boundary for two lines
+  // Always show "Descriptive" on top and "PrepToday" on bottom regardless of stored name
+  const el=document.getElementById("site-name");
+  if(!el)return;
+  const parts=name?name.split(" "):[""]; 
+  // Use first word as top, rest joined as bottom
+  const top=parts[0]||"Descriptive";
+  const bot=parts.slice(1).join("")||"PrepToday";
+  const topEl=el.querySelector(".site-name-top");
+  const botEl=el.querySelector(".site-name-bot");
+  if(topEl)topEl.textContent=top;
+  if(botEl)botEl.textContent=bot;
+}
+function renderHome(){
+  const d=D(),cfg=d.siteSettings||{};
+  if(cfg.name)updateSiteName(cfg.name);
+  updateLogo(localStorage.getItem("dpt_theme")||"light-default");
+  setT("h-eyebrow",cfg.homeEyebrow);
+  const ht=document.getElementById("h-title");if(ht&&cfg.homeTitle)ht.innerHTML=cfg.homeTitle.replace("\n","<br>");
+  setT("h-sub",cfg.homeSub);setT("h-plbl",cfg.practiceSectionLabel);setT("h-tlbl",cfg.toolsLabel);
+  setT("typ-card-t",cfg.typingCardTitle);setT("typ-card-d",cfg.typingCardDesc);
+  setT("typ-head",cfg.typingHeading);setT("typ-sub",cfg.typingSubhead);
+  if(cfg.tgLink){
+    setT("tgs-title",cfg.tgStripTitle);setT("tgs-sub",cfg.tgStripSub);
+    const hb=document.getElementById("tg-hbtn");if(hb){hb.href=cfg.tgLink;hb.classList.add("show");}setT("tg-ht",cfg.tgText||"Telegram");
+  }
+  // Course card icon/link logic removed — cards now managed via Offers & Discounts in admin
+  renderOfferCards();
   const tm={};d.sectionTypes.forEach(s=>tm[s.id]=s);
   const activeExams=d.exams.filter(e=>e.status==="active");
   const icons={email:'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',situation:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',report:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',precis:'<line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="13" y1="18" x2="3" y2="18"/>',essay:'<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>',comprehension:'<path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>'};
@@ -1144,7 +1192,7 @@ function launchExam(qid){
   const _sb=document.getElementById("exam-submit-btn");
   const _sh=document.getElementById("exam-submit-hint");
   if(_sb){_sb.disabled=true;}
-  if(_sh){_sh.textContent="Write at least half the required words to unlock";_sh.className="submit-guard-hint";}
+  if(_sh){_sh.textContent="Write at least two-thirds of the required words to unlock";_sh.className="submit-guard-hint";}
   restrictTA(ta);
   updWC("exam-ta","exam-wc","exam-wc-top","exam-pwc");
   clearInterval(TI);clearInterval(WI);
@@ -1275,13 +1323,13 @@ function updWC(ta,wc,top,panel){
   const v=cw(document.getElementById(ta).value);
   [wc,top].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=v;});
   const pe=document.getElementById(panel);if(pe)pe.textContent=v+' words';
-  // ── Submit guard: unlock when student has written >= half the required words ──
+  // ── Submit guard: unlock when student has written >= 2/3 of the lower word limit bound ──
   if(ta==='exam-ta'){
     const wlStr=CQ&&CQ.wordLimit?CQ.wordLimit:'';
     const nums=wlStr.match(/\d+/g);
     // Parse the lower bound of the word limit (e.g. "150-200" → 150, "~100" → 100)
     const lowerBound=nums&&nums.length>0?parseInt(nums[0]):0;
-    const threshold=lowerBound>0?Math.ceil(lowerBound/2):15;
+    const threshold=lowerBound>0?Math.ceil(lowerBound*2/3):15;
     const btn=document.getElementById('exam-submit-btn');
     const hint=document.getElementById('exam-submit-hint');
     if(btn){
@@ -1714,8 +1762,31 @@ function showMockResult(taken){
     </div>`;
   }).join("");
 }
-async function runAIMock(){
+function aggregateMockParameters(){
+  MS.aiResults=MS.aiResults||{};
+  const agg={};
+  Object.values(MS.aiResults).forEach(function(r){
+    (r.parameters||[]).forEach(function(p){
+      if(!agg[p.name])agg[p.name]={name:p.name,score:0,max:0};
+      agg[p.name].score+=p.score;agg[p.name].max+=p.max;
+    });
+  });
+  const list=Object.values(agg);
+  return list.length?list:null;
+}
+function recomputeMockTotal(){
   let totScore=0,totMax=0;
+  MS.aiResults=MS.aiResults||{};
+  for(let i=0;i<MS.s.length;i++){
+    const r=MS.aiResults[i];
+    if(r){totScore+=r.totalScore||0;totMax+=MS.s[i].question&&MS.s[i].question.marks||0;}
+  }
+  const tot=document.getElementById("r-total-score");
+  if(tot&&totMax>0)tot.textContent=`${totScore}/${totMax}`;
+  return {totScore,totMax};
+}
+async function runAIMock(){
+  MS.aiResults=MS.aiResults||{};
   for(let i=0;i<MS.s.length;i++){
     const s=MS.s[i];
     const ans=MS.a[i]||"";
@@ -1730,12 +1801,10 @@ async function runAIMock(){
     const scoreEl=document.getElementById(`mscore-${i}`);
     const aiEl=document.getElementById(`mai-${i}`);
     if(result){
-      totScore+=result.totalScore||0;
-      totMax+=s.question.marks||0;
+      MS.aiResults[i]=result;
       if(scoreEl)scoreEl.innerHTML=`<span style="color:var(--accent)">${result.totalScore}/${s.question.marks}</span>`;
       if(aiEl)aiEl.innerHTML=renderAIBlock(result,s.question.marks);
-      const tot=document.getElementById("r-total-score");
-      if(tot&&totMax>0)tot.textContent=`${totScore}/${totMax}`;
+      recomputeMockTotal();
     } else {
       const d2=D(),cfg2=d2.siteSettings||{};let ep2="";
       try{const ls=localStorage.getItem("dpt_data");if(ls){ep2=JSON.parse(ls)?.siteSettings?.apiProxy||"";}}catch(e){}
@@ -1760,8 +1829,12 @@ async function retryMockAI(idx){
   const wc=cw(ans),elapsed=(Date.now()-MS.st)/60000,wpm=elapsed>0?Math.round(wc/elapsed):0;
   const result=await evalWithAI(s.question,ans,wc,wpm);
   if(result){
+    MS.aiResults=MS.aiResults||{};
+    MS.aiResults[idx]=result;
     if(scoreEl)scoreEl.innerHTML='<span style="color:var(--accent)">'+result.totalScore+'/'+s.question.marks+'</span>';
     if(aiEl)aiEl.innerHTML=renderAIBlock(result,s.question.marks);
+    const {totScore,totMax}=recomputeMockTotal();
+    if(totMax>0)updateProgressEntry(MS.progressId,{totalScore:totScore+"/"+totMax,parameters:aggregateMockParameters()});
   } else {
     if(scoreEl)scoreEl.textContent="AI failed";
     MS.aiFails=MS.aiFails||{};MS.aiFails[idx]=(MS.aiFails[idx]||1)+1;
@@ -1780,6 +1853,10 @@ async function evalWithAI(q,ans,wc,wpm){
   if(!ep)return null;
   const tm={};d.sectionTypes.forEach(s=>tm[s.id]=s);
   const typeName=tm[q.type]?.name||q.type,max=q.marks;
+  // Distribute max marks across the 4 parameters so they sum EXACTLY to max
+  // (Math.round(max/4) reused 4x can overshoot/undershoot the real total — e.g. 15/4→4×4=16≠15)
+  const base=Math.floor(max/4),rem=max-base*4;
+  const pMax=[base+(rem>0?1:0),base+(rem>1?1:0),base+(rem>2?1:0),base];
   const sys=`You are a strict, senior examiner for SBI PO / IBPS PO Mains Descriptive Paper (2026 pattern), equivalent to the marking standard used by Oliveboard and Guidely. Your scoring must be realistic, unbiased, and rigorous — the same way an actual UPSC/banking exam evaluator would mark.
 
 HARD RULES YOU MUST FOLLOW WITHOUT EXCEPTION:
@@ -1803,28 +1880,28 @@ STEP 1 — VALIDITY CHECK:
 - Does the answer attempt to address the question at all? If NO → treat as gibberish.
 
 STEP 2 — SCORING (only if answer is valid):
-Score each of the 4 parameters out of ${Math.round(max/4)} marks using this strict rubric:
+Score each of the 4 parameters using the exact max shown for each (they are pre-distributed to add up to ${max} total — do not change them):
 
-[Content & Relevance /${Math.round(max/4)}]
+[Content & Relevance /${pMax[0]}]
 - Full marks: All key points covered with accurate, question-specific detail and banking/professional knowledge
 - 75%: Most key points covered, minor gaps
 - 50%: Some relevant points but significant gaps or vague content
 - 25%: Very few relevant points, mostly generic
 - 0%: Off-topic, irrelevant, or gibberish
 
-[Structure & Format /${Math.round(max/4)}]
+[Structure & Format /${pMax[1]}]
 - For EMAIL: Must have To, Subject, Salutation, Body paragraphs, Closing, Signature. Missing any = heavy deduction.
 - For REPORT: Must have heading, date, To, Subject, body with sections, recommendation, signature. Missing = heavy deduction.
 - For SITUATION/PRECIS/ESSAY: Logical flow, paragraphing, introduction and conclusion.
 - 0 if format is completely wrong for the type.
 
-[Language & Grammar /${Math.round(max/4)}]
+[Language & Grammar /${pMax[2]}]
 - Full marks: Formal tone, zero/near-zero errors, varied sentence structure, precise vocabulary
 - Deduct per error: spelling mistakes, wrong tense, subject-verb disagreement, informal language
 - 5+ errors = max 50% of this parameter
 - Gibberish/random text = 0
 
-[Word Limit Adherence /${Math.round(max/4)}]
+[Word Limit Adherence /${pMax[3]}]
 - Within ±10% of prescribed limit: full marks
 - 10–30% below limit: 50% of this parameter
 - >30% below or heavily over: 0–25% of this parameter
@@ -1833,18 +1910,27 @@ Score each of the 4 parameters out of ${Math.round(max/4)} marks using this stri
 STEP 3 — totalScore must equal the sum of the 4 parameter scores exactly.
 
 Return ONLY this JSON:
-{"totalScore":<n>,"parameters":[{"name":"Content & Relevance","score":<n>,"max":${Math.round(max/4)},"comment":"<specific 1-sentence critique>"},{"name":"Structure & Format","score":<n>,"max":${Math.round(max/4)},"comment":"<specific 1-sentence critique>"},{"name":"Language & Grammar","score":<n>,"max":${Math.round(max/4)},"comment":"<specific 1-sentence critique>"},{"name":"Word Limit","score":<n>,"max":${Math.round(max/4)},"comment":"<state actual word count vs required and impact>"}],"strengths":["<specific strength or 'None identified' if gibberish>"],"improvements":["<specific actionable point>","<specific actionable point>","<specific actionable point>"],"overallVerdict":"<2-3 honest sentences — state clearly if answer is unacceptable, below average, average, good, or excellent and why>"}`;
+{"totalScore":<n>,"parameters":[{"name":"Content & Relevance","score":<n>,"max":${pMax[0]},"comment":"<specific 1-sentence critique>"},{"name":"Structure & Format","score":<n>,"max":${pMax[1]},"comment":"<specific 1-sentence critique>"},{"name":"Language & Grammar","score":<n>,"max":${pMax[2]},"comment":"<specific 1-sentence critique>"},{"name":"Word Limit","score":<n>,"max":${pMax[3]},"comment":"<state actual word count vs required and impact>"}],"strengths":["<specific strength or 'None identified' if gibberish>"],"improvements":["<specific actionable point>","<specific actionable point>","<specific actionable point>"],"overallVerdict":"<2-3 honest sentences — state clearly if answer is unacceptable, below average, average, good, or excellent and why>"}`;
   try{
     const res=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({model:"gemini-2.5-flash-lite",max_tokens:1000,system:sys,messages:[{role:"user",content:p}]})});
     const data=await res.json();
     if(data.error)throw new Error(data.error.message);
-    return JSON.parse(data.content.map(i=>i.text||"").join("").replace(/```json|```/g,"").trim());
+    const result=JSON.parse(data.content.map(i=>i.text||"").join("").replace(/```json|```/g,"").trim());
+    // Never trust the model's self-reported totalScore — recompute it deterministically
+    // from the parameter scores so the displayed total always matches the breakdown.
+    if(result&&Array.isArray(result.parameters)){
+      result.parameters=result.parameters.map(pr=>({...pr,score:Math.max(0,Math.min(pr.score,pr.max))}));
+      result.totalScore=result.parameters.reduce((a,pr)=>a+pr.score,0);
+    }
+    return result;
   }catch(e){return null;}
 }
 function buildManualEvalText(q,ans,wc){
   const d=D(),tm={};d.sectionTypes.forEach(s=>tm[s.id]=s);
-  const typeName=tm[q.type]?.name||q.type,max=q.marks,per=Math.round(max/4);
+  const typeName=tm[q.type]?.name||q.type,max=q.marks;
+  const base=Math.floor(max/4),rem=max-base*4;
+  const pMax=[base+(rem>0?1:0),base+(rem>1?1:0),base+(rem>2?1:0),base];
   return `You are a strict, senior examiner for the SBI PO / IBPS PO Mains Descriptive Paper (2026 pattern). Evaluate my answer below the way a real bank exam evaluator would — be honest and rigorous, don't inflate the score.
 
 SECTION TYPE: ${typeName}
@@ -1857,13 +1943,13 @@ ${q.text}
 MY ANSWER (${wc} words):
 ${ans||"(blank)"}
 
-Please score me on these 4 parameters, each out of ${per} marks:
-1. Content & Relevance
-2. Structure & Format
-3. Language & Grammar
-4. Word Limit Adherence
+Please score me on these 4 parameters — note the max marks differ slightly per parameter so they add up to exactly ${max}:
+1. Content & Relevance (out of ${pMax[0]})
+2. Structure & Format (out of ${pMax[1]})
+3. Language & Grammar (out of ${pMax[2]})
+4. Word Limit Adherence (out of ${pMax[3]})
 
-For each parameter give a score and a one-line reason. Then give a total out of ${max}, 2-3 strengths, 2-3 specific improvements, and a short overall verdict (below average / average / good / excellent).`;
+For each parameter give a score and a one-line reason. Then give a total out of ${max} — please add up the 4 scores yourself and double-check the total actually equals their sum before giving it to me. Then give 2-3 strengths, 2-3 specific improvements, and a short overall verdict (below average / average / good / excellent).`;
 }
 function fallbackCopy(text,onDone){
   try{
@@ -1936,6 +2022,7 @@ async function runAI(ans,wc,wpm){
   if(result){
     document.getElementById("r-score").textContent=result.totalScore+"/"+q.marks;
     document.getElementById("r-ai").innerHTML=renderAIBlock(result,q.marks);
+    _lastAIArgs.result=result;
   } else {
     const d=D(),cfg=d.siteSettings||{};let ep="";
     try{const ls=localStorage.getItem("dpt_data");if(ls){ep=JSON.parse(ls)?.siteSettings?.apiProxy||"";}}catch(e){}
@@ -1957,6 +2044,8 @@ async function retryRunAI(){
   if(result){
     document.getElementById("r-score").textContent=result.totalScore+"/"+q.marks;
     aiEl.innerHTML=renderAIBlock(result,q.marks);
+    _lastAIArgs.result=result;
+    updateProgressEntry(_lastAIArgs.progressId,{score:result.totalScore+"/"+q.marks,parameters:result.parameters});
   } else {
     _lastAIArgs.fails=(_lastAIArgs.fails||1)+1;
     aiEl.innerHTML=aiFailHTML("retryRunAI()","manualEvalPractice()",_lastAIArgs.fails);
@@ -2135,10 +2224,25 @@ function getProgress(){
 }
 function saveProgress(entry){
   const list = getProgress();
+  entry.id = entry.id || (Date.now()+'_'+Math.random().toString(36).slice(2,9));
   list.unshift(entry);
   if(list.length > 200) list.length = 200;
   localStorage.setItem(PROG_KEY, JSON.stringify(list));
   updateProgCard();
+  return entry.id;
+}
+function updateProgressEntry(id,patch){
+  if(!id)return;
+  const list = getProgress();
+  const idx = list.findIndex(function(x){return x.id===id;});
+  if(idx===-1)return;
+  Object.assign(list[idx],patch);
+  localStorage.setItem(PROG_KEY, JSON.stringify(list));
+  updateProgCard();
+  // If the Progress screen is currently open, refresh it so the fix is visible immediately
+  if(document.getElementById('progress')&&document.getElementById('progress').classList.contains('active')){
+    renderHistList();
+  }
 }
 function updateProgCard(){
   const list = getProgress();
@@ -2189,7 +2293,7 @@ async function submitSingle(){
   sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'practice',CQ:CQ,ans:ans,wc:wc,wpm:wpm2,taken:taken}));
   await runAI(ans,wc,wpm2);
   const scoreEl = document.getElementById('r-score');
-  saveProgress({
+  const _practiceProgressId=saveProgress({
     kind: 'practice',
     date: new Date().toISOString(),
     examId: CQ ? CQ.examId||'' : '',
@@ -2200,11 +2304,13 @@ async function submitSingle(){
     wc: wc, wpm: wpm2, timeSec: taken,
     score: scoreEl ? scoreEl.textContent : '',
     marks: CQ ? CQ.marks||0 : 0,
-    questionId: CQ ? CQ.id||'' : ''
+    questionId: CQ ? CQ.id||'' : '',
+    parameters: (_lastAIArgs&&_lastAIArgs.result&&_lastAIArgs.result.parameters)||null
   });
+  if(_lastAIArgs)_lastAIArgs.progressId=_practiceProgressId;
   // Update snapshot with final AI score
   sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
-  sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'practice',CQ:CQ,ans:ans,wc:wc,wpm:wpm2,taken:taken,fails:(_lastAIArgs&&_lastAIArgs.fails)||0}));
+  sessionStorage.setItem('dpt_result_data', JSON.stringify({kind:'practice',CQ:CQ,ans:ans,wc:wc,wpm:wpm2,taken:taken,fails:(_lastAIArgs&&_lastAIArgs.fails)||0,progressId:_practiceProgressId}));
 }
 
 /* ---- Hook: Mock submit ---- */
@@ -2235,7 +2341,7 @@ async function submitMock(){
   const attempted = Object.values(MS.a).filter(function(a){return a&&a.trim();}).length;
   const totalWC = Object.values(MS.a).reduce(function(s,a){return s+cw(a||'');},0);
   const totScoreEl = document.getElementById('r-total-score');
-  saveProgress({
+  MS.progressId=saveProgress({
     kind: 'mock',
     date: new Date().toISOString(),
     examName: ex.name||'Mock',
@@ -2248,7 +2354,8 @@ async function submitMock(){
       };
     }),
     attempted: attempted, totalWC: totalWC, timeSec: taken,
-    totalScore: totScoreEl ? totScoreEl.textContent : '--'
+    totalScore: totScoreEl ? totScoreEl.textContent : '--',
+    parameters: aggregateMockParameters()
   });
   // Update snapshot with final AI-evaluated scores
   sessionStorage.setItem('dpt_result_html', document.getElementById('result').innerHTML);
@@ -2288,6 +2395,46 @@ function filterProg(kind, btn){
   renderHistList();
 }
 
+function computeWeakAreas(){
+  const list=getProgress();
+  const agg={};
+  list.forEach(function(entry){
+    if(entry.kind!=='practice'&&entry.kind!=='mock')return;
+    (entry.parameters||[]).forEach(function(p){
+      if(!p||!p.max)return;
+      if(!agg[p.name])agg[p.name]={name:p.name,score:0,max:0,count:0};
+      agg[p.name].score+=p.score;agg[p.name].max+=p.max;agg[p.name].count++;
+    });
+  });
+  const result=Object.values(agg).map(function(a){
+    return{name:a.name,pct:Math.round((a.score/a.max)*100),count:a.count};
+  });
+  result.sort(function(a,b){return a.pct-b.pct;});
+  return result;
+}
+function renderWeakAreas(){
+  const el=document.getElementById('weak-areas-card');
+  if(!el)return;
+  const areas=computeWeakAreas();
+  if(!areas.length){
+    el.style.display='none';
+    return;
+  }
+  el.style.display='';
+  const colFor=function(p){return p>=70?'var(--green,#22c55e)':p>=45?'var(--amber,#f59e0b)':'var(--red,#ef4444)';};
+  el.innerHTML=`
+    <div class="ch"><div class="cht">Your Weak Areas</div></div>
+    <div class="cb">
+      <div style="font-size:.72rem;color:var(--t2);margin-bottom:14px;line-height:1.6">Based on AI feedback across all your practice and mock attempts — this is where you're losing the most marks.</div>
+      ${areas.map(function(a,i){
+        return `<div class="sbar">
+          <div class="sbar-top"><span>${i===0?'⚠ ':''}${a.name}</span><span>${a.pct}%</span></div>
+          <div class="sbar-track"><div class="sbar-fill" style="width:${a.pct}%;background:${colFor(a.pct)}"></div></div>
+          <div class="sbar-note">${a.count} attempt${a.count!==1?'s':''} evaluated${i===0?' · Focus here first':''}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
 function renderProgressScreen(){
   const list = getProgress();
   const prac = list.filter(function(x){return x.kind==='practice';});
@@ -2298,6 +2445,7 @@ function renderProgressScreen(){
     '<div class="ph-tile"><div class="ph-v">'+(prac.length+mocks.length)+'</div><div class="ph-l">Sessions</div></div>'+
     '<div class="ph-tile"><div class="ph-v">'+typs.length+'</div><div class="ph-l">Typing Tests</div></div>'+
     '<div class="ph-tile"><div class="ph-v">'+(bestWPM||'--')+'</div><div class="ph-l">Best WPM</div></div>';
+  renderWeakAreas();
   renderHistList();
 }
 
@@ -2479,6 +2627,7 @@ init();
       <button class="clr-btn" onclick="clearAllProgress()">Clear All</button>
     </div>
     <div class="ph-row" id="prog-overview"></div>
+    <div class="card" id="weak-areas-card" style="margin-bottom:16px;display:none"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
       <div class="prog-tabs">
         <button class="ptab on" onclick="filterProg('all',this)">All</button>
