@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light-default">
+<html lang="en" data-theme="light-default" data-mode="light">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -449,14 +449,19 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
    and the exam-mode header, which keep their original design untouched.
    ========================================================================= */
 
-/* New tokens re-declared for every non-exam screen + shared overlays.
+/* Mode-independent tokens (radius etc.) + the light/dark blocks below.
    Because #exam/#fullmock are separate sibling containers, none of this
    touches them — they keep resolving the original [data-theme] variables
-   exactly as before, so the theme switcher still works for the test module. */
+   exactly as before, so the exam module's own look is untouched. */
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop){
+  --r:20px;--rs:12px;--rl:26px;
+}
+
+/* Light / Dark mode — matches the two reference screenshots (cream+ink vs near-black+cream),
+   both anchored to the same yellow brand accent. Doesn't touch #exam/#fullmock (see note above). */
+[data-mode="light"] :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop){
   --bg:#FBF2DA;--bg2:#FFFFFF;--bg3:#F4E6BE;--bg4:#EBD68F;
-  --t:#18130F;--t2:#6B5D45;--t3:#C7B78C;
-  --b:#18130F;
+  --t:#18130F;--t2:#6B5D45;--t3:#C7B78C;--b:#18130F;
   --accent:#A8710A;--ah:#8A5D08;--adim:#FFF3C2;--aborder:#18130F;
   --green:#1C8C4E;--gdim:#E1F5E7;--gborder:#18130F;
   --red:#D6382C;--rdim:#FBE3E0;--rborder:#18130F;
@@ -465,9 +470,29 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   --coral:#D3501F;--coraldim:#FBE6DC;--coralborder:#18130F;
   --ch:rgba(255,214,64,.2);
   --shadow:4px 4px 0 #18130F;
-  --r:14px;--rs:9px;--rl:20px;
+  --dotbg:radial-gradient(rgba(24,19,15,.35) 1px,transparent 1px);
 }
-:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker){background:var(--bg);}
+[data-mode="dark"] :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop){
+  --bg:#131210;--bg2:#1C1A16;--bg3:#26221B;--bg4:#332C21;
+  --t:#F5EEDD;--t2:#B7AC93;--t3:#5B5347;--b:#F5EEDD;
+  --accent:#FFDE4D;--ah:#FFE87A;--adim:#3A3220;--aborder:#F5EEDD;
+  --green:#4ADE80;--gdim:#1E3324;--gborder:#F5EEDD;
+  --red:#FF6F6F;--rdim:#3A1F1F;--rborder:#F5EEDD;
+  --amber:#FFC94D;
+  --teal:#4DD9C0;--tealdim:#17332E;--tealborder:#F5EEDD;
+  --coral:#FF9166;--coraldim:#3A2416;--coralborder:#F5EEDD;
+  --ch:rgba(255,222,77,.1);
+  --shadow:4px 4px 0 #F5EEDD;
+  --dotbg:radial-gradient(rgba(245,238,221,.35) 1px,transparent 1px);
+}
+:root{--brut-fill:#FFDE4D;--brut-fill-t:#18130F;}
+[data-mode="light"]{--brut-tint:#FFF3C2;}
+[data-mode="dark"]{--brut-tint:#3A3220;}
+:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker){
+  background-color:var(--bg);
+  background-image:var(--dotbg);
+  background-size:16px 16px;
+}
 
 /* headline / label voice */
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) h1,
@@ -475,17 +500,17 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .h-title,.r-top h2,.hc-title,.hi-title,.oc-title,.tmode-t,#offers-head,#ml-exam-name,.trc-grade{
   font-family:'Space Grotesk',sans-serif;
 }
-.h-title{font-weight:800;text-transform:uppercase;font-size:2.35rem;letter-spacing:-.01em;text-shadow:4px 4px 0 #FFDE4D;}
+.h-title{font-weight:800;text-transform:uppercase;font-size:2.35rem;letter-spacing:-.01em;text-shadow:4px 4px 0 var(--brut-fill);}
 .r-top h2{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;}
-.eyebrow{background:#FFDE4D;color:#18130F;border:2.5px solid var(--b);border-radius:999px;padding:5px 14px 5px 10px;display:inline-flex;font-weight:700;}
+.eyebrow{background:var(--brut-fill);color:var(--brut-fill-t);border:2.5px solid var(--b);border-radius:999px;padding:5px 14px 5px 10px;display:inline-flex;font-weight:700;}
 .eyebrow::before{background:#18130F;}
 .sec-lbl{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.66rem;}
 .sec-lbl::before{border-radius:2px;}
 
 /* scrolling ribbon on the homepage */
-.nb-marquee{overflow:hidden;border-top:3px solid var(--b);border-bottom:3px solid var(--b);background:#FFDE4D;margin:0 -32px 30px;}
+.nb-marquee{overflow:hidden;border-top:3px solid var(--b);border-bottom:3px solid var(--b);background:var(--brut-fill);margin:0 -32px 30px;}
 .nb-marquee-track{display:flex;width:max-content;animation:nbMarquee 26s linear infinite;}
-.nb-marquee-track span{display:flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:#18130F;white-space:nowrap;padding:9px 22px 9px 0;}
+.nb-marquee-track span{display:flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--brut-fill-t);white-space:nowrap;padding:9px 22px 9px 0;}
 @keyframes nbMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.nb-marquee-track{animation:none}}
 @media(max-width:640px){.nb-marquee{margin:0 -24px 24px}}
@@ -499,7 +524,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .lt-btn,
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .back-btn{
   font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.02em;
-  border:2.5px solid var(--b)!important;border-radius:var(--rs);
+  border:2.5px solid var(--b)!important;border-radius:999px;
   box-shadow:3px 3px 0 var(--b);transition:transform .12s ease,box-shadow .12s ease,background .12s ease,color .12s ease!important;
 }
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop) .btn:hover,
@@ -514,7 +539,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop) .bp,
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .oc-link,
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .tgs-cta{
-  background:#FFDE4D!important;color:#18130F!important;box-shadow:3px 3px 0 var(--b);
+  background:var(--brut-fill)!important;color:var(--brut-fill-t)!important;box-shadow:3px 3px 0 var(--b);
 }
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop) .bg,
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .back-btn,
@@ -529,10 +554,17 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   border:2px solid var(--b);font-weight:600;
 }
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) :is(.stab.on,.tob.on,.ptab.on,.tl-btn.on){
-  background:#FFDE4D;color:#18130F;
+  background:var(--brut-fill);color:var(--brut-fill-t);
 }
-:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) :is(.chip,.hi-badge,.hi-score-chip,.ftag,.lt-badge,.oc-price-save,.oc-top-badge){
-  border:2px solid var(--b);font-weight:600;
+:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) :is(.chip,.hi-badge,.hi-score-chip,.ftag,.lt-badge,.oc-price-save){
+  border:2px solid var(--b);font-weight:600;border-radius:999px;
+}
+:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .oc-top-badge{
+  top:-11px;right:16px;left:auto;
+  background:var(--brut-fill);color:var(--brut-fill-t);
+  border:2.5px solid var(--b);border-radius:999px;
+  padding:5px 13px;font-family:'Space Grotesk',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.05em;
+  box-shadow:3px 3px 0 var(--b);transform:rotate(-4deg);line-height:1.4;
 }
 
 /* card / surface family: thick border + hard offset shadow */
@@ -553,7 +585,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   border:2.5px solid var(--b);border-radius:8px;
 }
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .oc-icon-wrap{border:2px solid var(--b);}
-:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .offer-card.featured{border:3px solid #18130F;box-shadow:6px 6px 0 #FFDE4D;}
+:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .offer-card.featured{border:3px solid var(--b);box-shadow:6px 6px 0 var(--brut-fill);}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .q-item:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--b);}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .model-box{
   border-top:3px solid var(--b);border-right:3px solid var(--b);border-bottom:3px solid var(--b);border-left:5px solid var(--green);
@@ -569,7 +601,18 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .lt-logo-fb{border:2px solid var(--b);border-radius:8px;}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .cring .ring-bg{stroke:var(--b);opacity:.25;}
 
-/* modals */
+/* homepage-closing CTA banner, inspired by the reference site's footer */
+.nb-footer{position:relative;overflow:hidden;background:#18130F;margin:44px -32px 0;padding:52px 32px 0;color:#FBF2DA;border-top:4px solid #18130F;}
+.nb-footer-inner{position:relative;z-index:2;max-width:620px;}
+.nb-footer-eyebrow{display:inline-flex;align-items:center;background:var(--brut-fill);color:var(--brut-fill-t);border:2.5px solid #FBF2DA;border-radius:999px;padding:5px 14px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;}
+.nb-footer-h{font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;font-size:2.15rem;line-height:1.06;letter-spacing:-.01em;margin:0 0 12px;}
+.nb-footer-sub{font-size:.92rem;color:#C7B78C;max-width:420px;margin:0 0 24px;}
+.nb-footer-cta{background:var(--brut-fill)!important;color:var(--brut-fill-t)!important;border:3px solid #FBF2DA!important;box-shadow:5px 5px 0 rgba(251,242,218,.3)!important;font-size:.85rem;padding:13px 26px;}
+.nb-footer-cta:hover{box-shadow:7px 7px 0 rgba(251,242,218,.3)!important;}
+.nb-footer-word{position:relative;z-index:1;font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;font-size:8.5rem;line-height:.85;color:#FBF2DA;opacity:.08;white-space:nowrap;margin:34px -8px -16px;letter-spacing:-.01em;pointer-events:none;}
+@media(max-width:640px){.nb-footer{margin:32px -24px 0;padding:38px 24px 0;}.nb-footer-h{font-size:1.5rem}.nb-footer-word{font-size:3.6rem;margin:22px -6px -10px}}
+
+
 .cbox-t{font-family:'Space Grotesk',sans-serif;font-weight:800;text-transform:uppercase;}
 .panel-pop{border:3px solid var(--b)!important;box-shadow:5px 5px 0 var(--b)!important;}
 
@@ -589,19 +632,27 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
    [data-theme="light-default"] body.exam-mode header … rules
    (much higher specificity) continue to win untouched during a test. */
 header{
-  --bg:#FBF2DA;--bg2:#FFFFFF;--bg3:#F4E6BE;--t:#18130F;--t2:#6B5D45;--t3:#C7B78C;
-  --b:#18130F;--accent:#A8710A;--ah:#8A5D08;--adim:#FFF3C2;--aborder:#18130F;
   --rs:9px;
-  background:#FBF2DA;border-bottom:3px solid #18130F;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+  box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+[data-mode="light"] header{
+  --bg:#FBF2DA;--bg2:#FFFFFF;--bg3:#F4E6BE;--t:#18130F;--t2:#6B5D45;--t3:#C7B78C;--b:#18130F;
+  --accent:#A8710A;--ah:#8A5D08;--adim:#FFF3C2;--aborder:#18130F;
+  background:#FBF2DA;border-bottom:3px solid #18130F;
+}
+[data-mode="dark"] header{
+  --bg:#131210;--bg2:#1C1A16;--bg3:#26221B;--t:#F5EEDD;--t2:#B7AC93;--t3:#5B5347;--b:#F5EEDD;
+  --accent:#FFDE4D;--ah:#FFE87A;--adim:#3A3220;--aborder:#F5EEDD;
+  background:#131210;border-bottom:3px solid #F5EEDD;
 }
 header .site-name-top,header .site-name-bot{font-family:'Space Grotesk',sans-serif;font-weight:800;letter-spacing:0;}
 header .ib{border:2px solid var(--b);border-radius:8px;}
-header .ib:hover{background:#FFDE4D;border-color:var(--b);color:#18130F;}
+header .ib:hover{background:var(--brut-fill);border-color:var(--b);color:var(--brut-fill-t);}
 header .tg-hbtn{border:2px solid var(--b);border-radius:8px;font-weight:700;}
-header .tg-hbtn:hover{background:#FFDE4D;color:#18130F;border-color:var(--b);}
+header .tg-hbtn:hover{background:var(--brut-fill);color:var(--brut-fill-t);border-color:var(--b);}
 header .btn{font-family:'Space Grotesk',sans-serif;font-weight:700;text-transform:uppercase;border:2px solid var(--b);border-radius:8px;}
-header .h-brand:hover{background:#FFF3C2;}
-.panel-pop .t-choice.on{border-color:var(--b);background:#FFF3C2;}
+header .h-brand:hover{background:var(--brut-tint);}
+.panel-pop .t-choice.on{border-color:var(--b);background:var(--brut-tint);}
 
 </style>
 </head>
@@ -630,7 +681,7 @@ header .h-brand:hover{background:#FFF3C2;}
       <svg width="14" height="14" viewBox="0 0 24 24"><path d="M4 20V7H2m4 0h8m0 0h2m-2 0V20m-8-7h7"/><path d="M15 20v-5a2.5 2.5 0 015 0V20m-5-2.5h5"/></svg>
     </button>
     <button class="ib" onclick="toggleP('tp',event)" title="Theme">
-      <svg id="theme-ico" width="14" height="14" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="theme-ico" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.5 5.5 0 01-7.54-7.54A8.94 8.94 0 0012 3z"/></svg>
     </button>
   </div>
 </header>
@@ -641,13 +692,9 @@ header .h-brand:hover{background:#FFF3C2;}
 </div>
 <div class="panel-pop" id="tp">
   <div class="pop-title">Theme</div>
-  <div class="tp-grp"><div class="tp-grp-lbl">Dark</div>
-    <div class="t-choice" data-t="dark-default" onclick="setTheme('dark-default')"><div class="t-swatch" style="background:linear-gradient(135deg,#0e1117 50%,#e2b714 50%)"></div>Navy &amp; gold</div>
-    <div class="t-choice" data-t="dark-simple" onclick="setTheme('dark-simple')"><div class="t-swatch" style="background:linear-gradient(135deg,#18181b 50%,#6366f1 50%)"></div>Dark &amp; minimal</div>
-  </div>
-  <div class="tp-grp"><div class="tp-grp-lbl">Light</div>
-    <div class="t-choice" data-t="light-default" onclick="setTheme('light-default')"><div class="t-swatch" style="background:linear-gradient(135deg,#f8f9fc 50%,#2563eb 50%)"></div>Clean &amp; blue</div>
-    <div class="t-choice" data-t="light-warm" onclick="setTheme('light-warm')"><div class="t-swatch" style="background:linear-gradient(135deg,#faf8f5 50%,#c2460a 50%)"></div>Warm &amp; terracotta</div>
+  <div class="tp-grp">
+    <div class="t-choice" data-m="light" onclick="setMode('light')"><div class="t-swatch" style="background:linear-gradient(135deg,#FBF2DA 50%,#FFDE4D 50%)"></div>Light</div>
+    <div class="t-choice" data-m="dark" onclick="setMode('dark')"><div class="t-swatch" style="background:linear-gradient(135deg,#131210 50%,#FFDE4D 50%)"></div>Dark</div>
   </div>
 </div>
 <div class="cov" id="exit-cov">
@@ -696,6 +743,15 @@ header .h-brand:hover{background:#FFF3C2;}
       <div class="hc-title">Live Mock Tracker</div>
       <div class="hc-desc">Live &amp; upcoming mocks across top platforms</div>
     </div>
+  </div>
+  <div class="nb-footer">
+    <div class="nb-footer-inner">
+      <div class="nb-footer-eyebrow">Free. Forever. No catch.</div>
+      <h2 class="nb-footer-h">Ready to start<br>practicing?</h2>
+      <p class="nb-footer-sub">Pick a section, write your first answer, and get instant AI feedback — no signup needed.</p>
+      <button class="btn bp nb-footer-cta" onclick="document.getElementById('sec-practice-cards').scrollIntoView({behavior:'smooth',block:'center'})">Start Practicing →</button>
+    </div>
+    <div class="nb-footer-word" id="footer-wordmark" aria-hidden="true">Descriptive PrepToday</div>
   </div>
 </div>
 <div id="qselect" class="screen">
@@ -903,6 +959,8 @@ const EX=()=>{try{const d=D();return d.exams.find(e=>e.status==="active")||d.exa
 async function init(){
   const th=localStorage.getItem("dpt_theme")||"light-default";
   applyTheme(th,false);
+  const mo=localStorage.getItem("dpt_mode")||"light";
+  applyMode(mo,false);
   const rawFs=parseInt(localStorage.getItem("dpt_font")||"16");
   const fs=String(Math.min(Math.max(rawFs,14),22));
   setFS(fs,false);document.getElementById("fs-slider").value=fs;
@@ -952,14 +1010,15 @@ async function init(){
 function applyTheme(t,save=true){
   document.documentElement.setAttribute("data-theme",t);
   if(save)localStorage.setItem("dpt_theme",t);
-  const dark=t.startsWith("dark");
-  const ico=document.getElementById("theme-ico");
-  ico.innerHTML=dark?'<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>':'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>';
-  document.querySelectorAll(".t-choice").forEach(e=>e.classList.toggle("on",e.dataset.t===t));
   // Only update logo if data is already loaded (save=true means user-triggered, data is ready)
   if(save)updateLogo(t);
 }
-function setTheme(t){applyTheme(t);document.getElementById("tp").classList.remove("open");}
+function applyMode(m,save=true){
+  document.documentElement.setAttribute("data-mode",m);
+  if(save)localStorage.setItem("dpt_mode",m);
+  document.querySelectorAll(".t-choice").forEach(e=>e.classList.toggle("on",e.dataset.m===m));
+}
+function setMode(m){applyMode(m);document.getElementById("tp").classList.remove("open");}
 function updateLogo(t){
   const d=D(),cfg=d.siteSettings||{};
   // Clean & Blue's exam/mock header keeps a dark navy background even in the light theme,
@@ -1214,6 +1273,8 @@ function updateSiteName(name){
   const botEl=el.querySelector(".site-name-bot");
   if(topEl)topEl.textContent=top;
   if(botEl)botEl.textContent=bot;
+  const fw=document.getElementById("footer-wordmark");
+  if(fw)fw.textContent=name||"Descriptive PrepToday";
 }
 function renderHome(){
   const d=D(),cfg=d.siteSettings||{};
