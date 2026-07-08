@@ -181,12 +181,12 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .t-swatch{width:24px;height:16px;border-radius:3px;flex-shrink:0;border:1px solid rgba(0,0,0,.1)}
 /* SCREENS */
 .screen{display:none}.screen.active{display:block}
-.page-wrap{max-width:960px;margin:0 auto;padding:40px 32px}
+.page-wrap{max-width:none;padding:40px 32px}
 .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--t2);background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:6px 14px;cursor:pointer;font-family:var(--font);transition:all var(--tr);margin-bottom:22px}
 .back-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--adim)}
 .back-btn svg{stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 /* HOME */
-#home{max-width:1100px;margin:0 auto;padding:52px 32px 40px}
+#home{padding:52px 32px 40px}
 .eyebrow{font-family:var(--mono);font-size:.63rem;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
 .h-title{font-size:2.1rem;font-weight:800;letter-spacing:-.6px;line-height:1.15;margin-bottom:12px}
@@ -306,7 +306,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .bg{background:transparent;border:1px solid var(--b);color:var(--t2)}.bg:hover{border-color:var(--accent);color:var(--accent)}
 .bsm{padding:4px 10px;font-size:.7rem}
 /* RESULT */
-#result{max-width:920px;margin:0 auto;padding:34px 28px}
+#result{padding:34px 28px}
 .r-top{text-align:center;margin-bottom:24px}
 .r-top h2{font-size:1.35rem;font-weight:700;margin-bottom:3px;letter-spacing:-.3px}
 .r-top p{color:var(--t2);font-size:.78rem}
@@ -470,7 +470,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   --coral:#D3501F;--coraldim:#FBE6DC;--coralborder:#18130F;
   --ch:rgba(255,214,64,.2);
   --shadow:4px 4px 0 #18130F;
-  --dotbg:radial-gradient(rgba(24,19,15,.35) 1px,transparent 1px);
+  --dotbg:radial-gradient(rgba(24,19,15,.09) 1px,transparent 1px);
 }
 [data-mode="dark"] :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop){
   --bg:#131210;--bg2:#1C1A16;--bg3:#26221B;--bg4:#332C21;
@@ -483,7 +483,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   --coral:#FF9166;--coraldim:#3A2416;--coralborder:#F5EEDD;
   --ch:rgba(255,222,77,.1);
   --shadow:4px 4px 0 #F5EEDD;
-  --dotbg:radial-gradient(rgba(245,238,221,.35) 1px,transparent 1px);
+  --dotbg:radial-gradient(rgba(245,238,221,.10) 1px,transparent 1px);
 }
 :root{--brut-fill:#FFDE4D;--brut-fill-t:#18130F;}
 [data-mode="light"]{--brut-tint:#FFF3C2;}
@@ -547,7 +547,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
   background:var(--bg2)!important;
 }
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .clr-btn{color:var(--red)!important;border-color:var(--b)!important;}
-:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .clr-btn:hover{background:var(--red)!important;color:#fff!important;}
+:is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) .clr-btn:hover{background:var(--red)!important;color:var(--bg)!important;}
 
 /* pills — pattern for chips/tabs, thick-ish border, no heavy shadow (keeps dense rows calm) */
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker) :is(.stab,.tob,.ptab,.tl-btn,.mtab){
@@ -713,8 +713,8 @@ header .h-brand:hover{background:var(--brut-tint);}
   <p class="h-sub" id="h-sub">Exam-pattern interface · AI evaluation · Model answers · Typing speed tracker</p>
   <div class="nb-marquee" aria-hidden="true">
     <div class="nb-marquee-track">
-      <span>★ Descriptive Practice ★ AI Evaluation ★ Model Answers ★ Typing Speed Test ★ Exam-Pattern Interface ★ 100% Free Forever ★</span>
-      <span>★ Descriptive Practice ★ AI Evaluation ★ Model Answers ★ Typing Speed Test ★ Exam-Pattern Interface ★ 100% Free Forever ★</span>
+      <span>★ Descriptive Practice ★ AI Evaluation ★ Model Answers ★ Typing Speed Test ★ Exam-Pattern Interface ★</span>
+      <span>★ Descriptive Practice ★ AI Evaluation ★ Model Answers ★ Typing Speed Test ★ Exam-Pattern Interface ★</span>
     </div>
   </div>
   <div class="sec-lbl" id="h-plbl">Practice Section</div>
