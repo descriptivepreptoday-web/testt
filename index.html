@@ -455,6 +455,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
    exactly as before, so the exam module's own look is untouched. */
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker,.cov,.panel-pop){
   --r:20px;--rs:12px;--rl:26px;
+  color:var(--t);
 }
 
 /* Light / Dark mode — matches the two reference screenshots (cream+ink vs near-black+cream),
@@ -490,6 +491,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 [data-mode="dark"]{--brut-tint:#3A3220;}
 :is(#home,#qselect,#result,#typing,#offers,#mocklist,#progress,#live-tracker){
   background-color:var(--bg);
+  color:var(--t);
   background-image:var(--dotbg);
   background-size:16px 16px;
 }
@@ -633,6 +635,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
    (much higher specificity) continue to win untouched during a test. */
 header{
   --rs:9px;
+  color:var(--t);
   box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;
 }
 [data-mode="light"] header{
@@ -1010,21 +1013,21 @@ async function init(){
 function applyTheme(t,save=true){
   document.documentElement.setAttribute("data-theme",t);
   if(save)localStorage.setItem("dpt_theme",t);
-  // Only update logo if data is already loaded (save=true means user-triggered, data is ready)
-  if(save)updateLogo(t);
 }
 function applyMode(m,save=true){
   document.documentElement.setAttribute("data-mode",m);
   if(save)localStorage.setItem("dpt_mode",m);
   document.querySelectorAll(".t-choice").forEach(e=>e.classList.toggle("on",e.dataset.m===m));
+  // Only update logo if data is already loaded (save=true means user-triggered, data is ready)
+  if(save)updateLogo(m);
 }
 function setMode(m){applyMode(m);document.getElementById("tp").classList.remove("open");}
-function updateLogo(t){
+function updateLogo(m){
   const d=D(),cfg=d.siteSettings||{};
-  // Clean & Blue's exam/mock header keeps a dark navy background even in the light theme,
-  // so use the dark-theme logo there instead of faking a white tile behind the light logo.
-  const examDarkHeader=t==="light-default"&&document.body.classList.contains("exam-mode");
-  const dark=t.startsWith("dark")||examDarkHeader;
+  // The exam-taking header keeps its own dark navy background regardless of site mode,
+  // so use the dark-variant logo there instead of faking a white tile behind the light logo.
+  const examDarkHeader=document.body.classList.contains("exam-mode");
+  const dark=m==="dark"||examDarkHeader;
   const url=dark?(cfg.logoUrlDark||cfg.logoUrl||""):(cfg.logoUrlLight||cfg.logoUrl||"");
   const l=document.getElementById("site-logo");
   if(url){l.src=url;l.style.display="block";}else l.style.display="none";
@@ -1056,7 +1059,7 @@ function showS(id,opts){
   window.scrollTo(0,0);
   const isExamScreen=(id==="fullmock"||id==="exam");
   document.body.classList.toggle("exam-mode",isExamScreen);
-  updateLogo(localStorage.getItem("dpt_theme")||"light-default");
+  updateLogo(localStorage.getItem("dpt_mode")||"light");
   const hec=document.getElementById("h-exam-ctl");
   if(hec) hec.style.display=(id==="fullmock")?"flex":"none";
   const brand=document.getElementById("h-brand");
@@ -1279,7 +1282,7 @@ function updateSiteName(name){
 function renderHome(){
   const d=D(),cfg=d.siteSettings||{};
   if(cfg.name)updateSiteName(cfg.name);
-  updateLogo(localStorage.getItem("dpt_theme")||"light-default");
+  updateLogo(localStorage.getItem("dpt_mode")||"light");
   setT("h-eyebrow",cfg.homeEyebrow);
   const ht=document.getElementById("h-title");if(ht&&cfg.homeTitle)ht.innerHTML=cfg.homeTitle.replace("\n","<br>");
   setT("h-sub",cfg.homeSub);setT("h-plbl",cfg.practiceSectionLabel);setT("h-tlbl",cfg.toolsLabel);
