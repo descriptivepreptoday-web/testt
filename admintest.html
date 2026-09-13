@@ -411,8 +411,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);min-heig
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Essay Text (always free to read)</label>
           <textarea id="es-body" placeholder="The full essay text..." rows="8" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem;font-family:inherit;resize:vertical"></textarea>
 
-          <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Structural Breakdown (optional) — one section per line: Heading: point one | point two | point three</label>
-          <textarea id="es-structure" placeholder="Introduction: Hook about the topic | Thesis statement&#10;Body Paragraph 1 — Key Drivers: Agricultural expansion | Logging industry | Urban sprawl&#10;Conclusion: Summary of solutions | Call to action" rows="10" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
+          <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Structural Breakdown (optional) — either paste "Heading:" on its own line followed by a paragraph (auto-split into bullets), or write "Heading: point one | point two" on one line yourself</label>
+          <textarea id="es-structure" placeholder="Introduction:&#10;Your paragraph goes here — it'll be split into bullet points automatically.&#10;&#10;Body — Key Drivers:&#10;Another paragraph, or: point one | point two | point three" rows="10" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
 
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Linked Practice Question (from the Questions editor — must be an Essay Writing type question)</label>
           <select id="es-practice-q" style="width:100%;margin-bottom:12px;padding:8px 11px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem"></select>
@@ -2174,28 +2174,45 @@ function resetEssayForm(){
 }
 // Parses lines like "Heading: point one | point two" into [{heading, points:[...]}, ...].
 // A line with no colon, or no text after it, is skipped rather than erroring out.
-// Turns lines like "Heading: point one | point two" into sections. Nothing typed is ever
-// silently dropped: a line without a colon is added as an extra point under whichever
-// heading came before it (so a plain line just becomes a continuation, not lost data).
+// Understands two formats, mixed freely:
+//  1) "Heading:" on its own line, followed by a paragraph on the next line(s) — like a real
+//     pasted essay outline. The paragraph is auto-split into sentence-level bullets.
+//  2) "Heading: point one | point two" all on one line, for when you want to write bullets
+//     directly yourself.
+// A line counts as a heading if it ends in ":" (format 1), or contains ":" early in a short
+// line (format 2) — anything else is treated as body text for whichever heading came before it.
 function parseEssayStructure(text){
+  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   const sections=[];
-  text.split('\n').map(l=>l.trim()).filter(Boolean).forEach(line=>{
-    const i=line.indexOf(':');
-    if(i===-1){
-      if(sections.length)sections[sections.length-1].points.push(line);
-      else sections.push({heading:line,points:[]});
-      return;
+  let bodyBuffer=[];
+  function flush(){
+    if(!bodyBuffer.length||!sections.length)return;
+    const bodyText=bodyBuffer.join(' ');
+    let points=bodyText.includes('|')
+      ? bodyText.split('|').map(p=>p.trim()).filter(Boolean)
+      : bodyText.split(/(?<=[.!?])\s+/).map(p=>p.trim()).filter(Boolean);
+    if(!points.length)points=[bodyText];
+    sections[sections.length-1].points.push(...points);
+    bodyBuffer=[];
+  }
+  lines.forEach(line=>{
+    const endsWithColon=/:\s*$/.test(line);
+    const firstColon=line.indexOf(':');
+    if(endsWithColon){
+      flush();
+      sections.push({heading:line.replace(/:\s*$/,'').trim(),points:[]});
+    }else if(firstColon!==-1&&firstColon<50){
+      flush();
+      const heading=line.slice(0,firstColon).trim();
+      const rest=line.slice(firstColon+1).trim();
+      sections.push({heading,points:[]});
+      if(rest)bodyBuffer.push(rest);
+    }else{
+      bodyBuffer.push(line);
     }
-    const heading=line.slice(0,i).trim();
-    const pointsText=line.slice(i+1).trim();
-    const points=pointsText?pointsText.split('|').map(p=>p.trim()).filter(Boolean):[];
-    if(!heading){
-      if(sections.length)sections[sections.length-1].points.push(...points);
-      return;
-    }
-    sections.push({heading,points});
   });
-  return sections;
+  flush();
+  return sections.filter(s=>s.heading);
 }
 function saveEssay(){
   const title=document.getElementById('es-title').value.trim();
