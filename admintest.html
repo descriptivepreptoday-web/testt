@@ -412,7 +412,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);min-heig
           <textarea id="es-body" placeholder="The full essay text..." rows="8" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem;font-family:inherit;resize:vertical"></textarea>
 
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Structural Breakdown (optional) — one section per line: Heading: point one | point two | point three</label>
-          <textarea id="es-structure" placeholder="Introduction: Hook about the topic | Thesis statement&#10;Body Paragraph 1 — Key Drivers: Agricultural expansion | Logging industry | Urban sprawl&#10;Conclusion: Summary of solutions | Call to action" rows="4" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
+          <textarea id="es-structure" placeholder="Introduction: Hook about the topic | Thesis statement&#10;Body Paragraph 1 — Key Drivers: Agricultural expansion | Logging industry | Urban sprawl&#10;Conclusion: Summary of solutions | Call to action" rows="10" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
 
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Linked Practice Question (from the Questions editor — must be an Essay Writing type question)</label>
           <select id="es-practice-q" style="width:100%;margin-bottom:12px;padding:8px 11px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem"></select>
@@ -2174,15 +2174,28 @@ function resetEssayForm(){
 }
 // Parses lines like "Heading: point one | point two" into [{heading, points:[...]}, ...].
 // A line with no colon, or no text after it, is skipped rather than erroring out.
+// Turns lines like "Heading: point one | point two" into sections. Nothing typed is ever
+// silently dropped: a line without a colon is added as an extra point under whichever
+// heading came before it (so a plain line just becomes a continuation, not lost data).
 function parseEssayStructure(text){
-  return text.split('\n').map(line=>line.trim()).filter(Boolean).map(line=>{
+  const sections=[];
+  text.split('\n').map(l=>l.trim()).filter(Boolean).forEach(line=>{
     const i=line.indexOf(':');
-    if(i===-1)return null;
+    if(i===-1){
+      if(sections.length)sections[sections.length-1].points.push(line);
+      else sections.push({heading:line,points:[]});
+      return;
+    }
     const heading=line.slice(0,i).trim();
-    const points=line.slice(i+1).split('|').map(p=>p.trim()).filter(Boolean);
-    if(!heading||!points.length)return null;
-    return {heading,points};
-  }).filter(Boolean);
+    const pointsText=line.slice(i+1).trim();
+    const points=pointsText?pointsText.split('|').map(p=>p.trim()).filter(Boolean):[];
+    if(!heading){
+      if(sections.length)sections[sections.length-1].points.push(...points);
+      return;
+    }
+    sections.push({heading,points});
+  });
+  return sections;
 }
 function saveEssay(){
   const title=document.getElementById('es-title').value.trim();
