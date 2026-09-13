@@ -1731,7 +1731,44 @@
       ],
       "image": "https://i.postimg.cc/bvbc8cyM/Financial-Inclusion.avif",
       "body": "India has witnessed a remarkable shift towards digital banking over the past decade, driven by initiatives such as the Pradhan Mantri Jan Dhan Yojana, the Unified Payments Interface (UPI), and the spread of affordable smartphones and internet connectivity. This transformation has opened up unprecedented opportunities to extend formal financial services to previously unbanked populations, particularly in rural and semi-urban areas.\n\nUPI alone processes billions of transactions every month, allowing even small vendors and farmers to receive payments instantly without visiting a branch. Digital lending platforms have made credit accessible to small businesses lacking traditional collateral, while mobile-based insurance and investment products have widened the reach of financial planning to first-time users.\n\nHowever, several challenges limit the full potential of this shift. Digital literacy remains uneven, with many elderly and rural users struggling to navigate banking apps confidently. Cybersecurity threats, including phishing and OTP fraud, disproportionately affect first-time digital users unfamiliar with safe practices. Connectivity gaps in remote regions further continue to exclude a significant section of the population.\n\nTo address this, banks must invest in vernacular-language interfaces, simplified user experiences, and continuous financial literacy campaigns run with local self-help groups and Business Correspondents. Strengthening cybersecurity awareness and grievance redressal is equally important to build trust.\n\nIn conclusion, while digital banking has significantly advanced financial inclusion in India, true inclusion will only be achieved when access is matched by usage, trust and safety — a balance of technology, education and protection.",
-      "structure": [],
+      "structure": [
+        {
+          "heading": "Introduction",
+          "points": [
+            "India has witnessed a remarkable shift towards digital banking over the past decade, driven by initiatives such as the Pradhan Mantri Jan Dhan Yojana, the Unified Payments Interface (UPI), and the spread of affordable smartphones and internet connectivity.",
+            "This transformation has opened up unprecedented opportunities to extend formal financial services to previously unbanked populations, particularly in rural and semi-urban areas."
+          ]
+        },
+        {
+          "heading": "Body – Benefits / Opportunities",
+          "points": [
+            "UPI alone processes billions of transactions every month, allowing even small vendors and farmers to receive payments instantly without visiting a branch.",
+            "Digital lending platforms have made credit accessible to small businesses lacking traditional collateral, while mobile-based insurance and investment products have widened the reach of financial planning to first-time users."
+          ]
+        },
+        {
+          "heading": "Body – Challenges / Problems",
+          "points": [
+            "However, several challenges limit the full potential of this shift.",
+            "Digital literacy remains uneven, with many elderly and rural users struggling to navigate banking apps confidently.",
+            "Cybersecurity threats, including phishing and OTP fraud, disproportionately affect first-time digital users unfamiliar with safe practices.",
+            "Connectivity gaps in remote regions further continue to exclude a significant section of the population."
+          ]
+        },
+        {
+          "heading": "Body – Solutions / Measures",
+          "points": [
+            "To address this, banks must invest in vernacular-language interfaces, simplified user experiences, and continuous financial literacy campaigns run with local self-help groups and Business Correspondents.",
+            "Strengthening cybersecurity awareness and grievance redressal is equally important to build trust."
+          ]
+        },
+        {
+          "heading": "Conclusion",
+          "points": [
+            "In conclusion, while digital banking has significantly advanced financial inclusion in India, true inclusion will only be achieved when access is matched by usage, trust and safety — a balance of technology, education and protection."
+          ]
+        }
+      ],
       "practiceQuestionId": "q5",
       "active": true
     }
