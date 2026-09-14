@@ -283,7 +283,7 @@ input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
 .es-layout{display:flex;gap:18px;align-items:flex-start}
 .es-list{flex:1;min-width:260px;max-width:380px;display:flex;flex-direction:column;gap:10px;position:sticky;top:64px;max-height:calc(100vh - 80px);overflow-y:auto}
 .es-detail{flex:2;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rl);padding:20px;min-height:300px}
-.es-back-btn{display:none}
+.es-back-btn{display:none!important}
 .es-body-fade{transition:opacity .2s ease}
 .es-structure-btn{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--aborder);background:var(--bg2);color:var(--accent);cursor:pointer;flex-shrink:0;animation:esBtnIn .25s ease}
 .es-structure-btn.on{background:var(--accent);border-color:var(--accent);color:var(--bg)}
@@ -1828,9 +1828,7 @@ function renderEssayBodyHTML(e,mode){
     return structure.map(sec=>`
       <div style="margin-bottom:18px">
         <div style="font-size:.88rem;font-weight:800;color:var(--accent);margin-bottom:7px">${escapeHTML(sec.heading)}</div>
-        <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">
-          ${(sec.points||[]).map(p=>`<li style="font-size:.84rem;color:var(--t);line-height:1.65">${escapeHTML(p)}</li>`).join('')}
-        </ul>
+        <div style="font-size:.84rem;color:var(--t);line-height:1.7">${escapeHTML(sec.content||'')}</div>
       </div>`).join('');
   }
   return `<div style="font-size:.88rem;line-height:1.85;color:var(--t);white-space:pre-wrap">${escapeHTML(e.body||'')}</div>`;

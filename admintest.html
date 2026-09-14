@@ -411,8 +411,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);min-heig
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Essay Text (always free to read)</label>
           <textarea id="es-body" placeholder="The full essay text..." rows="8" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem;font-family:inherit;resize:vertical"></textarea>
 
-          <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Structural Breakdown (optional) — either paste "Heading:" on its own line followed by a paragraph (auto-split into bullets), or write "Heading: point one | point two" on one line yourself</label>
-          <textarea id="es-structure" placeholder="Introduction:&#10;Your paragraph goes here — it'll be split into bullet points automatically.&#10;&#10;Body — Key Drivers:&#10;Another paragraph, or: point one | point two | point three" rows="10" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
+          <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Structural Breakdown (optional) — write "Heading:" on its own line followed by the paragraph, or "Heading: content" on one line</label>
+          <textarea id="es-structure" placeholder="Introduction:&#10;Your paragraph goes here.&#10;&#10;Body — Key Drivers:&#10;Another paragraph, or just: Heading: content" rows="10" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
 
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Linked Practice Question (from the Questions editor — must be an Essay Writing type question)</label>
           <select id="es-practice-q" style="width:100%;margin-bottom:12px;padding:8px 11px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem"></select>
@@ -2157,7 +2157,7 @@ function editEssay(id){
   document.getElementById('es-tags').value=(e.tags||[]).join(', ');
   document.getElementById('es-image').value=e.image||'';
   document.getElementById('es-body').value=e.body||'';
-  document.getElementById('es-structure').value=(e.structure||[]).map(sec=>sec.heading+': '+(sec.points||[]).join(' | ')).join('\n');
+  document.getElementById('es-structure').value=(e.structure||[]).map(sec=>sec.heading+':\n'+(sec.content||'')).join('\n\n');
   document.getElementById('es-practice-q').value=e.practiceQuestionId||'';
   document.getElementById('es-active').checked=e.active!==false;
   document.getElementById('es-id').value=e.id;
@@ -2176,23 +2176,17 @@ function resetEssayForm(){
 // A line with no colon, or no text after it, is skipped rather than erroring out.
 // Understands two formats, mixed freely:
 //  1) "Heading:" on its own line, followed by a paragraph on the next line(s) — like a real
-//     pasted essay outline. The paragraph is auto-split into sentence-level bullets.
-//  2) "Heading: point one | point two" all on one line, for when you want to write bullets
-//     directly yourself.
-// A line counts as a heading if it ends in ":" (format 1), or contains ":" early in a short
-// line (format 2) — anything else is treated as body text for whichever heading came before it.
+//     pasted essay outline.
+//  2) "Heading: content" all on one line.
+// Either way, each section is just a heading + its full paragraph text — no bullet splitting.
 function parseEssayStructure(text){
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
   const sections=[];
   let bodyBuffer=[];
   function flush(){
     if(!bodyBuffer.length||!sections.length)return;
-    const bodyText=bodyBuffer.join(' ');
-    let points=bodyText.includes('|')
-      ? bodyText.split('|').map(p=>p.trim()).filter(Boolean)
-      : bodyText.split(/(?<=[.!?])\s+/).map(p=>p.trim()).filter(Boolean);
-    if(!points.length)points=[bodyText];
-    sections[sections.length-1].points.push(...points);
+    const cur=sections[sections.length-1];
+    cur.content=(cur.content?cur.content+' ':'')+bodyBuffer.join(' ');
     bodyBuffer=[];
   }
   lines.forEach(line=>{
@@ -2200,13 +2194,12 @@ function parseEssayStructure(text){
     const firstColon=line.indexOf(':');
     if(endsWithColon){
       flush();
-      sections.push({heading:line.replace(/:\s*$/,'').trim(),points:[]});
+      sections.push({heading:line.replace(/:\s*$/,'').trim(),content:''});
     }else if(firstColon!==-1&&firstColon<50){
       flush();
       const heading=line.slice(0,firstColon).trim();
       const rest=line.slice(firstColon+1).trim();
-      sections.push({heading,points:[]});
-      if(rest)bodyBuffer.push(rest);
+      sections.push({heading,content:rest||''});
     }else{
       bodyBuffer.push(line);
     }
