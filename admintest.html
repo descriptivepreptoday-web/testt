@@ -411,8 +411,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t);min-heig
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Essay Text (always free to read)</label>
           <textarea id="es-body" placeholder="The full essay text..." rows="8" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem;font-family:inherit;resize:vertical"></textarea>
 
-          <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Structural Breakdown (optional) — write "Heading:" on its own line followed by the paragraph, or "Heading: content" on one line</label>
-          <textarea id="es-structure" placeholder="Introduction:&#10;Your paragraph goes here.&#10;&#10;Body — Key Drivers:&#10;Another paragraph, or just: Heading: content" rows="10" style="width:100%;margin-bottom:12px;padding:8px 10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
+          <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:8px">Structural Breakdown (optional) — add a subheading (Introduction, Body Paragraph 1, Conclusion, etc.) with its paragraph underneath. Plain text, no bullets.</label>
+          <div id="es-structure-sections" style="margin-bottom:10px"></div>
+          <button class="btn" style="margin-bottom:14px" onclick="addEssayStructureSection()">+ Add Section</button>
 
           <label style="font-size:.72rem;color:var(--t2);display:block;margin-bottom:5px">Linked Practice Question (from the Questions editor — must be an Essay Writing type question)</label>
           <select id="es-practice-q" style="width:100%;margin-bottom:12px;padding:8px 11px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg3);color:var(--t);font-size:.82rem"></select>
@@ -2146,6 +2147,25 @@ function renderEssayList(){
     </tr>`).join('')
     +'</tbody></table>';
 }
+let _es_sectionCount=0;
+function addEssayStructureSection(heading,content){
+  const id='ess-'+(_es_sectionCount++);
+  const wrap=document.createElement('div');
+  wrap.id=id;
+  wrap.className='es-structure-block';
+  wrap.style.cssText='border:1px solid var(--b);border-radius:var(--rs);padding:12px;margin-bottom:10px;background:var(--bg3)';
+  wrap.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-size:.68rem;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.05em">Section</span>
+      <button class="btn" style="padding:3px 9px;font-size:.66rem" onclick="document.getElementById('${id}').remove()">Remove</button>
+    </div>
+    <input class="es-sec-heading" placeholder="Heading (e.g. Introduction, Body Paragraph 1, Conclusion)" style="width:100%;margin-bottom:8px;padding:7px 9px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg2);color:var(--t);font-size:.8rem"/>
+    <textarea class="es-sec-content" placeholder="Paragraph text for this section" rows="3" style="width:100%;padding:7px 9px;border-radius:var(--rs);border:1px solid var(--b);background:var(--bg2);color:var(--t);font-size:.8rem;font-family:inherit;resize:vertical"></textarea>
+  `;
+  document.getElementById('es-structure-sections').appendChild(wrap);
+  if(heading!=null)wrap.querySelector('.es-sec-heading').value=heading;
+  if(content!=null)wrap.querySelector('.es-sec-content').value=content;
+}
 function editEssay(id){
   const d=D();
   const e=(d.essays||[]).find(x=>x.id===id);
@@ -2157,7 +2177,8 @@ function editEssay(id){
   document.getElementById('es-tags').value=(e.tags||[]).join(', ');
   document.getElementById('es-image').value=e.image||'';
   document.getElementById('es-body').value=e.body||'';
-  document.getElementById('es-structure').value=(e.structure||[]).map(sec=>sec.heading+':\n'+(sec.content||'')).join('\n\n');
+  document.getElementById('es-structure-sections').innerHTML='';
+  (e.structure||[]).forEach(sec=>addEssayStructureSection(sec.heading,sec.content));
   document.getElementById('es-practice-q').value=e.practiceQuestionId||'';
   document.getElementById('es-active').checked=e.active!==false;
   document.getElementById('es-id').value=e.id;
@@ -2167,50 +2188,20 @@ function editEssay(id){
 function resetEssayForm(){
   _es_editingId=null;
   document.getElementById('es-form-title').textContent='Add Essay';
-  ['es-title','es-category','es-tags','es-image','es-body','es-structure','es-id'].forEach(id=>document.getElementById(id).value='');
+  ['es-title','es-category','es-tags','es-image','es-body','es-id'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('es-structure-sections').innerHTML='';
   document.getElementById('es-practice-q').value='';
   document.getElementById('es-active').checked=true;
   document.getElementById('es-cancel-edit').style.display='none';
-}
-// Parses lines like "Heading: point one | point two" into [{heading, points:[...]}, ...].
-// A line with no colon, or no text after it, is skipped rather than erroring out.
-// Understands two formats, mixed freely:
-//  1) "Heading:" on its own line, followed by a paragraph on the next line(s) — like a real
-//     pasted essay outline.
-//  2) "Heading: content" all on one line.
-// Either way, each section is just a heading + its full paragraph text — no bullet splitting.
-function parseEssayStructure(text){
-  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
-  const sections=[];
-  let bodyBuffer=[];
-  function flush(){
-    if(!bodyBuffer.length||!sections.length)return;
-    const cur=sections[sections.length-1];
-    cur.content=(cur.content?cur.content+' ':'')+bodyBuffer.join(' ');
-    bodyBuffer=[];
-  }
-  lines.forEach(line=>{
-    const endsWithColon=/:\s*$/.test(line);
-    const firstColon=line.indexOf(':');
-    if(endsWithColon){
-      flush();
-      sections.push({heading:line.replace(/:\s*$/,'').trim(),content:''});
-    }else if(firstColon!==-1&&firstColon<50){
-      flush();
-      const heading=line.slice(0,firstColon).trim();
-      const rest=line.slice(firstColon+1).trim();
-      sections.push({heading,content:rest||''});
-    }else{
-      bodyBuffer.push(line);
-    }
-  });
-  flush();
-  return sections.filter(s=>s.heading);
 }
 function saveEssay(){
   const title=document.getElementById('es-title').value.trim();
   const body=document.getElementById('es-body').value.trim();
   if(!title||!body){t('Title and essay text are required','er');return;}
+  const structure=Array.from(document.querySelectorAll('#es-structure-sections .es-structure-block')).map(block=>({
+    heading:block.querySelector('.es-sec-heading').value.trim(),
+    content:block.querySelector('.es-sec-content').value.trim()
+  })).filter(sec=>sec.heading); // a section needs at least a heading to count
   const d=D();
   if(!d.essays)d.essays=[];
   const essay={
@@ -2220,7 +2211,7 @@ function saveEssay(){
     tags:document.getElementById('es-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
     image:document.getElementById('es-image').value.trim(),
     body,
-    structure:parseEssayStructure(document.getElementById('es-structure').value),
+    structure,
     practiceQuestionId:document.getElementById('es-practice-q').value||null,
     active:document.getElementById('es-active').checked
   };
